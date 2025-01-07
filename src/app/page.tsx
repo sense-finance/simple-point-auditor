@@ -1,7 +1,9 @@
 export default async function Home() {
-  const data = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/points-audit`
-  ).then((r) => r.json());
+  const data: any[] = [];
+
+  // await fetch(
+  // `${process.env.NEXT_PUBLIC_APP_URL}/api/points-audit`
+  // ).then((r) => r.json());
 
   return (
     <div className="p-8 max-w-7xl mx-auto">
