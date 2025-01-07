@@ -42,6 +42,17 @@ export const APIS = [
     ],
   },
   {
+    pointsId: POINTS_ID_VEDA_S1,
+    dataSources: [
+      {
+        getURL: (wallet: string) =>
+          `https://app.veda.tech/api/user-veda-points?userAddress=${wallet}`,
+        select: (data: any) =>
+          data.Response.ethereum.userChainVedaPointsSum || 0,
+      },
+    ],
+  },
+  {
     pointsId: POINTS_ID_SYMBIOTIC_S1,
     dataSources: [
       {
@@ -162,10 +173,10 @@ export const CONFIG: Array<{
         type: POINTS_ID_ETHERFI_S4,
         expectedPointsPerDay: { value: 20000, baseAsset: "ETH" },
       },
-      {
-        type: POINTS_ID_EIGENLAYER_S3,
-        expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
-      },
+      //   {
+      //     type: POINTS_ID_EIGENLAYER_S3,
+      //     expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
+      //   },
     ],
   },
   {
@@ -195,14 +206,14 @@ export const CONFIG: Array<{
         type: POINTS_ID_ZIRCUIT_S3,
         expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
       },
-      {
-        type: POINTS_ID_EIGENPIE_S1,
-        expectedPointsPerDay: { value: 2, baseAsset: "ETH" },
-      },
-      {
-        type: POINTS_ID_EIGENLAYER_S3,
-        expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
-      },
+      //   {
+      //     type: POINTS_ID_EIGENPIE_S1,
+      //     expectedPointsPerDay: { value: 2, baseAsset: "ETH" },
+      //   },
+      //   {
+      //     type: POINTS_ID_EIGENLAYER_S3,
+      //     expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
+      //   },
     ],
   },
 ];
