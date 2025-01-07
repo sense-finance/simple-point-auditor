@@ -76,6 +76,7 @@ export default function Home() {
                   const actual = parseFloat(row.actualPoints);
                   const expected = parseFloat(row.expectedPoints);
                   const diff = actual - expected;
+                  const percentDiff = (diff / expected) * 100;
 
                   return (
                     <tr
@@ -103,7 +104,10 @@ export default function Home() {
                             : "text-emerald-600 bg-emerald-50"
                         }`}
                       >
-                        {diff.toFixed(4)}
+                        {Math.abs(diff).toFixed(4)}
+                        <span className="ml-1">
+                          ({percentDiff.toFixed(1)}%)
+                        </span>
                       </td>
                     </tr>
                   );
