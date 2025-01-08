@@ -216,6 +216,18 @@ export const CONFIG: Array<{
       //   },
     ],
   },
+  {
+    strategy: "Fluid: sUSDe/USDT Looping",
+    start: "Dec-06-2024 05:13:11 PM UTC",
+    owner: "0x0a161D622a7Dd4D39cfd2f0B4D984a3341b10cab",
+    fixedValue: { value: 1.141, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+      },
+    ],
+  },
 ];
 
 const memoizedFetchETHPriceUSD = (() => {
