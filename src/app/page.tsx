@@ -52,7 +52,7 @@ export default function PointsAuditByPointsId() {
   // Error display
   if (error) {
     return (
-      <div className="p-8 max-w-7xl mx-auto">
+      <div className="p-8 max-w-7xl mx-auto" role="alert" aria-live="assertive">
         <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-600">
           {error}
         </div>
@@ -63,187 +63,353 @@ export default function PointsAuditByPointsId() {
   // Grouping the data once we have it
   const groupedData = groupByPointsId(data);
 
+  /**
+   * -------------------------
+   * 1) LOADING State
+   * -------------------------
+   * We'll handle a skeleton for both table and the card layout.
+   */
+  if (loading) {
+    return (
+      <div className="p-8 max-w-7xl mx-auto" aria-busy="true" role="status">
+        {/* TABLE SKELETON (Visible on md screens and up) */}
+        <div className="hidden sm:block overflow-x-auto rounded-lg shadow-lg border border-gray-200">
+          <table className="w-full border-collapse bg-white">
+            <thead>
+              <tr className="bg-gray-50">
+                <th
+                  scope="col"
+                  className="p-4 text-left text-gray-700 font-semibold border-b border-gray-200"
+                >
+                  Points Type
+                </th>
+                <th
+                  scope="col"
+                  className="p-4 text-left text-gray-700 font-semibold border-b border-gray-200"
+                >
+                  Strategy
+                </th>
+                <th
+                  scope="col"
+                  className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200"
+                >
+                  Expected
+                </th>
+                <th
+                  scope="col"
+                  className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200"
+                >
+                  Actual
+                </th>
+                <th
+                  scope="col"
+                  className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200"
+                >
+                  Diff
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.from({ length: 5 }).map((_, groupIndex) => (
+                <React.Fragment key={groupIndex}>
+                  <tr className="border-b bg-gray-50">
+                    <td
+                      className="p-4 font-medium animate-pulse bg-gray-200 text-gray-200"
+                      colSpan={5}
+                    >
+                      <div className="h-4 w-48 bg-gray-200 rounded"></div>
+                    </td>
+                  </tr>
+                  {Array.from({ length: 3 }).map((__, rowIndex) => (
+                    <tr
+                      key={`${groupIndex}-${rowIndex}`}
+                      className="border-b hover:bg-gray-50 transition-colors"
+                    >
+                      <td className="p-4" />
+                      <td className="p-4">
+                        <div className="h-4 w-32 bg-gray-200 rounded animate-pulse mb-2" />
+                      </td>
+                      <td className="p-4 text-right">
+                        <div className="h-4 w-16 bg-gray-200 rounded animate-pulse ml-auto" />
+                      </td>
+                      <td className="p-4 text-right">
+                        <div className="h-4 w-16 bg-gray-200 rounded animate-pulse ml-auto" />
+                      </td>
+                      <td className="p-4 text-right">
+                        <div className="h-4 w-16 bg-gray-200 rounded animate-pulse ml-auto" />
+                      </td>
+                    </tr>
+                  ))}
+                </React.Fragment>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* CARD SKELETON (Visible on mobile screens) */}
+        <div className="block sm:hidden space-y-4">
+          {Array.from({ length: 5 }).map((_, idx) => (
+            <div
+              key={idx}
+              className="bg-white border border-gray-200 rounded-lg p-4 animate-pulse"
+            >
+              <div className="h-4 w-32 bg-gray-200 rounded mb-4" />
+              {Array.from({ length: 3 }).map((__, rIdx) => (
+                <div key={rIdx} className="flex justify-between mb-2">
+                  <div className="h-4 w-20 bg-gray-200 rounded" />
+                  <div className="h-4 w-16 bg-gray-200 rounded" />
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  /**
+   * -------------------------
+   * 2) ACTUAL DATA RENDER
+   * -------------------------
+   */
   return (
     <div className="p-8 max-w-7xl mx-auto">
-      <div className="overflow-x-auto rounded-lg shadow-lg border border-gray-200">
-        <table className="w-full border-collapse bg-white">
+      {/* ---------- TABLE Layout (hidden on small screens) ---------- */}
+      <div className="hidden sm:block overflow-x-auto rounded-lg shadow-lg border border-gray-200">
+        <table
+          className="w-full border-collapse bg-white"
+          aria-label="Points Audit Table"
+        >
           <thead>
             <tr className="bg-gray-50">
-              <th className="p-4 text-left text-gray-700 font-semibold border-b border-gray-200">
+              <th
+                scope="col"
+                className="p-4 text-left text-gray-700 font-semibold border-b border-gray-200"
+              >
                 Points Type
               </th>
-              <th className="p-4 text-left text-gray-700 font-semibold border-b border-gray-200">
+              <th
+                scope="col"
+                className="p-4 text-left text-gray-700 font-semibold border-b border-gray-200"
+              >
                 Strategy
               </th>
-              <th className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200">
+              <th
+                scope="col"
+                className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200"
+              >
                 Expected
               </th>
-              <th className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200">
+              <th
+                scope="col"
+                className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200"
+              >
                 Actual
               </th>
-              <th className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200">
+              <th
+                scope="col"
+                className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200"
+              >
                 Diff
               </th>
             </tr>
           </thead>
 
           <tbody>
-            {loading
-              ? // --------------------------------------
-                // LOADING SKELETON
-                // We'll simulate multiple groups, each with multiple sub-rows.
-                // Feel free to tweak the number of rows or styles.
-                // --------------------------------------
-                Array.from({ length: 5 }).map((_, groupIndex) => (
-                  <React.Fragment key={groupIndex}>
-                    {/* Group Header Skeleton */}
-                    <tr className="border-b bg-gray-50">
-                      <td
-                        className="p-4 font-medium animate-pulse bg-gray-200 text-gray-200"
-                        colSpan={5}
-                      >
-                        <div className="h-4 w-48 bg-gray-200 rounded"></div>
-                      </td>
-                    </tr>
+            {Object.entries(groupedData).map(([pointsId, rows]) => {
+              // Compute an aggregate for the entire group
+              const totalExpected = rows.reduce(
+                (acc, row) => acc + parseFloat(row.expectedPoints),
+                0
+              );
+              const totalActual = rows.reduce(
+                (acc, row) => acc + parseFloat(row.actualPoints),
+                0
+              );
+              const totalDiff = totalActual - totalExpected;
+              const totalDiffPct =
+                totalExpected === 0 ? 0 : (totalDiff / totalExpected) * 100;
 
-                    {/* Sub-rows Skeleton */}
-                    {Array.from({ length: 3 }).map((__, rowIndex) => (
+              // Friendly label fallback
+              const displayName = pointIdToFriendlyName[pointsId] || pointsId;
+
+              return (
+                <React.Fragment key={pointsId}>
+                  {/* GROUP HEADER ROW */}
+                  <tr className="border-b bg-gray-100">
+                    <td className="p-4 font-semibold" colSpan={5}>
+                      {displayName}
+                    </td>
+                  </tr>
+
+                  {/* SUB ROWS */}
+                  {rows.map((row, subIndex) => {
+                    const actual = parseFloat(row.actualPoints);
+                    const expected = parseFloat(row.expectedPoints);
+                    const diff = actual - expected;
+                    const percentDiff =
+                      expected === 0 ? 0 : (diff / expected) * 100;
+
+                    return (
                       <tr
-                        key={`${groupIndex}-${rowIndex}`}
+                        key={subIndex}
                         className="border-b hover:bg-gray-50 transition-colors"
                       >
+                        <td className="p-4" />
                         <td className="p-4">
-                          {/* Empty cell under "Points Type" */}
+                          <div className="font-medium text-gray-900">
+                            {row.strategy}
+                          </div>
                         </td>
-                        <td className="p-4">
-                          <div className="h-4 w-32 bg-gray-200 rounded animate-pulse mb-2"></div>
+                        <td className="text-right p-4 font-mono text-gray-600">
+                          {expected.toFixed(4)}
                         </td>
-                        <td className="p-4 text-right">
-                          <div className="h-4 w-16 bg-gray-200 rounded animate-pulse ml-auto"></div>
+                        <td className="text-right p-4 font-mono text-gray-600">
+                          {actual.toFixed(4)}
                         </td>
-                        <td className="p-4 text-right">
-                          <div className="h-4 w-16 bg-gray-200 rounded animate-pulse ml-auto"></div>
-                        </td>
-                        <td className="p-4 text-right">
-                          <div className="h-4 w-16 bg-gray-200 rounded animate-pulse ml-auto"></div>
-                        </td>
-                      </tr>
-                    ))}
-                  </React.Fragment>
-                ))
-              : // --------------------------------------
-                // RENDER ACTUAL DATA
-                // --------------------------------------
-                Object.entries(groupedData).map(([pointsId, rows]) => {
-                  // Compute an aggregate for the entire group
-                  const totalExpected = rows.reduce(
-                    (acc, row) => acc + parseFloat(row.expectedPoints),
-                    0
-                  );
-                  const totalActual = rows.reduce(
-                    (acc, row) => acc + parseFloat(row.actualPoints),
-                    0
-                  );
-                  const totalDiff = totalActual - totalExpected;
-                  const totalDiffPct =
-                    totalExpected === 0 ? 0 : (totalDiff / totalExpected) * 100;
-
-                  // Friendly label fallback
-                  const displayName =
-                    pointIdToFriendlyName[pointsId] || pointsId;
-
-                  return (
-                    <React.Fragment key={pointsId}>
-                      {/* GROUP HEADER ROW */}
-                      <tr className="border-b bg-gray-100">
-                        <td className="p-4 font-semibold" colSpan={5}>
-                          {displayName}
-                        </td>
-                      </tr>
-
-                      {/* SUB ROWS */}
-                      {rows.map((row, subIndex) => {
-                        const actual = parseFloat(row.actualPoints);
-                        const expected = parseFloat(row.expectedPoints);
-                        const diff = actual - expected;
-                        const percentDiff =
-                          expected === 0 ? 0 : (diff / expected) * 100;
-
-                        return (
-                          <tr
-                            key={subIndex}
-                            className="border-b hover:bg-gray-50 transition-colors"
-                          >
-                            {/* empty cell under "Points Type" */}
-                            <td className="p-4"></td>
-
-                            {/* Strategy name */}
-                            <td className="p-4">
-                              <div className="font-medium text-gray-900">
-                                {row.strategy}
-                              </div>
-                            </td>
-
-                            {/* Expected */}
-                            <td className="text-right p-4 font-mono text-gray-600">
-                              {expected.toFixed(4)}
-                            </td>
-
-                            {/* Actual */}
-                            <td className="text-right p-4 font-mono text-gray-600">
-                              {actual.toFixed(4)}
-                            </td>
-
-                            {/* Diff */}
-                            <td
-                              className={`text-right p-4 font-mono font-medium whitespace-nowrap ${
-                                diff < 0
-                                  ? "text-red-600 bg-red-50"
-                                  : "text-emerald-600 bg-emerald-50"
-                              }`}
-                            >
-                              {Math.abs(diff).toFixed(4)}
-                              <span className="ml-1">
-                                ({percentDiff.toFixed(1)}%)
-                              </span>
-                            </td>
-                          </tr>
-                        );
-                      })}
-
-                      {/* AGGREGATE ROW */}
-                      <tr className="border-b font-mono font-medium">
-                        {/* empty cell under "Points Type" */}
-                        <td className="p-4"></td>
-
-                        <td className="p-4 text-right text-gray-500">
-                          <span className="italic">Group Total</span>
-                        </td>
-
-                        <td className="p-4 text-right text-gray-600">
-                          {totalExpected.toFixed(4)}
-                        </td>
-
-                        <td className="p-4 text-right text-gray-600">
-                          {totalActual.toFixed(4)}
-                        </td>
-
                         <td
-                          className={`p-4 text-right ${
-                            totalDiff < 0
+                          className={`text-right p-4 font-mono font-medium whitespace-nowrap ${
+                            diff < 0
                               ? "text-red-600 bg-red-50"
                               : "text-emerald-600 bg-emerald-50"
                           }`}
                         >
-                          {Math.abs(totalDiff).toFixed(4)} (
-                          {totalDiffPct.toFixed(1)}%)
+                          {Math.abs(diff).toFixed(4)}
+                          <span className="ml-1">
+                            ({percentDiff.toFixed(1)}%)
+                          </span>
                         </td>
                       </tr>
-                    </React.Fragment>
-                  );
-                })}
+                    );
+                  })}
+
+                  {/* AGGREGATE ROW */}
+                  <tr className="border-b font-mono font-medium">
+                    <td className="p-4" />
+                    <td className="p-4 text-right text-gray-500">
+                      <span className="italic">Group Total</span>
+                    </td>
+                    <td className="p-4 text-right text-gray-600">
+                      {totalExpected.toFixed(4)}
+                    </td>
+                    <td className="p-4 text-right text-gray-600">
+                      {totalActual.toFixed(4)}
+                    </td>
+                    <td
+                      className={`p-4 text-right ${
+                        totalDiff < 0
+                          ? "text-red-600 bg-red-50"
+                          : "text-emerald-600 bg-emerald-50"
+                      }`}
+                    >
+                      {Math.abs(totalDiff).toFixed(4)} (
+                      {totalDiffPct.toFixed(1)}%)
+                    </td>
+                  </tr>
+                </React.Fragment>
+              );
+            })}
           </tbody>
         </table>
+      </div>
+
+      {/* ---------- CARD Layout (only shown on small screens) ---------- */}
+      <div className="block sm:hidden space-y-6">
+        {Object.entries(groupedData).map(([pointsId, rows]) => {
+          // Compute group-level totals
+          const totalExpected = rows.reduce(
+            (acc, row) => acc + parseFloat(row.expectedPoints),
+            0
+          );
+          const totalActual = rows.reduce(
+            (acc, row) => acc + parseFloat(row.actualPoints),
+            0
+          );
+          const totalDiff = totalActual - totalExpected;
+          const totalDiffPct =
+            totalExpected === 0 ? 0 : (totalDiff / totalExpected) * 100;
+
+          // Friendly label
+          const displayName = pointIdToFriendlyName[pointsId] || pointsId;
+
+          return (
+            <div
+              key={pointsId}
+              className="bg-white border border-gray-200 rounded-lg p-4 shadow"
+            >
+              {/* GROUP HEADER */}
+              <h2 className="text-lg font-semibold mb-4">{displayName}</h2>
+
+              {/* SUB ROWS AS CARDS */}
+              <div className="space-y-2">
+                {rows.map((row, subIndex) => {
+                  const actual = parseFloat(row.actualPoints);
+                  const expected = parseFloat(row.expectedPoints);
+                  const diff = actual - expected;
+                  const percentDiff =
+                    expected === 0 ? 0 : (diff / expected) * 100;
+
+                  return (
+                    <div
+                      key={subIndex}
+                      className="p-3 rounded-md border border-gray-100"
+                    >
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="font-medium text-gray-700">
+                          Strategy
+                        </span>
+                        <span className="text-gray-900">{row.strategy}</span>
+                      </div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="font-medium text-gray-700">
+                          Expected
+                        </span>
+                        <span className="font-mono text-gray-600">
+                          {expected.toFixed(4)}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="font-medium text-gray-700">
+                          Actual
+                        </span>
+                        <span className="font-mono text-gray-600">
+                          {actual.toFixed(4)}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="font-medium text-gray-700">Diff</span>
+                        <span
+                          className={`font-mono font-medium ${
+                            diff < 0
+                              ? "text-red-600 bg-red-50 px-2 rounded"
+                              : "text-emerald-600 bg-emerald-50 px-2 rounded"
+                          }`}
+                        >
+                          {Math.abs(diff).toFixed(4)} ({percentDiff.toFixed(1)}
+                          %)
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* GROUP TOTAL */}
+              <div className="mt-4 pt-4 border-t border-gray-100 font-mono font-medium flex justify-between">
+                <span className="text-gray-500 italic">Group Total</span>
+                <span
+                  className={`${
+                    totalDiff < 0
+                      ? "text-red-600 bg-red-50"
+                      : "text-emerald-600 bg-emerald-50"
+                  } px-2 rounded`}
+                >
+                  {Math.abs(totalDiff).toFixed(4)} ({totalDiffPct.toFixed(1)}%)
+                </span>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
