@@ -5,7 +5,7 @@ import { CONFIG, APIS, convertValue } from "@/app/lib";
 
 export const maxDuration = 120;
 
-export async function GET(request: Request) {
+export async function GET() {
   const now = Date.now();
   const results = [];
   const pointsBySource: Record<string, string> = {};
