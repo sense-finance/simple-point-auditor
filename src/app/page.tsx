@@ -2,6 +2,78 @@
 
 import React, { useState, useEffect } from "react";
 
+function InfoTooltip({
+  owner,
+  dataSourceURLs,
+  pointsBySource,
+}: {
+  owner: string;
+  dataSourceURLs: string[];
+  pointsBySource: Record<string, string>;
+}) {
+  const [open, setOpen] = useState(false);
+
+  const truncateUrl = (url: string) => {
+    if (url.length <= 40) return url;
+
+    const start = url.slice(0, 20);
+    const end = url.slice(-20);
+    return `${start}...${end}`;
+  };
+
+  return (
+    <div
+      className="relative ml-2 inline-block"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <span className="cursor-help text-gray-400 hover:text-gray-600 transition-colors">
+        ℹ
+      </span>
+
+      {open && (
+        <div className="absolute z-10 w-96 p-4 mt-2 text-sm bg-white border border-gray-200 rounded-lg shadow-lg -translate-x-1/2 left-1/2">
+          {/* Arrow */}
+          <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-t border-l border-gray-200 transform rotate-45" />
+
+          <div className="mb-3 flex items-center gap-2">
+            <div className="w-2 h-2 bg-green-400 rounded-full" />
+            <a
+              href={`https://etherscan.io/address/${owner}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800 font-medium transition-colors"
+            >
+              View tracked address on Etherscan
+            </a>
+          </div>
+
+          <div className="text-xs uppercase tracking-wider text-gray-500 font-semibold mb-2">
+            Data Sources
+          </div>
+          <div className="space-y-1.5">
+            {dataSourceURLs.map((url, idx) => (
+              <a
+                key={idx}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-xs text-gray-600 hover:text-blue-600 hover:bg-blue-50 p-1.5 rounded transition-colors"
+                title={url}
+              >
+                {truncateUrl(url)}{" "}
+                <span className="text-gray-400">
+                  ({Number(pointsBySource[url]).toFixed(4)})
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // 1. Friendly label map
 const pointIdToFriendlyName: Record<string, string> = {
   POINTS_ID_ETHENA_SATS_S3: "Ethena Sats (S3)",
@@ -262,6 +334,11 @@ export default function PointsAuditByPointsId() {
                         <td className="p-4">
                           <div className="font-medium text-gray-900">
                             {row.strategy}
+                            <InfoTooltip
+                              owner={row.owner}
+                              dataSourceURLs={row.dataSourceURLs}
+                              pointsBySource={row.pointsBySource}
+                            />
                           </div>
                         </td>
                         <td className="text-right p-4 font-mono text-gray-600">

@@ -5,9 +5,10 @@ import { CONFIG, APIS, convertValue } from "@/app/lib";
 
 export const maxDuration = 120;
 
-export async function GET() {
+export async function GET(request: Request) {
   const now = Date.now();
   const results = [];
+  const pointsBySource: Record<string, string> = {};
 
   for (const configItem of CONFIG) {
     // days since "start"
@@ -18,11 +19,19 @@ export async function GET() {
     for (const pointDef of configItem.points) {
       const matchingApi = APIS.find((api) => api.pointsId === pointDef.type);
       let actualPoints = new Big(0);
+      let dataSourceURLs: string[] = [];
 
       // Sum actual points from all data sources
       if (matchingApi) {
-        // Process in batches of 5
-        const batchSize = 7;
+        // Build up the data source URLs and initialize pointsBySource tracking
+        dataSourceURLs = matchingApi.dataSources.map((dataSource) => {
+          const url = dataSource.getURL(configItem.owner);
+          pointsBySource[url] = "0";
+          return url;
+        });
+
+        // Process in batches
+        const batchSize = 20;
         for (let i = 0; i < matchingApi.dataSources.length; i += batchSize) {
           const batch = matchingApi.dataSources.slice(i, i + batchSize);
           const results = await Promise.all(
@@ -30,8 +39,16 @@ export async function GET() {
               try {
                 const url = dataSource.getURL(configItem.owner);
                 const raw = await fetch(url).then((r) => r.json());
-                return dataSource.select(raw);
+                const points = dataSource.select(raw);
+                pointsBySource[url] = new Big(points).toString();
+                return points;
               } catch (e) {
+                if (
+                  e instanceof Error &&
+                  e.message.includes("Unexpected token '<'")
+                ) {
+                  throw new Error("US region detected");
+                }
                 console.error(e);
                 return 0;
               }
@@ -72,6 +89,9 @@ export async function GET() {
         pointsId: pointDef.type,
         actualPoints: actualPoints.toString(),
         expectedPoints: expectedPoints.toString(),
+        owner: configItem.owner,
+        pointsBySource,
+        dataSourceURLs,
       });
     }
   }
