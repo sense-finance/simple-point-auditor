@@ -7,6 +7,7 @@ export const POINTS_ID_MELLOW_S1 = "POINTS_ID_MELLOW_S1";
 export const POINTS_ID_ZIRCUIT_S3 = "POINTS_ID_ZIRCUIT_S3";
 export const POINTS_ID_ETHERFI_S4 = "POINTS_ID_ETHERFI_S4";
 export const POINTS_ID_VEDA_S1 = "POINTS_ID_VEDA_S1";
+const MAINNET_AGETH = "0xe1B4d34E8754600962Cd944B535180Bd758E6c2e";
 
 export const APIS = [
   {
@@ -27,6 +28,30 @@ export const APIS = [
         getURL: (wallet: string) =>
           `https://stake.zircuit.com/api/points/${wallet}`,
         select: (data: any) => data["1"].totalPoints || 0,
+      },
+    ],
+  },
+  {
+    pointsId: POINTS_ID_KARAK_S2,
+    dataSources: [
+      {
+        getURL: (wallet: string) =>
+          `https://restaking-backend.karak.network/getPortfolio?batch=1&input=${encodeURIComponent(
+            JSON.stringify({ "0": { wallet } })
+          )}`,
+        select: (data: any) => data?.[0]?.result?.data?.xpByPhase?.phase2 || 0,
+        catchError: true,
+      },
+      {
+        getURL: (wallet: string) =>
+          `https://app.ether.fi/api/portfolio/v3/${wallet}`,
+        select: (data: any) =>
+          data.totalPointsSummaries?.KARAK?.CurrentPoints || 0,
+      },
+      {
+        getURL: (wallet: string) =>
+          `https://common.kelpdao.xyz/gain/user/${wallet}`,
+        select: (data: any) => data[MAINNET_AGETH]?.karakPoints || 0,
       },
     ],
   },
@@ -53,6 +78,33 @@ export const APIS = [
     ],
   },
   {
+    pointsId: POINTS_ID_MELLOW_S1,
+    dataSources: [
+      {
+        getURL: (wallet: string) =>
+          `https://points.mellow.finance/v1/chain/1/users/${wallet}`,
+        select: (data: any) =>
+          data.reduce(
+            (acc: number, curr: { user_mellow_points: number }) =>
+              curr.user_mellow_points + acc,
+            0
+          ),
+      },
+      {
+        getURL: (wallet: string) =>
+          `https://points.mellow.finance/v1/chain/1/defi/users/${wallet}`,
+        select: (data: any) =>
+          data.reduce(
+            (
+              acc: number,
+              curr: { user_mellow_points: number; boost: number }
+            ) => curr.user_mellow_points * curr.boost + acc,
+            0
+          ),
+      },
+    ],
+  },
+  {
     pointsId: POINTS_ID_SYMBIOTIC_S1,
     dataSources: [
       {
@@ -65,7 +117,7 @@ export const APIS = [
           `https://points.mellow.finance/v1/chain/1/users/${wallet}`,
         select: (data: any) =>
           data.reduce(
-            (acc: any, curr: any) => curr.user_symbiotic_points + acc,
+            (acc: number, curr: any) => curr.user_symbiotic_points + acc,
             0
           ),
       },
@@ -74,7 +126,7 @@ export const APIS = [
           `https://points.mellow.finance/v1/chain/1/defi/users/${wallet}`,
         select: (data: any) =>
           data.reduce(
-            (acc: any, curr: any) => curr.user_symbiotic_points + acc,
+            (acc: number, curr: any) => curr.user_symbiotic_points + acc,
             0
           ),
       },
@@ -225,6 +277,117 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+      },
+    ],
+  },
+  {
+    strategy: "Karak: Restake weETH",
+    start: "Jan-08-2025 03:53:47 AM UTC",
+    owner: "0xB012BF2E813Ac618441246bF9225f770fB5e8410",
+    fixedValue: { value: 0.0015, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_KARAK_S2,
+        expectedPointsPerDay: { value: 1.2, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_ETHERFI_S4,
+        expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
+      },
+      // {
+      //   type: POINTS_ID_EIGENLAYER_S3,
+      //   expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
+      // },
+    ],
+  },
+  {
+    strategy: "Karak: Restake USDe",
+    start: "Jan-08-2025 03:59:11 AM UTC",
+    owner: "0x8C4B26947Eb4c6eD12d3555872106b3e1dfc7349",
+    fixedValue: { value: 5.01, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_KARAK_S2,
+        expectedPointsPerDay: { value: 1.2, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 20, baseAsset: "USD" },
+      },
+    ],
+  },
+  {
+    strategy: "Symbiotic: Restake wstETH",
+    start: "Jan-08-2025 12:58:47 PM UTC",
+    owner: "0xbB1A8420af98358a1BEEA44cC050f6b8610d411a",
+    fixedValue: { value: 0.001521806, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+    ],
+  },
+  {
+    strategy: "Symbiotic: Restake sUSDe",
+    start: "Jan-08-2025 01:51:47 PM UTC",
+    owner: "0x201D2EFf0F2f2ea460f44a73F4231567A2892644",
+    fixedValue: { value: 5.016, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 10, baseAsset: "USD" },
+      },
+    ],
+  },
+  // {
+  //   strategy: "Symbiotic: Restake LBTC",
+  //   start: "Jan-08-2025 01:51:47 PM UTC",
+  //   owner: "0x201D2EFf0F2f2ea460f44a73F4231567A2892644",
+  //   fixedValue: { value: 5.016, asset: "USD" },
+  //   points: [
+  //     {
+  //       type: POINTS_ID_SYMBIOTIC_S1,
+  //       expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+  //     },
+
+  //   ],
+  // },
+
+  {
+    strategy: "Mellow: Ethena LRT Vault sUSDe",
+    start: "Jan-08-2025 08:51:59 PM UTC",
+    owner: "0x803cD032bCFAfB23Bf7DEB02fd2da2cd02919c4D",
+    fixedValue: { value: 4.89288, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 10, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+    ],
+  },
+
+  {
+    strategy: "Kelp: agETH",
+    start: "Jan-07-2025 06:30:59 PM UTC",
+    owner: "0x84C8Da9521b5f3B70Df324d5A4FE61b6EF189aAE",
+    fixedValue: { value: 0.001, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_KARAK_S2,
+        expectedPointsPerDay: { value: 460, baseAsset: "ETH" },
       },
     ],
   },

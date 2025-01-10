@@ -20,10 +20,14 @@ export async function GET() {
       // Sum actual points from all data sources
       if (matchingApi) {
         for (const dataSource of matchingApi.dataSources) {
-          const url = dataSource.getURL(configItem.owner);
-          const raw = await fetch(url).then((r) => r.json());
-          const value = dataSource.select(raw); // could be a number or string
-          actualPoints = actualPoints.plus(new Big(value));
+          try {
+            const url = dataSource.getURL(configItem.owner);
+            const raw = await fetch(url).then((r) => r.json());
+            const value = dataSource.select(raw); // could be a number or string
+            actualPoints = actualPoints.plus(new Big(value));
+          } catch (e) {
+            console.error(e);
+          }
         }
       }
 

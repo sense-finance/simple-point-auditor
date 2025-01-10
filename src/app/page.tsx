@@ -36,7 +36,10 @@ export default function PointsAuditByPointsId() {
   useEffect(() => {
     fetch(`/api/points-audit`)
       .then((r) => {
-        if (!r.ok) throw new Error("Failed to fetch data");
+        if (!r.ok)
+          throw new Error(
+            "Failed to fetch data. Are you in a region that's able to access all of the APIs?"
+          );
         return r.json();
       })
       .then((jsonData) => {
