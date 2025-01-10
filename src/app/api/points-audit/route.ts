@@ -3,6 +3,8 @@ import { Big } from "big.js";
 
 import { CONFIG, APIS, convertValue } from "@/app/lib";
 
+export const maxDuration = 120;
+
 export async function GET() {
   const now = Date.now();
   const results = [];
@@ -19,15 +21,27 @@ export async function GET() {
 
       // Sum actual points from all data sources
       if (matchingApi) {
-        for (const dataSource of matchingApi.dataSources) {
-          try {
-            const url = dataSource.getURL(configItem.owner);
-            const raw = await fetch(url).then((r) => r.json());
-            const value = dataSource.select(raw); // could be a number or string
+        // Process in batches of 5
+        const batchSize = 7;
+        for (let i = 0; i < matchingApi.dataSources.length; i += batchSize) {
+          const batch = matchingApi.dataSources.slice(i, i + batchSize);
+          const results = await Promise.all(
+            batch.map(async (dataSource) => {
+              try {
+                const url = dataSource.getURL(configItem.owner);
+                const raw = await fetch(url).then((r) => r.json());
+                return dataSource.select(raw);
+              } catch (e) {
+                console.error(e);
+                return 0;
+              }
+            })
+          );
+
+          // Sum the batch results
+          results.forEach((value) => {
             actualPoints = actualPoints.plus(new Big(value));
-          } catch (e) {
-            console.error(e);
-          }
+          });
         }
       }
 
