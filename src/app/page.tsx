@@ -1,6 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { SparkLineChart } from "@tremor/react";
+import * as Tooltip from "@radix-ui/react-tooltip";
+
+type HistoricalData = {
+  actualPoints: string;
+  created_at: string;
+}[];
 
 function InfoTooltip({
   owner,
@@ -103,19 +110,19 @@ export default function PointsAuditByPointsId() {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [historicalData, setHistoricalData] = useState<
+    Record<string, HistoricalData>
+  >({});
 
   // Fetch logic
   useEffect(() => {
-    fetch(`/api/points-audit`)
-      .then((r) => {
-        if (!r.ok)
-          throw new Error(
-            "Failed to fetch data. Are you in a region that's able to access all of the APIs?"
-          );
-        return r.json();
-      })
-      .then((jsonData) => {
-        setData(jsonData);
+    Promise.all([
+      fetch("/api/points-audit").then((r) => r.json()),
+      fetch("/api/points-audit-history").then((r) => r.json()),
+    ])
+      .then(([pointsData, historyData]) => {
+        setData(pointsData);
+        setHistoricalData(historyData);
         setLoading(false);
       })
       .catch((err) => {
@@ -134,6 +141,8 @@ export default function PointsAuditByPointsId() {
       </div>
     );
   }
+
+  console.log("historicalData", historicalData);
 
   // Grouping the data once we have it
   const groupedData = groupByPointsId(data);
@@ -345,7 +354,57 @@ export default function PointsAuditByPointsId() {
                           {expected.toFixed(4)}
                         </td>
                         <td className="text-right p-4 font-mono text-gray-600">
-                          {actual.toFixed(4)}
+                          <Tooltip.Provider>
+                            <Tooltip.Root>
+                              <Tooltip.Trigger asChild>
+                                <span className="cursor-pointer border-b border-dotted border-gray-400 hover:border-black transition-colors">
+                                  {actual.toFixed(4)}
+                                </span>
+                              </Tooltip.Trigger>
+                              <Tooltip.Portal>
+                                <Tooltip.Content
+                                  className="bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-50"
+                                  sideOffset={5}
+                                >
+                                  {historicalData[
+                                    `${row.strategy}-${row.pointsId}`
+                                  ] && (
+                                    <div className="w-64">
+                                      <div className="text-xs text-gray-500 mb-2">
+                                        Historical Points
+                                      </div>
+                                      <div className="space-y-1 whitespace-nowrap">
+                                        {historicalData[
+                                          `${row.strategy}-${row.pointsId}`
+                                        ].map((d, i) => (
+                                          <div
+                                            key={i}
+                                            className="flex justify-between text-sm"
+                                          >
+                                            <span className="text-gray-600">
+                                              {new Date(
+                                                d.created_at
+                                              ).toLocaleString("en-US", {
+                                                dateStyle: "short",
+                                                timeStyle: "medium",
+                                              })}
+                                              :
+                                            </span>
+                                            <span className="font-medium">
+                                              {parseFloat(
+                                                d.actualPoints
+                                              ).toFixed(4)}
+                                            </span>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  )}
+                                  <Tooltip.Arrow className="fill-white" />
+                                </Tooltip.Content>
+                              </Tooltip.Portal>
+                            </Tooltip.Root>
+                          </Tooltip.Provider>
                         </td>
                         <td
                           className={`text-right p-4 font-mono font-medium whitespace-nowrap ${

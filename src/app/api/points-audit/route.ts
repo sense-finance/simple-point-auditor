@@ -4,7 +4,7 @@ import { Big } from "big.js";
 // Adjust imports to your actual paths/types
 import { CONFIG, APIS, convertValue } from "@/app/lib";
 
-export const maxDuration = 120;
+export const maxDuration = 180;
 
 /**
  * Example types. Adjust to your real data shapes.

@@ -3,6 +3,8 @@ import { neon } from "@neondatabase/serverless";
 import { getAllPointsData } from "../points-audit/route";
 import { NextResponse } from "next/server";
 
+export const maxDuration = 180;
+
 export async function GET() {
   const sql = neon(process.env.DATABASE_URL!);
 
