@@ -13,7 +13,10 @@ export async function GET() {
     `;
 
     const fourHoursAgo = Date.now() - 4 * 60 * 60 * 1000 - 5000; // a little wiggle room
-    if (lastRun.length > 0 && lastRun[0].created_at > fourHoursAgo) {
+    if (
+      lastRun.length > 0 &&
+      new Date(lastRun[0].created_at).getTime() > fourHoursAgo
+    ) {
       console.log(
         "Skipping points-audit-store, last run was less than 4 hours ago"
       );
@@ -31,7 +34,7 @@ export async function GET() {
             created_at, strategy, points_id, 
             actual_points, expected_points, owner
           ) VALUES (
-            ${new Date()}, ${item.strategy}, ${item.pointsId},
+            ${new Date().toISOString()}, ${item.strategy}, ${item.pointsId},
             ${item.actualPoints}, ${item.expectedPoints}, ${item.owner}
           ) RETURNING id
         `;
