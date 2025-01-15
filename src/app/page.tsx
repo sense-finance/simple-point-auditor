@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { SparkLineChart } from "@tremor/react";
 import * as Tooltip from "@radix-ui/react-tooltip";
 
 type HistoricalData = {
