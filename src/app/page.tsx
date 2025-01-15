@@ -349,14 +349,17 @@ export default function PointsAuditByPointsId() {
                         </td>
                         <td
                           className={`text-right p-4 font-mono font-medium whitespace-nowrap ${
-                            diff < 0
+                            Math.abs(percentDiff) < 0.1
+                              ? "text-indigo-600 bg-indigo-50"
+                              : diff < 0
                               ? "text-red-600 bg-red-50"
                               : "text-emerald-600 bg-emerald-50"
                           }`}
                         >
+                          {Math.abs(percentDiff) < 0.1 && "⭐"}{" "}
                           {Math.abs(diff).toFixed(4)}
                           <span className="ml-1">
-                            ({percentDiff.toFixed(1)}%)
+                            ({percentDiff.toFixed(1)}%){" "}
                           </span>
                         </td>
                       </tr>
@@ -460,13 +463,16 @@ export default function PointsAuditByPointsId() {
                         <span className="font-medium text-gray-700">Diff</span>
                         <span
                           className={`font-mono font-medium ${
-                            diff < 0
+                            Math.abs(percentDiff) < 0.1
+                              ? "text-indigo-600 bg-indigo-50 px-2 rounded"
+                              : diff < 0
                               ? "text-red-600 bg-red-50 px-2 rounded"
                               : "text-emerald-600 bg-emerald-50 px-2 rounded"
                           }`}
                         >
                           {Math.abs(diff).toFixed(4)} ({percentDiff.toFixed(1)}
                           %)
+                          {Math.abs(percentDiff) < 0.1 && " ⭐"}
                         </span>
                       </div>
                     </div>

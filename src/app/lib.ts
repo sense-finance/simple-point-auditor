@@ -391,6 +391,67 @@ export const CONFIG: Array<{
       },
     ],
   },
+  {
+    strategy: "Pendle: Hold YT-sUSDE-29MAY2025",
+    start: "Jan-14-2025 02:40:35 PM UTC",
+    owner: "0x80CC5d5060aCcB22580B8375e9296A9da6D48186",
+    fixedValue: { value: 75, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
+      },
+    ],
+  },
+
+  {
+    strategy: "Pendle: Hold YT-sUSDE-27MAR2025",
+    start: "Jan-14-2025 02:38:23 PM UTC",
+    owner: "0xC35726baBcEd982cd3360AE2745360F9E55f0eEE",
+    fixedValue: { value: 225, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
+      },
+    ],
+  },
+  {
+    strategy: "Pendle: Hold sUSDe (Karak) YTs (29 Jan 2025)",
+    start: "Jan-08-2025 09:06:47 PM UTC",
+    owner: "0x89d8c1d1a0ec5c77663c0083514c06b11480f211",
+    fixedValue: { value: 304.71, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_KARAK_S2,
+        expectedPointsPerDay: { value: 1.6, baseAsset: "USD" },
+      },
+    ],
+  },
+  {
+    strategy: "Pendle: Hold rsUSDe YTs (26 Mar 2025)",
+    start: "Jan-08-2025 09:04:47 PM UTC",
+    owner: "0xe03eca1200f3e3d0a385f02547591265ed5b06a4",
+    fixedValue: { value: 82.28, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 10, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.012, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+    ],
+  },
 ];
 
 const memoizedFetchETHPriceUSD = (() => {
