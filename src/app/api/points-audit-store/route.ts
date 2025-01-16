@@ -17,7 +17,7 @@ export async function GET() {
       ORDER BY created_at DESC LIMIT 1
     `;
 
-    const fourHoursAgo = Date.now() - 4 * 60 * 60 * 1000 - 5000; // a little wiggle room
+    const fourHoursAgo = Date.now() - 4 * 60 * 60 * 1000 + 5000; // a little wiggle room
     if (
       lastRun.length > 0 &&
       new Date(lastRun[0].created_at).getTime() > fourHoursAgo
