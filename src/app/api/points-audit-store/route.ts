@@ -2,6 +2,7 @@ import { neon } from "@neondatabase/serverless";
 
 import { getAllPointsData } from "../points-audit/route";
 import { NextResponse } from "next/server";
+import { fetchETHPriceUSD } from "@/app/lib";
 
 export const maxDuration = 180;
 
@@ -9,6 +10,8 @@ export async function GET() {
   const sql = neon(process.env.DATABASE_URL!);
 
   try {
+    const currentEthPriceUSD = await fetchETHPriceUSD();
+
     const lastRun = await sql`
       SELECT created_at FROM points_audit_logs 
       ORDER BY created_at DESC LIMIT 1
@@ -30,15 +33,21 @@ export async function GET() {
     await sql.transaction((tx) => {
       // Create all queries first without executing them
       const queries = data.flatMap((item) => {
-        // Prepare main record query
         const logQuery = tx`
           INSERT INTO points_audit_logs (
             created_at, strategy, points_id, 
-            actual_points, expected_points, owner
+            actual_points, expected_points, owner,
+            eth_price_usd
           ) VALUES (
-            ${new Date().toISOString()}, ${item.strategy}, ${item.pointsId},
-            ${item.actualPoints}, ${item.expectedPoints}, ${item.owner}
-          ) RETURNING id
+            ${new Date().toISOString()}, 
+            ${item.strategy}, 
+            ${item.pointsId},
+            ${item.actualPoints}, 
+            ${item.expectedPoints}, 
+            ${item.owner},
+            ${currentEthPriceUSD}
+          )
+          RETURNING id
         `;
 
         // Prepare source queries (will be executed after logQuery)

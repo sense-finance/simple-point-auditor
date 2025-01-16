@@ -193,9 +193,6 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
   return resultsArray;
 }
 
-/**
- * GET handler — returns the computed data in JSON.
- */
 export async function GET() {
   try {
     const results = await getAllPointsData();

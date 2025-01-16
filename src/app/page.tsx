@@ -300,19 +300,6 @@ export default function PointsAuditByPointsId() {
 
           <tbody>
             {Object.entries(groupedData).map(([pointsId, rows]) => {
-              // Compute an aggregate for the entire group
-              const totalExpected = rows.reduce(
-                (acc, row) => acc + parseFloat(row.expectedPoints),
-                0
-              );
-              const totalActual = rows.reduce(
-                (acc, row) => acc + parseFloat(row.actualPoints),
-                0
-              );
-              const totalDiff = totalActual - totalExpected;
-              const totalDiffPct =
-                totalExpected === 0 ? 0 : (totalDiff / totalExpected) * 100;
-
               // Friendly label fallback
               const displayName = pointIdToFriendlyName[pointsId] || pointsId;
 
@@ -341,7 +328,9 @@ export default function PointsAuditByPointsId() {
                         <td className="p-4" />
                         <td className="p-4">
                           <div className="font-medium text-gray-900">
-                            {row.strategy}
+                            <span className="text-gray-900 truncate max-w-[180px]">
+                              {row.strategy}
+                            </span>
                             <InfoTooltip
                               owner={row.owner}
                               dataSourceURLs={row.dataSourceURLs}
@@ -423,30 +412,6 @@ export default function PointsAuditByPointsId() {
                       </tr>
                     );
                   })}
-
-                  {/* AGGREGATE ROW */}
-                  <tr className="border-b font-mono font-medium">
-                    <td className="p-4" />
-                    <td className="p-4 text-right text-gray-500">
-                      <span className="italic">Group Total</span>
-                    </td>
-                    <td className="p-4 text-right text-gray-600">
-                      {totalExpected.toFixed(4)}
-                    </td>
-                    <td className="p-4 text-right text-gray-600">
-                      {totalActual.toFixed(4)}
-                    </td>
-                    <td
-                      className={`p-4 text-right ${
-                        totalDiff < 0
-                          ? "text-red-600 bg-red-50"
-                          : "text-emerald-600 bg-emerald-50"
-                      }`}
-                    >
-                      {Math.abs(totalDiff).toFixed(4)} (
-                      {totalDiffPct.toFixed(1)}%)
-                    </td>
-                  </tr>
                 </React.Fragment>
               );
             })}
@@ -457,19 +422,6 @@ export default function PointsAuditByPointsId() {
       {/* ---------- CARD Layout (only shown on small screens) ---------- */}
       <div className="block sm:hidden space-y-6">
         {Object.entries(groupedData).map(([pointsId, rows]) => {
-          // Compute group-level totals
-          const totalExpected = rows.reduce(
-            (acc, row) => acc + parseFloat(row.expectedPoints),
-            0
-          );
-          const totalActual = rows.reduce(
-            (acc, row) => acc + parseFloat(row.actualPoints),
-            0
-          );
-          const totalDiff = totalActual - totalExpected;
-          const totalDiffPct =
-            totalExpected === 0 ? 0 : (totalDiff / totalExpected) * 100;
-
           // Friendly label
           const displayName = pointIdToFriendlyName[pointsId] || pointsId;
 
@@ -499,7 +451,9 @@ export default function PointsAuditByPointsId() {
                         <span className="font-medium text-gray-700">
                           Strategy
                         </span>
-                        <span className="text-gray-900">{row.strategy}</span>
+                        <span className="text-gray-900 truncate max-w-[180px]">
+                          {row.strategy}
+                        </span>
                       </div>
                       <div className="flex items-center justify-between mb-1">
                         <span className="font-medium text-gray-700">
@@ -536,20 +490,6 @@ export default function PointsAuditByPointsId() {
                     </div>
                   );
                 })}
-              </div>
-
-              {/* GROUP TOTAL */}
-              <div className="mt-4 pt-4 border-t border-gray-100 font-mono font-medium flex justify-between">
-                <span className="text-gray-500 italic">Group Total</span>
-                <span
-                  className={`${
-                    totalDiff < 0
-                      ? "text-red-600 bg-red-50"
-                      : "text-emerald-600 bg-emerald-50"
-                  } px-2 rounded`}
-                >
-                  {Math.abs(totalDiff).toFixed(4)} ({totalDiffPct.toFixed(1)}%)
-                </span>
               </div>
             </div>
           );
