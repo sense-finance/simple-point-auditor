@@ -6,11 +6,6 @@ import { CONFIG, APIS, convertValue, AssetType } from "@/app/lib";
 
 export const maxDuration = 180;
 
-interface ApiDataSource {
-  getURL: (owner: string) => string;
-  select: (rawResponse: any) => number | string;
-}
-
 interface PointsDataResult {
   strategy: string;
   pointsId: string;

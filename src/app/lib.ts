@@ -639,7 +639,7 @@ export async function convertValue(
 }
 
 export async function fetchPriceUSD(asset: "ethereum" | "bitcoin") {
-  let coinGeckoApiKey = process.env.COIN_GECKO_API_KEY;
+  const coinGeckoApiKey = process.env.COIN_GECKO_API_KEY;
   if (!coinGeckoApiKey) {
     throw new Error("no coin gecko api key");
   }
