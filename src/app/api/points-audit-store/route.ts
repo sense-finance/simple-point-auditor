@@ -17,13 +17,13 @@ export async function GET() {
       ORDER BY created_at DESC LIMIT 1
     `;
 
-    const fourHoursAgo = Date.now() - 4 * 60 * 60 * 1000 + 5000; // a little wiggle room
+    const fourHoursAgo = Date.now() - 4 * 60 * 60 * 1000 + 60000; // 1 minute wiggle room
     if (
       lastRun.length > 0 &&
       new Date(lastRun[0].created_at).getTime() > fourHoursAgo
     ) {
       console.log(
-        "Skipping points-audit-store, last run was less than 4 hours ago"
+        "Skipping points-audit-store, last run was less than ~4 hours ago"
       );
       return NextResponse.json({ status: "skipped" }, { status: 200 });
     }

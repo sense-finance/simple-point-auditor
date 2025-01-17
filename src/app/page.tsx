@@ -34,7 +34,7 @@ function InfoTooltip({
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setOpen(false);
-    }, 150); // 150ms delay
+    }, 100); // 100ms delay
   };
 
   const handleMouseEnter = () => {
@@ -205,12 +205,6 @@ export default function PointsAuditByPointsId() {
         setError(err.message);
         setLoading(false);
       });
-
-    fetch("/api/points-audit-last")
-      .then((r) => r.json())
-      .then((data) => {
-        console.log("lastRun", data);
-      });
   }, []);
 
   // Error display
@@ -223,8 +217,6 @@ export default function PointsAuditByPointsId() {
       </div>
     );
   }
-
-  console.log("historicalData", historicalData);
 
   // Grouping the data once we have it
   const groupedData = groupByPointsId(data);
@@ -426,46 +418,60 @@ export default function PointsAuditByPointsId() {
                           {expected.toFixed(4)}
                         </td>
                         <td className="text-right p-4 font-mono text-gray-600">
-                          <Tooltip.Provider>
+                          <Tooltip.Provider delayDuration={0}>
                             <Tooltip.Root>
                               <Tooltip.Trigger asChild>
-                                <span className="cursor-pointer border-b border-dotted border-gray-400 hover:border-black transition-colors">
+                                <span className="cursor-pointer border-b border-dotted border-gray-400 hover:border-indigo-500 transition-colors">
                                   {actual.toFixed(4)}
                                 </span>
                               </Tooltip.Trigger>
                               <Tooltip.Portal>
                                 <Tooltip.Content
-                                  className="bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-50"
+                                  className="bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-50 min-w-[320px]"
                                   sideOffset={5}
                                 >
                                   {historicalData[
                                     `${row.strategy}-${row.pointsId}`
                                   ] && (
-                                    <div className="w-64">
-                                      <div className="text-xs text-gray-500 mb-2">
-                                        Historical Points
+                                    <div>
+                                      <div className="flex items-center gap-2 mb-3">
+                                        <div className="h-2 w-2 rounded-full bg-indigo-500" />
+                                        <h3 className="text-sm font-semibold text-gray-900">
+                                          Historical Points
+                                        </h3>
                                       </div>
-                                      <div className="space-y-1 whitespace-nowrap">
+
+                                      <div className="space-y-2">
                                         {historicalData[
                                           `${row.strategy}-${row.pointsId}`
                                         ].map((d, i) => (
                                           <div
                                             key={i}
-                                            className="flex justify-between text-sm"
+                                            className="flex justify-between items-center py-1.5 px-2 rounded hover:bg-gray-50"
                                           >
-                                            <span className="text-gray-600">
-                                              {new Date(
-                                                d.created_at
-                                              ).toLocaleString("en-US", {
-                                                dateStyle: "short",
-                                                timeStyle: "medium",
-                                              })}
-                                              :
-                                            </span>
-                                            <span className="font-medium">
+                                            <div className="flex flex-col min-w-[140px]">
+                                              <span className="text-xs font-medium text-gray-900">
+                                                {new Date(
+                                                  d.created_at
+                                                ).toLocaleDateString("en-US", {
+                                                  dateStyle: "medium",
+                                                })}
+                                              </span>
+                                              <span className="text-xs text-gray-500">
+                                                {new Date(
+                                                  d.created_at
+                                                ).toLocaleTimeString("en-US", {
+                                                  timeStyle: "short",
+                                                })}
+                                              </span>
+                                            </div>
+                                            <span className="font-mono font-medium text-indigo-600 ml-4">
                                               {parseFloat(
                                                 d.actualPoints
-                                              ).toFixed(4)}
+                                              ).toLocaleString("en-US", {
+                                                minimumFractionDigits: 4,
+                                                maximumFractionDigits: 4,
+                                              })}
                                             </span>
                                           </div>
                                         ))}
