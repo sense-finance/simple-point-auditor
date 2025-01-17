@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
 
 type HistoricalData = {
@@ -9,15 +9,40 @@ type HistoricalData = {
 }[];
 
 function InfoTooltip({
+  externalAppURL,
   owner,
   dataSourceURLs,
   pointsBySource,
 }: {
+  externalAppURL?: string;
   owner: string;
   dataSourceURLs: string[];
   pointsBySource: Record<string, string>;
 }) {
   const [open, setOpen] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Clear timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setOpen(false);
+    }, 150); // 150ms delay
+  };
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setOpen(true);
+  };
 
   const truncateUrl = (url: string) => {
     if (url.length <= 40) return url;
@@ -30,8 +55,8 @@ function InfoTooltip({
   return (
     <div
       className="relative ml-2 inline-block"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <span className="cursor-help text-gray-400 hover:text-gray-600 transition-colors">
         ℹ
@@ -42,16 +67,68 @@ function InfoTooltip({
           {/* Arrow */}
           <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-t border-l border-gray-200 transform rotate-45" />
 
-          <div className="mb-3 flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-400 rounded-full" />
+          <div className="mb-3 flex items-center gap-3">
             <a
               href={`https://etherscan.io/address/${owner}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 font-medium transition-colors"
+              className="group flex items-center gap-2 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 rounded-md transition-colors"
             >
-              View tracked address on Etherscan
+              <div className="flex flex-col">
+                <span className="text-xs text-indigo-600 font-medium">
+                  View Strategy Owner
+                </span>
+                <span className="text-xs text-gray-500 font-mono">
+                  {owner.slice(0, 6)}...{owner.slice(-4)}
+                </span>
+              </div>
+              <svg
+                className="w-3 h-3 text-indigo-600 group-hover:translate-x-0.5 transition-transform"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M21 13V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H11"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                />
+                <path d="M13 11L21 3" stroke="currentColor" strokeWidth="2" />
+                <path d="M16 3H21V8" stroke="currentColor" strokeWidth="2" />
+              </svg>
             </a>
+
+            {externalAppURL && (
+              <a
+                href={externalAppURL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-2 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 rounded-md transition-colors"
+              >
+                <div className="flex flex-col">
+                  <span className="text-xs text-emerald-600 font-medium">
+                    Strategy
+                  </span>
+                  <span className="text-xs text-gray-500">
+                    View on native app
+                  </span>
+                </div>
+                <svg
+                  className="w-3 h-3 text-emerald-600 group-hover:translate-x-0.5 transition-transform"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M21 13V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H11"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  />
+                  <path d="M13 11L21 3" stroke="currentColor" strokeWidth="2" />
+                  <path d="M16 3H21V8" stroke="currentColor" strokeWidth="2" />
+                </svg>
+              </a>
+            )}
           </div>
 
           <div className="text-xs uppercase tracking-wider text-gray-500 font-semibold mb-2">
@@ -135,7 +212,6 @@ export default function PointsAuditByPointsId() {
         console.log("lastRun", data);
       });
   }, []);
-  console.log("data", data);
 
   // Error display
   if (error) {
@@ -339,6 +415,7 @@ export default function PointsAuditByPointsId() {
                               {row.strategy}
                             </span>
                             <InfoTooltip
+                              externalAppURL={row.externalAppURL}
                               owner={row.owner}
                               dataSourceURLs={row.dataSourceURLs}
                               pointsBySource={row.pointsBySource}

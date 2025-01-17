@@ -157,21 +157,20 @@ export const CONFIG: Array<{
       baseAsset: AssetType;
     };
   }>;
+  externalAppURL?: string;
 }> = [
   {
     strategy: "Ethena: Lock USDe",
     start: "Jan-06-2025 10:42:59 PM UTC",
     owner: "0xb2E3A7D691F8e3FD891A64cA794378e25F1d666D",
-    // optional: if the value of the position doesn't fluctuate with respect to usd or eth
-    // (ie is static and doesn't need to be recalculated)
     fixedValue: { value: 5.0, asset: "USD" },
     points: [
       {
         type: POINTS_ID_ETHENA_SATS_S3,
-        // expected points per day per the value of the possition in 'asset' terms
         expectedPointsPerDay: { value: 20, baseAsset: "USD" },
       },
     ],
+    externalAppURL: "https://app.ethena.fi/liquidity",
   },
   {
     strategy: "Ethena: sUSDe collateral on Morpho",
@@ -181,10 +180,11 @@ export const CONFIG: Array<{
     points: [
       {
         type: POINTS_ID_ETHENA_SATS_S3,
-        // expected points per day per the value of the possition in 'asset' terms
         expectedPointsPerDay: { value: 5, baseAsset: "USD" },
       },
     ],
+    externalAppURL:
+      "https://app.morpho.org/market?id=0x39d11026eae1c6ec02aa4c0910778664089cdd97c3fd23f68f7cd05e2e95af48&network=mainnet&morphoPrice=2.0",
   },
   {
     strategy: "Zircuit: Stake weETHs",
@@ -209,13 +209,13 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 0.03, baseAsset: "USD" },
       },
     ],
+    externalAppURL: "https://app.zircuit.com/",
   },
   {
     strategy: "Zircuit: Stake weETH",
     start: "Jan-07-2025 06:22:35 AM UTC",
     owner: "0xE0b3Ad1382912Be4628a42c20Ab8A373b87a7856",
     fixedValue: { value: 0.0015, asset: "ETH" },
-
     points: [
       {
         type: POINTS_ID_ZIRCUIT_S3,
@@ -225,18 +225,14 @@ export const CONFIG: Array<{
         type: POINTS_ID_ETHERFI_S4,
         expectedPointsPerDay: { value: 20000, baseAsset: "ETH" },
       },
-      //   {
-      //     type: POINTS_ID_EIGENLAYER_S3,
-      //     expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
-      //   },
     ],
+    externalAppURL: "https://app.zircuit.com/",
   },
   {
     strategy: "Zircuit: Stake USDe",
     start: "Jan-07-2025 06:33:23 AM UTC",
     owner: "0x0Eddb413B00B8C4871f3189D063b34f7067C948B",
     fixedValue: { value: 5.01, asset: "USD" },
-
     points: [
       {
         type: POINTS_ID_ETHENA_SATS_S3,
@@ -247,6 +243,7 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
       },
     ],
+    externalAppURL: "https://app.zircuit.com/",
   },
   {
     strategy: "Zircuit: Stake mstETH",
@@ -258,15 +255,8 @@ export const CONFIG: Array<{
         type: POINTS_ID_ZIRCUIT_S3,
         expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
       },
-      //   {
-      //     type: POINTS_ID_EIGENPIE_S1,
-      //     expectedPointsPerDay: { value: 2, baseAsset: "ETH" },
-      //   },
-      //   {
-      //     type: POINTS_ID_EIGENLAYER_S3,
-      //     expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
-      //   },
     ],
+    externalAppURL: "https://app.zircuit.com/",
   },
   {
     strategy: "Zircuit: Stake amphrETH",
@@ -287,8 +277,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
       },
     ],
+    externalAppURL: "https://app.zircuit.com/",
   },
-
   {
     strategy: "Mellow: Re7 Labs LRT",
     start: "Jan-08-2025 08:29:35 PM UTC",
@@ -304,8 +294,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
       },
     ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-re7lrt",
   },
-
   {
     strategy: "Mellow: Ethena LRT Vault stETH",
     start: "Jan-08-2025 08:51:59 PM UTC",
@@ -325,8 +315,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 10, baseAsset: "USD" },
       },
     ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-rsteth",
   },
-
   {
     strategy: "Mellow: Re7 Labs Restaked wBTC",
     start: "Jan-08-2025 08:38:23 PM UTC",
@@ -342,8 +332,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
       },
     ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-re7rwbtc",
   },
-
   {
     strategy: "Fluid: sUSDe/USDT Looping",
     start: "Dec-06-2024 05:13:11 PM UTC",
@@ -355,8 +345,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 5, baseAsset: "USD" },
       },
     ],
+    externalAppURL: "https://fluid.instadapp.io/vaults/1/18",
   },
-
   {
     strategy: "Symbiotic: Restake LBTC",
     start: "Jan-08-2025 03:25:47 PM UTC",
@@ -368,8 +358,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
       },
     ],
+    externalAppURL: "https://app.symbiotic.fi/restake/lbtc",
   },
-
   {
     strategy: "Fluid: weETH/wstETH Looping",
     start: "Jan-08-2025 08:51:23 PM UTC",
@@ -385,8 +375,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 36, baseAsset: "ETH" },
       },
     ],
+    externalAppURL: "https://fluid.instadapp.io/vaults/1/16",
   },
-
   {
     strategy: "Fluid: weETHs/wstETH Looping",
     start: "Jan-09-2025 03:33:47 AM UTC",
@@ -406,8 +396,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
       },
     ],
+    externalAppURL: "https://fluid.instadapp.io/vaults/1/27",
   },
-
   {
     strategy: "Fluid: sUSDe/GHO Looping",
     start: "Jan-10-2025 06:19:59 AM UTC",
@@ -419,8 +409,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 5, baseAsset: "USD" },
       },
     ],
+    externalAppURL: "https://fluid.instadapp.io/vaults/1/56",
   },
-
   {
     strategy: "Fluid: sUSDe/USDC Looping",
     start: "Jan-09-2025 03:47:59 AM UTC",
@@ -432,8 +422,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 5, baseAsset: "USD" },
       },
     ],
+    externalAppURL: "https://fluid.instadapp.io/vaults/1/17",
   },
-
   {
     strategy: "Karak: Restake weETH",
     start: "Jan-08-2025 03:53:47 AM UTC",
@@ -448,11 +438,8 @@ export const CONFIG: Array<{
         type: POINTS_ID_ETHERFI_S4,
         expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
       },
-      // {
-      //   type: POINTS_ID_EIGENLAYER_S3,
-      //   expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
-      // },
     ],
+    externalAppURL: "https://app.karak.network/pool/ethereum/WeETH",
   },
   {
     strategy: "Karak: Restake USDe",
@@ -469,6 +456,7 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 20, baseAsset: "USD" },
       },
     ],
+    externalAppURL: "https://app.karak.network/pool/ethereum/USDe",
   },
   {
     strategy: "Symbiotic: Restake wstETH",
@@ -481,6 +469,7 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
       },
     ],
+    externalAppURL: "https://app.symbiotic.fi/restake/wsteth",
   },
   {
     strategy: "Symbiotic: Restake sUSDe",
@@ -497,8 +486,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 10, baseAsset: "USD" },
       },
     ],
+    externalAppURL: "https://app.symbiotic.fi/restake/susde",
   },
-
   {
     strategy: "Mellow: Ethena LRT Vault sUSDe",
     start: "Jan-08-2025 08:51:59 PM UTC",
@@ -518,8 +507,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
       },
     ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-rsusde",
   },
-
   {
     strategy: "Kelp: agETH",
     start: "Jan-07-2025 06:30:59 PM UTC",
@@ -531,6 +520,7 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 460, baseAsset: "ETH" },
       },
     ],
+    externalAppURL: "https://kelpdao.xyz/gain/airdrop-gain/",
   },
   {
     strategy: "Pendle: Hold YT-sUSDE-29MAY2025",
@@ -543,8 +533,9 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 30, baseAsset: "USD" },
       },
     ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0xB162B764044697cf03617C2EFbcB1f42e31E4766/swap?view=yt&chain=ethereum",
   },
-
   {
     strategy: "Pendle: Hold YT-sUSDE-27MAR2025",
     start: "Jan-14-2025 02:38:23 PM UTC",
@@ -556,6 +547,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 30, baseAsset: "USD" },
       },
     ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0xcDd26Eb5EB2Ce0f203a84553853667aE69Ca29Ce/swap?view=yt&chain=ethereum",
   },
   {
     strategy: "Pendle: Hold sUSDe (Karak) YTs (29 Jan 2025)",
@@ -572,6 +565,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 1.6, baseAsset: "USD" },
       },
     ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0xdbe4d359d4e48087586ec04b93809ba647343548/swap?view=yt&chain=ethereum",
   },
   {
     strategy: "Pendle: Hold rsUSDe YTs (26 Mar 2025)",
@@ -592,6 +587,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
       },
     ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x890b6afc834c2a2cc6cb9b6627272ab4ecfd8271/swap?view=yt&chain=ethereum",
   },
 ];
 

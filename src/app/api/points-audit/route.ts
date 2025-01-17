@@ -6,34 +6,9 @@ import { CONFIG, APIS, convertValue, AssetType } from "@/app/lib";
 
 export const maxDuration = 180;
 
-/**
- * Example types. Adjust to your real data shapes.
- */
-interface ConfigItem {
-  strategy: string;
-  owner: string;
-  start: string | Date;
-  fixedValue?: {
-    asset: string;
-    value: number;
-  };
-  points: Array<{
-    type: string; // e.g. "pointsId"
-    expectedPointsPerDay: {
-      value: number;
-      baseAsset: string;
-    };
-  }>;
-}
-
 interface ApiDataSource {
   getURL: (owner: string) => string;
   select: (rawResponse: any) => number | string;
-}
-
-interface ApiDefinition {
-  pointsId: string;
-  dataSources: ApiDataSource[];
 }
 
 interface PointsDataResult {
@@ -44,6 +19,7 @@ interface PointsDataResult {
   owner: string;
   pointsBySource: Record<string, string>;
   dataSourceURLs: string[];
+  externalAppURL?: string;
 }
 
 /**
@@ -55,8 +31,8 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
   const tasks: Array<Promise<PointsDataResult>> = [];
 
   // Cast your CONFIG and APIS to the interfaces if needed
-  const typedConfig = CONFIG as ConfigItem[];
-  const typedApis = APIS as ApiDefinition[];
+  const typedConfig = CONFIG as typeof CONFIG;
+  const typedApis = APIS as typeof APIS;
 
   for (const configItem of typedConfig) {
     // days since "start"
@@ -182,6 +158,7 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
             owner: configItem.owner,
             pointsBySource,
             dataSourceURLs,
+            externalAppURL: configItem.externalAppURL,
           };
         })()
       );
