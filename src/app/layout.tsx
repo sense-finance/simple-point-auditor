@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Rumpel Point Audit",
-  description: "Audit our points",
+  title: "Rumpel Point Tracker",
+  description: "Track our points",
 };
 
 export default function RootLayout({
@@ -45,7 +45,7 @@ export default function RootLayout({
 
               <div className="absolute left-1/2 -translate-x-1/2">
                 <span className="text-base font-medium text-gray-800">
-                  Rumpel Point Audit Dashboard
+                  Rumpel Point Tracker Dashboard
                 </span>
               </div>
 
