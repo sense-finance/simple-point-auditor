@@ -140,7 +140,7 @@ export const APIS = [
   },
 ];
 
-export type AssetType = "USD" | "ETH";
+export type AssetType = "USD" | "ETH" | "BTC";
 
 export const CONFIG: Array<{
   strategy: string;
@@ -269,6 +269,82 @@ export const CONFIG: Array<{
     ],
   },
   {
+    strategy: "Zircuit: Stake amphrETH",
+    start: "Jan-08-2025 08:21:35 PM UTC",
+    owner: "0x5256cdF356ad80b9Af2A852A0ED2cC45B9971D2e",
+    fixedValue: { value: 0.0015, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_ZIRCUIT_S3,
+        expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
+      },
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.012, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+    ],
+  },
+
+  {
+    strategy: "Mellow: Re7 Labs LRT",
+    start: "Jan-08-2025 08:29:35 PM UTC",
+    owner: "0x83c4fbDddD1F60021c3aE2940d21d93E96017F00",
+    fixedValue: { value: 0.001, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+    ],
+  },
+
+  {
+    strategy: "Mellow: Ethena LRT Vault stETH",
+    start: "Jan-08-2025 08:51:59 PM UTC",
+    owner: "0x803cD032bCFAfB23Bf7DEB02fd2da2cd02919c4D",
+    fixedValue: { value: 4.94, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 10, baseAsset: "USD" },
+      },
+    ],
+  },
+
+  {
+    strategy: "Mellow: Re7 Labs Restaked wBTC",
+    start: "Jan-08-2025 08:38:23 PM UTC",
+    owner: "0x246633B59288BA6A4160D3244382EC87Bedbd4d6",
+    fixedValue: { value: 0.00005228, asset: "BTC" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+    ],
+  },
+
+  {
     strategy: "Fluid: sUSDe/USDT Looping",
     start: "Dec-06-2024 05:13:11 PM UTC",
     owner: "0x0a161D622a7Dd4D39cfd2f0B4D984a3341b10cab",
@@ -280,6 +356,84 @@ export const CONFIG: Array<{
       },
     ],
   },
+
+  {
+    strategy: "Symbiotic: Restake LBTC",
+    start: "Jan-08-2025 03:25:47 PM UTC",
+    owner: "0x9c94730890120709ae4bfe9DA72DdA0BbC81B15b",
+    fixedValue: { value: 0.00005277, asset: "BTC" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+    ],
+  },
+
+  {
+    strategy: "Fluid: weETH/wstETH Looping",
+    start: "Jan-08-2025 08:51:23 PM UTC",
+    owner: "0x7fba27a482006e7a93815b607a6577998aa94730",
+    fixedValue: { value: 0.000382163037, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_ETHERFI_S4,
+        expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
+      },
+      {
+        type: POINTS_ID_ZIRCUIT_S3,
+        expectedPointsPerDay: { value: 36, baseAsset: "ETH" },
+      },
+    ],
+  },
+
+  {
+    strategy: "Fluid: weETHs/wstETH Looping",
+    start: "Jan-09-2025 03:33:47 AM UTC",
+    owner: "0xde96647e506e87b9c709a9b3d794b90182f8f7c0",
+    fixedValue: { value: 0.001572, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_ETHERFI_S4,
+        expectedPointsPerDay: { value: 35000, baseAsset: "ETH" },
+      },
+      {
+        type: POINTS_ID_ZIRCUIT_S3,
+        expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
+      },
+    ],
+  },
+
+  {
+    strategy: "Fluid: sUSDe/GHO Looping",
+    start: "Jan-10-2025 06:19:59 AM UTC",
+    owner: "0x7695b7f25ce04ddacae7da99db945ffb71b87554",
+    fixedValue: { value: 1.654, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+      },
+    ],
+  },
+
+  {
+    strategy: "Fluid: sUSDe/USDC Looping",
+    start: "Jan-09-2025 03:47:59 AM UTC",
+    owner: "0xd0600e901f894c64d407c8a28df21bb697c3eba3",
+    fixedValue: { value: 8.54, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+      },
+    ],
+  },
+
   {
     strategy: "Karak: Restake weETH",
     start: "Jan-08-2025 03:53:47 AM UTC",
@@ -344,19 +498,6 @@ export const CONFIG: Array<{
       },
     ],
   },
-  // {
-  //   strategy: "Symbiotic: Restake LBTC",
-  //   start: "Jan-08-2025 01:51:47 PM UTC",
-  //   owner: "0x201D2EFf0F2f2ea460f44a73F4231567A2892644",
-  //   fixedValue: { value: 5.016, asset: "USD" },
-  //   points: [
-  //     {
-  //       type: POINTS_ID_SYMBIOTIC_S1,
-  //       expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
-  //     },
-
-  //   ],
-  // },
 
   {
     strategy: "Mellow: Ethena LRT Vault sUSDe",
@@ -458,34 +599,56 @@ const memoizedFetchETHPriceUSD = (() => {
   let cache: number | null = null;
   return async () => {
     if (cache === null) {
-      cache = await fetchETHPriceUSD();
+      cache = await fetchPriceUSD("ethereum");
+    }
+    return cache;
+  };
+})();
+
+const memoizedFetchBTCPriceUSD = (() => {
+  let cache: number | null = null;
+  return async () => {
+    if (cache === null) {
+      cache = await fetchPriceUSD("bitcoin");
     }
     return cache;
   };
 })();
 
 export async function convertValue(
-  fromAsset: "USD" | "ETH",
-  toAsset: "USD" | "ETH",
+  fromAsset: AssetType,
+  toAsset: AssetType,
   value: number
 ): Promise<number> {
   const ethPriceUSD = (await memoizedFetchETHPriceUSD()) as number;
+  const btcPriceUSD = (await memoizedFetchBTCPriceUSD()) as number;
 
   if (fromAsset === toAsset) return value;
-  if (fromAsset === "ETH") return value * ethPriceUSD;
-  if (toAsset === "ETH") return value / ethPriceUSD;
 
-  throw new Error("Invalid asset");
+  // Convert source to USD first
+  const valueInUSD =
+    fromAsset === "USD"
+      ? value
+      : fromAsset === "ETH"
+      ? value * ethPriceUSD
+      : value * btcPriceUSD;
+
+  // Then convert USD to target
+  return toAsset === "USD"
+    ? valueInUSD
+    : toAsset === "ETH"
+    ? valueInUSD / ethPriceUSD
+    : valueInUSD / btcPriceUSD;
 }
 
-export async function fetchETHPriceUSD() {
+export async function fetchPriceUSD(asset: "ethereum" | "bitcoin") {
   let coinGeckoApiKey = process.env.COIN_GECKO_API_KEY;
   if (!coinGeckoApiKey) {
     throw new Error("no coin gecko api key");
   }
 
   const res = await fetch(
-    `https://pro-api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd`,
+    `https://pro-api.coingecko.com/api/v3/simple/price?ids=${asset}&vs_currencies=usd`,
     {
       method: "GET",
       headers: {
@@ -499,5 +662,5 @@ export async function fetchETHPriceUSD() {
 
   const data = await res.json();
 
-  return data.ethereum.usd;
+  return data[asset].usd;
 }

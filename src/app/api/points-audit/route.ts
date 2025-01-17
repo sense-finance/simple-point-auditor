@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { Big } from "big.js";
 
 // Adjust imports to your actual paths/types
-import { CONFIG, APIS, convertValue } from "@/app/lib";
+import { CONFIG, APIS, convertValue, AssetType } from "@/app/lib";
 
 export const maxDuration = 180;
 
@@ -164,8 +164,8 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
             } else {
               // If the fixedValue asset differs, convert it
               const positionValueInBaseAsset = await convertValue(
-                configItem.fixedValue.asset as "USD" | "ETH",
-                pointDef.expectedPointsPerDay.baseAsset as "USD" | "ETH",
+                configItem.fixedValue.asset as AssetType,
+                pointDef.expectedPointsPerDay.baseAsset as AssetType,
                 positionValue.toNumber()
               );
               expectedPoints = daysSinceStart

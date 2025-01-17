@@ -128,7 +128,14 @@ export default function PointsAuditByPointsId() {
         setError(err.message);
         setLoading(false);
       });
+
+    fetch("/api/points-audit-last")
+      .then((r) => r.json())
+      .then((data) => {
+        console.log("lastRun", data);
+      });
   }, []);
+  console.log("data", data);
 
   // Error display
   if (error) {

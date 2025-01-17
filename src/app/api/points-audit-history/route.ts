@@ -19,7 +19,6 @@ export async function GET() {
     const grouped = history.reduce((acc: Record<string, any[]>, row) => {
       const key = `${row.strategy}-${row.points_id}`;
       if (!acc[key]) acc[key] = [];
-      console.log("created_at", row.created_at);
       acc[key].push({
         actualPoints: row.actual_points,
         created_at: row.created_at,

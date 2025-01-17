@@ -2,7 +2,7 @@ import { neon } from "@neondatabase/serverless";
 
 import { getAllPointsData } from "../points-audit/route";
 import { NextResponse } from "next/server";
-import { fetchETHPriceUSD } from "@/app/lib";
+import { fetchPriceUSD } from "@/app/lib";
 
 export const maxDuration = 180;
 
@@ -10,7 +10,7 @@ export async function GET() {
   const sql = neon(process.env.DATABASE_URL!);
 
   try {
-    const currentEthPriceUSD = await fetchETHPriceUSD();
+    const currentEthPriceUSD = await fetchPriceUSD("ethereum");
 
     const lastRun = await sql`
       SELECT created_at FROM points_audit_logs 
