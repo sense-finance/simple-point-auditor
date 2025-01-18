@@ -21,6 +21,17 @@ function InfoTooltip({
 }) {
   const [open, setOpen] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const [showAbove, setShowAbove] = useState(false);
+
+  useEffect(() => {
+    if (open && tooltipRef.current) {
+      const rect = tooltipRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const bottomSpace = viewportHeight - rect.bottom;
+      setShowAbove(bottomSpace < 200); // Show above if less than 200px from bottom
+    }
+  }, [open]);
 
   // Clear timeout on unmount
   useEffect(() => {
@@ -63,9 +74,17 @@ function InfoTooltip({
       </span>
 
       {open && (
-        <div className="absolute z-10 w-96 p-4 mt-2 text-sm bg-white border border-gray-200 rounded-lg shadow-lg -translate-x-1/2 left-1/2">
+        <div
+          ref={tooltipRef}
+          className={`absolute z-10 w-96 p-4 text-sm bg-white border border-gray-200 rounded-lg shadow-lg -translate-x-1/2 left-1/2
+            ${showAbove ? "bottom-6" : "mt-2"}`}
+        >
           {/* Arrow */}
-          <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-t border-l border-gray-200 transform rotate-45" />
+          <div
+            className={`absolute ${
+              showAbove ? "-bottom-2 rotate-[225deg]" : "-top-2 rotate-45"
+            } left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-t border-l border-gray-200 transform`}
+          />
 
           <div className="mb-3 flex items-center gap-3">
             <a
@@ -422,7 +441,10 @@ export default function PointsAuditByPointsId() {
                             <Tooltip.Root>
                               <Tooltip.Trigger asChild>
                                 <span className="cursor-pointer border-b border-dotted border-gray-400 hover:border-indigo-500 transition-colors">
-                                  {actual.toFixed(4)}
+                                  {actual.toLocaleString("en-US", {
+                                    minimumFractionDigits: 4,
+                                    maximumFractionDigits: 4,
+                                  })}
                                 </span>
                               </Tooltip.Trigger>
                               <Tooltip.Portal>
