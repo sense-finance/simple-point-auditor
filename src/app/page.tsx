@@ -389,7 +389,7 @@ export default function PointsAuditByPointsId() {
                   <tr className="border-b bg-gray-50">
                     <td
                       className="p-4 font-medium animate-pulse bg-gray-200 text-gray-200"
-                      colSpan={5}
+                      colSpan={6}
                     >
                       <div className="h-4 w-48 bg-gray-200 rounded"></div>
                     </td>
