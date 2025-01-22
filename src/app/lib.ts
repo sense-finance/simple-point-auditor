@@ -725,7 +725,7 @@ export const CONFIG: Array<{
         type: POINTS_ID_KARAK_S2,
         expectedPointsPerDay: { value: 460, baseAsset: "ETH" },
         state: {
-          value: "verified",
+          value: "delayed",
           lastSnapshot: "2025/01/21",
           diff: "1150.5%",
         },
