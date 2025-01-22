@@ -156,6 +156,11 @@ export const CONFIG: Array<{
       value: number;
       baseAsset: AssetType;
     };
+    state: {
+      value: "verified" | "delayed" | "partial";
+      lastSnapshot: string;
+      diff: string;
+    };
   }>;
   externalAppURL?: string;
 }> = [
@@ -163,11 +168,17 @@ export const CONFIG: Array<{
     strategy: "Ethena: Lock USDe",
     start: "Jan-06-2025 10:42:59 PM UTC",
     owner: "0xb2E3A7D691F8e3FD891A64cA794378e25F1d666D",
+
     fixedValue: { value: 5.0, asset: "USD" },
     points: [
       {
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 20, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-1.2%",
+        },
       },
     ],
     externalAppURL: "https://app.ethena.fi/liquidity",
@@ -181,6 +192,11 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-17.6%",
+        },
       },
     ],
     externalAppURL:
@@ -195,18 +211,38 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_ZIRCUIT_S3,
         expectedPointsPerDay: { value: 48, baseAsset: "ETH" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/01/21",
+          diff: "-43.2%",
+        },
       },
       {
         type: POINTS_ID_ETHERFI_S4,
         expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "2.9%",
+        },
       },
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-7.6%",
+        },
       },
       {
         type: POINTS_ID_VEDA_S1,
         expectedPointsPerDay: { value: 0.03, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/01/21",
+          diff: "-100.0%",
+        },
       },
     ],
     externalAppURL: "https://app.zircuit.com/",
@@ -220,10 +256,20 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_ZIRCUIT_S3,
         expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "8.8%",
+        },
       },
       {
         type: POINTS_ID_ETHERFI_S4,
         expectedPointsPerDay: { value: 20000, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-1.7%",
+        },
       },
     ],
     externalAppURL: "https://app.zircuit.com/",
@@ -237,10 +283,20 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 15, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-6.0%",
+        },
       },
       {
         type: POINTS_ID_ZIRCUIT_S3,
         expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "16.2%",
+        },
       },
     ],
     externalAppURL: "https://app.zircuit.com/",
@@ -254,6 +310,11 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_ZIRCUIT_S3,
         expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "16.2%",
+        },
       },
     ],
     externalAppURL: "https://app.zircuit.com/",
@@ -267,14 +328,29 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_ZIRCUIT_S3,
         expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "13.2%",
+        },
       },
       {
         type: POINTS_ID_MELLOW_S1,
         expectedPointsPerDay: { value: 0.012, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-1.8%",
+        },
       },
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-1.9%",
+        },
       },
     ],
     externalAppURL: "https://app.zircuit.com/",
@@ -288,10 +364,20 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-1.9%",
+        },
       },
       {
         type: POINTS_ID_MELLOW_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-1.9%",
+        },
       },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-re7lrt",
@@ -303,16 +389,31 @@ export const CONFIG: Array<{
     fixedValue: { value: 4.94, asset: "USD" },
     points: [
       {
-        type: POINTS_ID_SYMBIOTIC_S1,
-        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 10, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-14.8%",
+        },
       },
       {
         type: POINTS_ID_MELLOW_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-0.8%",
+        },
       },
       {
-        type: POINTS_ID_ETHENA_SATS_S3,
-        expectedPointsPerDay: { value: 10, baseAsset: "USD" },
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-0.7%",
+        },
       },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-rsteth",
@@ -326,10 +427,20 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-6.9%",
+        },
       },
       {
         type: POINTS_ID_MELLOW_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-6.9%",
+        },
       },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-re7rwbtc",
@@ -343,6 +454,11 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-13.1%",
+        },
       },
     ],
     externalAppURL: "https://fluid.instadapp.io/vaults/1/18",
@@ -356,6 +472,11 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-7.0%",
+        },
       },
     ],
     externalAppURL: "https://app.symbiotic.fi/restake/lbtc",
@@ -367,12 +488,22 @@ export const CONFIG: Array<{
     fixedValue: { value: 0.000382163037, asset: "ETH" },
     points: [
       {
-        type: POINTS_ID_ETHERFI_S4,
-        expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
-      },
-      {
         type: POINTS_ID_ZIRCUIT_S3,
         expectedPointsPerDay: { value: 36, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-0.0%",
+        },
+      },
+      {
+        type: POINTS_ID_ETHERFI_S4,
+        expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "3.8%",
+        },
       },
     ],
     externalAppURL: "https://fluid.instadapp.io/vaults/1/16",
@@ -384,16 +515,31 @@ export const CONFIG: Array<{
     fixedValue: { value: 0.001572, asset: "ETH" },
     points: [
       {
+        type: POINTS_ID_ZIRCUIT_S3,
+        expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "0.1%",
+        },
+      },
+      {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-7.4%",
+        },
       },
       {
         type: POINTS_ID_ETHERFI_S4,
         expectedPointsPerDay: { value: 35000, baseAsset: "ETH" },
-      },
-      {
-        type: POINTS_ID_ZIRCUIT_S3,
-        expectedPointsPerDay: { value: 24, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "3.0%",
+        },
       },
     ],
     externalAppURL: "https://fluid.instadapp.io/vaults/1/27",
@@ -407,6 +553,11 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/01/21",
+          diff: "-100.0%",
+        },
       },
     ],
     externalAppURL: "https://fluid.instadapp.io/vaults/1/56",
@@ -420,6 +571,11 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/01/21",
+          diff: "-100.0%",
+        },
       },
     ],
     externalAppURL: "https://fluid.instadapp.io/vaults/1/17",
@@ -433,10 +589,20 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_KARAK_S2,
         expectedPointsPerDay: { value: 1.2, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/01/21",
+          diff: "-100.0%",
+        },
       },
       {
         type: POINTS_ID_ETHERFI_S4,
         expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/01/21",
+          diff: "-48.5%",
+        },
       },
     ],
     externalAppURL: "https://app.karak.network/pool/ethereum/WeETH",
@@ -450,10 +616,20 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_KARAK_S2,
         expectedPointsPerDay: { value: 1.2, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/01/21",
+          diff: "-100.0%",
+        },
       },
       {
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 20, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-6.7%",
+        },
       },
     ],
     externalAppURL: "https://app.karak.network/pool/ethereum/USDe",
@@ -467,6 +643,11 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-1.8%",
+        },
       },
     ],
     externalAppURL: "https://app.symbiotic.fi/restake/wsteth",
@@ -480,10 +661,20 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "0.3%",
+        },
       },
       {
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 10, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-15.8%",
+        },
       },
     ],
     externalAppURL: "https://app.symbiotic.fi/restake/susde",
@@ -497,14 +688,29 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "0.3%",
+        },
       },
       {
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 10, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-14.0%",
+        },
       },
       {
         type: POINTS_ID_MELLOW_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "0.2%",
+        },
       },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-rsusde",
@@ -518,6 +724,11 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_KARAK_S2,
         expectedPointsPerDay: { value: 460, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "1150.5%",
+        },
       },
     ],
     externalAppURL: "https://kelpdao.xyz/gain/airdrop-gain/",
@@ -531,6 +742,11 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 30, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-15.8%",
+        },
       },
     ],
     externalAppURL:
@@ -545,6 +761,11 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 30, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-9.8%",
+        },
       },
     ],
     externalAppURL:
@@ -559,10 +780,20 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/01/21",
+          diff: "-100.0%",
+        },
       },
       {
         type: POINTS_ID_KARAK_S2,
         expectedPointsPerDay: { value: 1.6, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/01/21",
+          diff: "-100.0%",
+        },
       },
     ],
     externalAppURL:
@@ -577,14 +808,29 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 10, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/01/21",
+          diff: "-100.0%",
+        },
       },
       {
         type: POINTS_ID_MELLOW_S1,
         expectedPointsPerDay: { value: 0.012, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-3.1%",
+        },
       },
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/21",
+          diff: "-3.1%",
+        },
       },
     ],
     externalAppURL:

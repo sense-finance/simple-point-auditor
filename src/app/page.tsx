@@ -1,7 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import React, { useState, useEffect, useRef } from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
+import * as Dialog from "@radix-ui/react-dialog";
+import { CONFIG } from "./lib";
 
 type HistoricalData = {
   actualPoints: string;
@@ -201,6 +204,85 @@ function groupByPointsId(rows: any[]): Record<string, any[]> {
   }, {} as Record<string, any[]>);
 }
 
+function HistoryModal({
+  isOpen,
+  onClose,
+  data,
+  strategy,
+  pointsId,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  data: HistoricalData;
+  strategy: string;
+  pointsId: string;
+}) {
+  return (
+    <Dialog.Root open={isOpen} onOpenChange={onClose}>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm" />
+        <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-2xl p-6 w-[480px] max-h-[80vh] overflow-y-auto">
+          <div className="flex items-center justify-between mb-6">
+            <Dialog.Title className="text-lg font-semibold text-gray-900">
+              Historical Points
+            </Dialog.Title>
+            <Dialog.Close className="text-gray-400 hover:text-gray-600">
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 15 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z"
+                  fill="currentColor"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+            </Dialog.Close>
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 mb-4 text-sm text-gray-500">
+              <span className="font-medium">{strategy}</span>
+              <span>•</span>
+              <span>{pointsId}</span>
+            </div>
+
+            {data.map((d, i) => (
+              <div
+                key={i}
+                className="flex justify-between items-center py-2 px-3 rounded hover:bg-gray-50"
+              >
+                <div className="flex flex-col">
+                  <span className="text-sm font-medium text-gray-900">
+                    {new Date(d.created_at).toLocaleDateString("en-US", {
+                      dateStyle: "medium",
+                    })}
+                  </span>
+                  <span className="text-xs text-gray-500">
+                    {new Date(d.created_at).toLocaleTimeString("en-US", {
+                      timeStyle: "short",
+                    })}
+                  </span>
+                </div>
+                <span className="font-mono font-medium text-indigo-600">
+                  {parseFloat(d.actualPoints).toLocaleString("en-US", {
+                    minimumFractionDigits: 4,
+                    maximumFractionDigits: 4,
+                  })}
+                </span>
+              </div>
+            ))}
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
+  );
+}
+
 export default function PointsAuditByPointsId() {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -208,6 +290,15 @@ export default function PointsAuditByPointsId() {
   const [historicalData, setHistoricalData] = useState<
     Record<string, HistoricalData>
   >({});
+  const [selectedHistory, setSelectedHistory] = useState<{
+    isOpen: boolean;
+    strategy: string;
+    pointsId: string;
+  }>({
+    isOpen: false,
+    strategy: "",
+    pointsId: "",
+  });
 
   // Fetch logic
   useEffect(() => {
@@ -283,6 +374,12 @@ export default function PointsAuditByPointsId() {
                   className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200"
                 >
                   Diff
+                </th>
+                <th
+                  scope="col"
+                  className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200"
+                >
+                  Audit State
                 </th>
               </tr>
             </thead>
@@ -361,10 +458,8 @@ export default function PointsAuditByPointsId() {
             <tr className="bg-gray-50">
               <th
                 scope="col"
-                className="p-4 text-left text-gray-700 font-semibold border-b border-gray-200"
-              >
-                Points Type
-              </th>
+                className="p-4 text-left text-gray-700 font-semibold border-b border-gray-200 w-[60px]"
+              ></th>
               <th
                 scope="col"
                 className="p-4 text-left text-gray-700 font-semibold border-b border-gray-200"
@@ -373,21 +468,28 @@ export default function PointsAuditByPointsId() {
               </th>
               <th
                 scope="col"
-                className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200"
+                className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200 w-[140px]"
               >
                 Expected
               </th>
               <th
                 scope="col"
-                className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200"
+                className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200 w-[140px]"
               >
                 Actual
               </th>
               <th
                 scope="col"
-                className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200"
+                className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200 w-[160px]"
               >
                 Diff
+              </th>
+              <th
+                scope="col"
+                className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200 w-[160px]"
+              >
+                <div>Audit State</div>
+                <div className="text-xs font-normal">Last Snapshot, Diff%</div>
               </th>
             </tr>
           </thead>
@@ -401,7 +503,7 @@ export default function PointsAuditByPointsId() {
                 <React.Fragment key={pointsId}>
                   {/* GROUP HEADER ROW */}
                   <tr className="border-b bg-gray-100">
-                    <td className="p-4 font-semibold" colSpan={5}>
+                    <td className="p-4 font-semibold" colSpan={6}>
                       {displayName}
                     </td>
                   </tr>
@@ -414,13 +516,21 @@ export default function PointsAuditByPointsId() {
                     const percentDiff =
                       expected === 0 ? 0 : (diff / expected) * 100;
 
+                    const strategyConfig = CONFIG.find(
+                      (c) => c.strategy === row.strategy
+                    );
+
+                    const state = strategyConfig?.points.find(
+                      (p) => p.type === row.pointsId
+                    )?.state;
+
                     return (
                       <tr
                         key={subIndex}
                         className="border-b hover:bg-gray-50 transition-colors"
                       >
-                        <td className="p-4" />
-                        <td className="p-4">
+                        <td className="py-5 px-4" />
+                        <td className="py-5 px-4">
                           <div className="font-medium text-gray-900">
                             <span className="text-gray-900 truncate max-w-[180px]">
                               {row.strategy}
@@ -433,10 +543,10 @@ export default function PointsAuditByPointsId() {
                             />
                           </div>
                         </td>
-                        <td className="text-right p-4 font-mono text-gray-600">
+                        <td className="py-5 px-2 text-right font-mono text-gray-600">
                           {expected.toFixed(4)}
                         </td>
-                        <td className="text-right p-4 font-mono text-gray-600">
+                        <td className="py-5 px-2 text-right font-mono text-gray-600">
                           <Tooltip.Provider delayDuration={0}>
                             <Tooltip.Root>
                               <Tooltip.Trigger asChild>
@@ -466,38 +576,69 @@ export default function PointsAuditByPointsId() {
                                       <div className="space-y-2">
                                         {historicalData[
                                           `${row.strategy}-${row.pointsId}`
-                                        ].map((d, i) => (
-                                          <div
-                                            key={i}
-                                            className="flex justify-between items-center py-1.5 px-2 rounded hover:bg-gray-50"
-                                          >
-                                            <div className="flex flex-col min-w-[140px]">
-                                              <span className="text-xs font-medium text-gray-900">
-                                                {new Date(
-                                                  d.created_at
-                                                ).toLocaleDateString("en-US", {
-                                                  dateStyle: "medium",
-                                                })}
-                                              </span>
-                                              <span className="text-xs text-gray-500">
-                                                {new Date(
-                                                  d.created_at
-                                                ).toLocaleTimeString("en-US", {
-                                                  timeStyle: "short",
+                                        ]
+                                          .slice(0, 5)
+                                          .map((d, i) => (
+                                            <div
+                                              key={i}
+                                              className="flex justify-between items-center py-1.5 px-2 rounded hover:bg-gray-50"
+                                            >
+                                              <div className="flex flex-col min-w-[140px]">
+                                                <span className="text-xs font-medium text-gray-900">
+                                                  {new Date(
+                                                    d.created_at
+                                                  ).toLocaleDateString(
+                                                    "en-US",
+                                                    {
+                                                      dateStyle: "medium",
+                                                    }
+                                                  )}
+                                                </span>
+                                                <span className="text-xs text-gray-500">
+                                                  {new Date(
+                                                    d.created_at
+                                                  ).toLocaleTimeString(
+                                                    "en-US",
+                                                    {
+                                                      timeStyle: "short",
+                                                    }
+                                                  )}
+                                                </span>
+                                              </div>
+                                              <span className="font-mono font-medium text-indigo-600 ml-4">
+                                                {parseFloat(
+                                                  d.actualPoints
+                                                ).toLocaleString("en-US", {
+                                                  minimumFractionDigits: 4,
+                                                  maximumFractionDigits: 4,
                                                 })}
                                               </span>
                                             </div>
-                                            <span className="font-mono font-medium text-indigo-600 ml-4">
-                                              {parseFloat(
-                                                d.actualPoints
-                                              ).toLocaleString("en-US", {
-                                                minimumFractionDigits: 4,
-                                                maximumFractionDigits: 4,
-                                              })}
-                                            </span>
-                                          </div>
-                                        ))}
+                                          ))}
                                       </div>
+
+                                      {historicalData[
+                                        `${row.strategy}-${row.pointsId}`
+                                      ].length > 5 && (
+                                        <a
+                                          href="#"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            setSelectedHistory({
+                                              isOpen: true,
+                                              strategy: row.strategy,
+                                              pointsId: row.pointsId,
+                                            });
+                                          }}
+                                          className="mt-3 text-xs text-indigo-600 hover:text-indigo-800 block text-center"
+                                        >
+                                          View{" "}
+                                          {historicalData[
+                                            `${row.strategy}-${row.pointsId}`
+                                          ].length - 5}{" "}
+                                          more entries
+                                        </a>
+                                      )}
                                     </div>
                                   )}
                                   <Tooltip.Arrow className="fill-white" />
@@ -507,7 +648,7 @@ export default function PointsAuditByPointsId() {
                           </Tooltip.Provider>
                         </td>
                         <td
-                          className={`text-right p-4 font-mono font-medium whitespace-nowrap ${
+                          className={`py-5 px-2 text-right font-mono font-medium whitespace-nowrap ${
                             Math.abs(percentDiff) < 0.1
                               ? "text-indigo-600 bg-indigo-50"
                               : diff < 0
@@ -517,9 +658,29 @@ export default function PointsAuditByPointsId() {
                         >
                           {Math.abs(percentDiff) < 0.1 && "⭐"}{" "}
                           {Math.abs(diff).toFixed(4)}
-                          <span className="ml-1">
-                            ({percentDiff.toFixed(1)}%){" "}
+                          <span className="text-xs ml-1">
+                            ({percentDiff.toFixed(1)}%)
                           </span>
+                        </td>
+                        <td className="py-5 px-2 text-right">
+                          <div className="flex items-center justify-end gap-1.5 font-medium font-mono">
+                            <Image
+                              src={`/${
+                                {
+                                  verified: "check-circle",
+                                  delayed: "clock-rewind",
+                                  partial: "pie-chart",
+                                }[state?.value?.toLowerCase() ?? ""]
+                              }.svg`}
+                              width="16"
+                              height="16"
+                              alt={state?.value ?? ""}
+                            />
+                            <span>{state?.value}</span>
+                          </div>
+                          <div className="text-gray-500 text-xs font-mono">
+                            {state?.lastSnapshot}, {state?.diff}
+                          </div>
                         </td>
                       </tr>
                     );
@@ -607,6 +768,23 @@ export default function PointsAuditByPointsId() {
           );
         })}
       </div>
+
+      {/* History Modal */}
+      {selectedHistory.isOpen && (
+        <HistoryModal
+          isOpen={selectedHistory.isOpen}
+          onClose={() =>
+            setSelectedHistory((prev) => ({ ...prev, isOpen: false }))
+          }
+          data={
+            historicalData[
+              `${selectedHistory.strategy}-${selectedHistory.pointsId}`
+            ]
+          }
+          strategy={selectedHistory.strategy}
+          pointsId={selectedHistory.pointsId}
+        />
+      )}
     </div>
   );
 }
