@@ -662,26 +662,28 @@ export default function PointsAuditByPointsId() {
                             ({percentDiff.toFixed(1)}%)
                           </span>
                         </td>
-                        <td className="py-5 px-2 text-right">
-                          <div className="flex items-center justify-end gap-1.5 font-medium font-mono">
-                            <Image
-                              src={`/${
-                                {
-                                  verified: "check-circle",
-                                  delayed: "clock-rewind",
-                                  partial: "pie-chart",
-                                }[state?.value?.toLowerCase() ?? ""]
-                              }.svg`}
-                              width="16"
-                              height="16"
-                              alt={state?.value ?? ""}
-                            />
-                            <span>{state?.value}</span>
-                          </div>
-                          <div className="text-gray-500 text-xs font-mono">
-                            {state?.lastSnapshot}, {state?.diff}
-                          </div>
-                        </td>
+                        {state && (
+                          <td className="py-5 px-2 text-right">
+                            <div className="flex items-center justify-end gap-1.5 font-medium font-mono">
+                              <Image
+                                src={`/${
+                                  {
+                                    verified: "check-circle",
+                                    delayed: "clock-rewind",
+                                    partial: "pie-chart",
+                                  }[state?.value?.toLowerCase() ?? ""]
+                                }.svg`}
+                                width="16"
+                                height="16"
+                                alt={state?.value ?? ""}
+                              />
+                              <span>{state?.value}</span>
+                            </div>
+                            <div className="text-gray-500 text-xs font-mono">
+                              {state?.lastSnapshot}, {state?.diff}
+                            </div>
+                          </td>
+                        )}
                       </tr>
                     );
                   })}
