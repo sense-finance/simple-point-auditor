@@ -62,7 +62,6 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
               matchingApi.dataSources.map(async (dataSource) => {
                 try {
                   const url = dataSource.getURL(configItem.owner);
-                  // @ts-ignore - todo add typing for dataSource
                   const headers = dataSource.headers ? dataSource.headers : {};
                   let attempts = 0;
                   const maxAttempts = 3;

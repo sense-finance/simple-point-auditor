@@ -13,7 +13,15 @@ const MAINNET_AGETH = "0xe1B4d34E8754600962Cd944B535180Bd758E6c2e";
 
 const RESOLVE_BEARER_TOKEN = process.env.RESOLVE_BEARER_TOKEN;
 
-export const APIS = [
+export const APIS: Array<{
+  pointsId: string,
+  dataSources: {
+    getURL: (wallet: string)=>string,
+    select: (data: any) => number,
+    catchError?: boolean,
+    headers?: any,
+  }[],
+}> = [
   {
     pointsId: POINTS_ID_ETHENA_SATS_S3,
     dataSources: [
