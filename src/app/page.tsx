@@ -191,6 +191,7 @@ const pointIdToFriendlyName: Record<string, string> = {
   POINTS_ID_ETHERFI_S4: "EtherFi (S4)",
   POINTS_ID_VEDA_S1: "Veda (S1)",
   POINTS_ID_LOMBARD_LUX_S1: "Lombard Lux (S1)",
+  POINTS_ID_RESOLV_S1: "Resolv (S1)",
 };
 
 // 2. Helper to group data by pointsId

@@ -8,6 +8,7 @@ export const POINTS_ID_ZIRCUIT_S3 = "POINTS_ID_ZIRCUIT_S3";
 export const POINTS_ID_ETHERFI_S4 = "POINTS_ID_ETHERFI_S4";
 export const POINTS_ID_VEDA_S1 = "POINTS_ID_VEDA_S1";
 export const POINTS_ID_LOMBARD_LUX_S1 = "POINTS_ID_LOMBARD_LUX_S1";
+export const POINTS_ID_RESOLV_S1 = "POINTS_ID_RESOLV_S1";
 const MAINNET_AGETH = "0xe1B4d34E8754600962Cd944B535180Bd758E6c2e";
 
 export const APIS = [
@@ -149,6 +150,20 @@ export const APIS = [
       },
     ],
   },
+  {
+    pointsId: POINTS_ID_RESOLV_S1,
+    dataSources: [
+      {
+        getURL: (wallet: string) =>
+          `https://api.fuul.xyz/api/v1/payouts/leaderboard?user_address=${wallet}`,
+        select: (data: any) => data?.results?.[0]?.total_amount,
+        headers: {
+          Authorization:
+            "Bearer 983ef6bfd983055a38fbc436251c98624cb8de5da4767d1b6830a36849171ac2",
+        },
+      },
+    ],
+  },
 ];
 
 export type AssetType = "USD" | "ETH" | "BTC";
@@ -173,6 +188,12 @@ export const CONFIG: Array<{
       diff: string;
     };
   }>;
+  boosts?: {
+    name: string;
+    startDate: string;
+    endDate: string;
+    multiplier: number;
+  }[];
   externalAppURL?: string;
 }> = [
   {
@@ -865,6 +886,31 @@ export const CONFIG: Array<{
     ],
     externalAppURL:
       "https://app.euler.finance/vault/0xbC35161043EE2D74816d421EfD6a45fDa73B050A?network=ethereum",
+  },
+  {
+    strategy: "Euler: wstUSR/USDC",
+    start: "Jan-23-2025 06:53:59 PM UTC",
+    owner: "0x4Baf2A657E28fEcf178F86558F4e471356CB5DAC",
+    fixedValue: { value: 62.62, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_RESOLV_S1,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/28",
+          diff: "13.2%",
+        },
+      },
+    ],
+    boosts: [
+      {
+        name: "Grand Epoch",
+        startDate: "Jan-5-2025 06:53:59 PM UTC",
+        endDate: "Jan-23-2026 06:53:59 PM UTC",
+        multiplier: 0.25,
+      },
+    ],
   },
 ];
 
