@@ -899,7 +899,7 @@ export const CONFIG: Array<{
         state: {
           value: "verified",
           lastSnapshot: "2025/01/28",
-          diff: "13.2%",
+          diff: "4.2%",
         },
       },
     ],

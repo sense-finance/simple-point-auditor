@@ -62,12 +62,13 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
               matchingApi.dataSources.map(async (dataSource) => {
                 try {
                   const url = dataSource.getURL(configItem.owner);
+                  // @ts-ignore - todo add typing for dataSource
                   const headers = dataSource.headers ? dataSource.headers : {};
                   let attempts = 0;
                   const maxAttempts = 3;
                   let lastError: unknown;
 
-                  console.log("Fetching:", url, JSON.stringify(headers));
+                  console.log("Fetching:", url);
 
                   while (attempts < maxAttempts) {
                     try {
