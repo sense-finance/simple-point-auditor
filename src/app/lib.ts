@@ -7,6 +7,7 @@ export const POINTS_ID_MELLOW_S1 = "POINTS_ID_MELLOW_S1";
 export const POINTS_ID_ZIRCUIT_S3 = "POINTS_ID_ZIRCUIT_S3";
 export const POINTS_ID_ETHERFI_S4 = "POINTS_ID_ETHERFI_S4";
 export const POINTS_ID_VEDA_S1 = "POINTS_ID_VEDA_S1";
+export const POINTS_ID_LOMBARD_LUX_S1 = "POINTS_ID_LOMBARD_LUX_S1";
 const MAINNET_AGETH = "0xe1B4d34E8754600962Cd944B535180Bd758E6c2e";
 
 export const APIS = [
@@ -138,6 +139,16 @@ export const APIS = [
       },
     ],
   },
+  {
+    pointsId: POINTS_ID_LOMBARD_LUX_S1,
+    dataSources: [
+      {
+        getURL: (wallet: string) =>
+          `https://mainnet.prod.lombard.finance/api/v1/referral-system/season-1/points/${wallet}`,
+        select: (data: any) => data?.total || 0,
+      },
+    ],
+  },
 ];
 
 export type AssetType = "USD" | "ETH" | "BTC";
@@ -156,7 +167,7 @@ export const CONFIG: Array<{
       value: number;
       baseAsset: AssetType;
     };
-    state: {
+    state?: {
       value: "verified" | "delayed" | "partial";
       lastSnapshot: string;
       diff: string;
@@ -835,6 +846,25 @@ export const CONFIG: Array<{
     ],
     externalAppURL:
       "https://app.pendle.finance/trade/markets/0x890b6afc834c2a2cc6cb9b6627272ab4ecfd8271/swap?view=yt&chain=ethereum",
+  },
+  {
+    strategy: "Euler: LBTC/cbBTC Looping",
+    start: "Jan-23-2025 05:50:35 PM UTC",
+    owner: "0x7ED9DbFfc22c5d36c2Cc612e17049D8B992bE584",
+    fixedValue: { value: 0.00065, asset: "BTC" },
+    points: [
+      {
+        type: POINTS_ID_LOMBARD_LUX_S1,
+        expectedPointsPerDay: { value: 3, baseAsset: "BTC" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/26",
+          diff: "13.2%",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.euler.finance/vault/0xbC35161043EE2D74816d421EfD6a45fDa73B050A?network=ethereum",
   },
 ];
 
