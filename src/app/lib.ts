@@ -11,6 +11,8 @@ export const POINTS_ID_LOMBARD_LUX_S1 = "POINTS_ID_LOMBARD_LUX_S1";
 export const POINTS_ID_RESOLV_S1 = "POINTS_ID_RESOLV_S1";
 const MAINNET_AGETH = "0xe1B4d34E8754600962Cd944B535180Bd758E6c2e";
 
+const RESOLVE_BEARER_TOKEN = process.env.RESOLVE_BEARER_TOKEN;
+
 export const APIS = [
   {
     pointsId: POINTS_ID_ETHENA_SATS_S3,
@@ -158,8 +160,7 @@ export const APIS = [
           `https://api.fuul.xyz/api/v1/payouts/leaderboard?user_address=${wallet}`,
         select: (data: any) => data?.results?.[0]?.total_amount,
         headers: {
-          Authorization:
-            "Bearer 983ef6bfd983055a38fbc436251c98624cb8de5da4767d1b6830a36849171ac2",
+          Authorization: RESOLVE_BEARER_TOKEN,
         },
       },
     ],
