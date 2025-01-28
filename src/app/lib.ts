@@ -912,6 +912,8 @@ export const CONFIG: Array<{
         multiplier: 0.25,
       },
     ],
+    externalAppURL:
+    "https://app.resolv.xyz/points",
   },
 ];
 
