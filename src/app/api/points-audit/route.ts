@@ -79,7 +79,6 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
                       const pointsAsBig = new Big(points);
                       // Update local pointsBySource for debugging
                       pointsBySource[url] = pointsAsBig.toString();
-                      console.log("result:", url, pointsAsBig);
                       return pointsAsBig;
                     } catch (e) {
                       lastError = e;
