@@ -62,6 +62,7 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
               matchingApi.dataSources.map(async (dataSource) => {
                 try {
                   const url = dataSource.getURL(configItem.owner);
+                  const headers = dataSource.headers ? dataSource.headers : {};
                   let attempts = 0;
                   const maxAttempts = 3;
                   let lastError: unknown;
@@ -70,7 +71,9 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
 
                   while (attempts < maxAttempts) {
                     try {
-                      const raw = await fetch(url).then((r) => r.json());
+                      const raw = await fetch(url, { headers }).then((r) =>
+                        r.json()
+                      );
                       const points = dataSource.select(raw);
                       // Convert to Big just in case
                       const pointsAsBig = new Big(points);
@@ -142,6 +145,29 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
               expectedPoints = daysSinceStart
                 .times(dailyRate)
                 .times(positionValueInBaseAsset);
+            }
+
+            const baseExpectedPoints = expectedPoints;
+            if (configItem.boosts) {
+              for (const boost of configItem.boosts) {
+                const boostStart = new Date(boost.startDate).getTime();
+                const boostEnd = new Date(boost.endDate).getTime();
+                const depositStart = new Date(configItem.start).getTime();
+
+                const effectiveEnd = now > boostEnd ? boostEnd : now;
+                const effectiveStart =
+                  depositStart > boostStart ? depositStart : boostStart;
+
+                const effectiveBoostDuration = new Big(
+                  (effectiveEnd - effectiveStart) / (1000 * 60 * 60 * 24)
+                );
+
+                expectedPoints = expectedPoints.plus(
+                  baseExpectedPoints
+                    .times(effectiveBoostDuration.div(daysSinceStart))
+                    .times(new Big(boost.multiplier))
+                );
+              }
             }
           }
 
