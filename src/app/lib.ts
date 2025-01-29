@@ -923,6 +923,87 @@ export const CONFIG: Array<{
     externalAppURL:
     "https://app.resolv.xyz/points",
   },
+  {
+    strategy: "Resolv: Hold USR",
+    start: "Jan-28-2025 03:34:35 PM UTC",
+    owner: "0x9B8Cb8604f7Bf22D6de09a72d9D9198c2cC6D9EE",
+    fixedValue: { value: 16.15, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_RESOLV_S1,
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/29",
+          diff: "-2.8%%",
+        },
+      },
+    ],
+    boosts: [
+      {
+        name: "Grand Epoch",
+        startDate: "Jan-5-2025 06:53:59 PM UTC",
+        endDate: "Jan-23-2026 06:53:59 PM UTC",
+        multiplier: 0.25,
+      },
+    ],
+    externalAppURL:
+    "https://app.resolv.xyz/points",
+  },
+  {
+    strategy: "Resolv: Hold RLP",
+    start: "Jan-28-2025 03:45:59 PM UTC",
+    owner: "0x49a5ac8367602bfb4410619c52511595F8fD98ef",
+    fixedValue: { value: 2.73, asset: "USD" }, // asset is RLP (itself)
+    points: [
+      {
+        type: POINTS_ID_RESOLV_S1,
+        expectedPointsPerDay: { value: 10, baseAsset: "USD" }, // asset is RLP (itself)
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/29",
+          diff: "-0.1%",
+        },
+      },
+    ],
+    boosts: [
+      {
+        name: "Grand Epoch",
+        startDate: "Jan-5-2025 06:53:59 PM UTC",
+        endDate: "Jan-23-2026 06:53:59 PM UTC",
+        multiplier: 0.25,
+      },
+    ],
+    externalAppURL:
+    "https://app.resolv.xyz/points",
+  },
+  {
+    strategy: "Resolv: Hold stkUSR",
+    start: "Jan-28-2025 03:53:35 PM UTC",
+    owner: "0x7b9bB657d06e39A5e3Af24F50775a888d9B36897",
+    fixedValue: { value: 5.001, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_RESOLV_S1,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/01/29",
+          diff: "-0.0%",
+        },
+      },
+    ],
+    boosts: [
+      {
+        name: "Grand Epoch",
+        startDate: "Jan-5-2025 06:53:59 PM UTC",
+        endDate: "Jan-23-2026 06:53:59 PM UTC",
+        multiplier: 0.25,
+      },
+    ],
+    externalAppURL:
+    "https://app.resolv.xyz/points",
+  },
 ];
 
 const memoizedFetchETHPriceUSD = (() => {
