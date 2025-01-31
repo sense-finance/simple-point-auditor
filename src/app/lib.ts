@@ -887,9 +887,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_LOMBARD_LUX_S1,
         expectedPointsPerDay: { value: 3, baseAsset: "BTC" },
         state: {
-          value: "verified",
-          lastSnapshot: "2025/01/26",
-          diff: "13.2%",
+          value: "partial",
+          lastSnapshot: "2025/01/21",
+          diff: "-53.1%",
         },
       },
     ],
