@@ -1004,6 +1004,26 @@ export const CONFIG: Array<{
     externalAppURL:
     "https://app.resolv.xyz/points",
   },
+  {
+    strategy: "Pendle: Hold USDe 27 Mar 2025",
+    start: "Jan-22-2025 01:15:23 PM UTC",
+    owner: "0xDc97A03e188585453018e237931df951268Fb5eF",
+    fixedValue: { value: 157.2946, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 50, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/03",
+          diff: "-10.5%",
+        },
+      },
+    ],
+    boosts: [],
+    externalAppURL:
+    "https://app.pendle.finance/trade/markets/0x4A8036EFA1307F1cA82d932C0895faa18dB0c9eE/swap?view=yt&chain=ethereum",
+  },
 ];
 
 const memoizedFetchETHPriceUSD = (() => {
