@@ -14,13 +14,13 @@ const MAINNET_AGETH = "0xe1B4d34E8754600962Cd944B535180Bd758E6c2e";
 const RESOLVE_BEARER_TOKEN = process.env.RESOLVE_BEARER_TOKEN;
 
 export const APIS: Array<{
-  pointsId: string,
+  pointsId: string;
   dataSources: {
-    getURL: (wallet: string)=>string,
-    select: (data: any) => number,
-    catchError?: boolean,
-    headers?: any,
-  }[],
+    getURL: (wallet: string) => string;
+    select: (data: any) => number;
+    catchError?: boolean;
+    headers?: any;
+  }[];
 }> = [
   {
     pointsId: POINTS_ID_ETHENA_SATS_S3,
@@ -920,8 +920,7 @@ export const CONFIG: Array<{
         multiplier: 0.25,
       },
     ],
-    externalAppURL:
-    "https://app.resolv.xyz/points",
+    externalAppURL: "https://app.resolv.xyz/points",
   },
   {
     strategy: "Resolv: Hold USR",
@@ -947,8 +946,7 @@ export const CONFIG: Array<{
         multiplier: 0.25,
       },
     ],
-    externalAppURL:
-    "https://app.resolv.xyz/points",
+    externalAppURL: "https://app.resolv.xyz/points",
   },
   {
     strategy: "Resolv: Hold RLP",
@@ -974,11 +972,10 @@ export const CONFIG: Array<{
         multiplier: 0.25,
       },
     ],
-    externalAppURL:
-    "https://app.resolv.xyz/points",
+    externalAppURL: "https://app.resolv.xyz/points",
   },
   {
-    strategy: "Resolv: Hold stkUSR",
+    strategy: "Resolv: Hold stUSR",
     start: "Jan-28-2025 03:53:35 PM UTC",
     owner: "0x7b9bB657d06e39A5e3Af24F50775a888d9B36897",
     fixedValue: { value: 5.001, asset: "USD" },
@@ -1001,8 +998,7 @@ export const CONFIG: Array<{
         multiplier: 0.25,
       },
     ],
-    externalAppURL:
-    "https://app.resolv.xyz/points",
+    externalAppURL: "https://app.resolv.xyz/points",
   },
   {
     strategy: "Pendle: Hold USDe 27 Mar 2025",
@@ -1022,7 +1018,7 @@ export const CONFIG: Array<{
     ],
     boosts: [],
     externalAppURL:
-    "https://app.pendle.finance/trade/markets/0x4A8036EFA1307F1cA82d932C0895faa18dB0c9eE/swap?view=yt&chain=ethereum",
+      "https://app.pendle.finance/trade/markets/0x4A8036EFA1307F1cA82d932C0895faa18dB0c9eE/swap?view=yt&chain=ethereum",
   },
 ];
 
