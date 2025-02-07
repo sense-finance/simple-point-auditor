@@ -1022,7 +1022,6 @@ export const CONFIG: Array<{
   },
   // Points are earned per YT
   // The rate is variable depending on how close to maturity the YT is
-  // The reward rate is set to 1 and boosts are used to set the appropriate multiplier by date
   {
     strategy: "Pendle: USR YTs (25 Mar 2025)",
     start: "Jan-28-2025 04:01:35 PM UTC",
@@ -1080,18 +1079,6 @@ export const CONFIG: Array<{
         startDate: "Jan-05-2025 06:53:59 PM UTC",
         endDate: "Jan-23-2026 06:53:59 PM UTC",
         multiplier: 0.25,
-      },
-      {
-        name: "Initial Reward Rate",
-        startDate: "Jan-01-2025 12:00:00 AM UTC",
-        endDate: "Jan-31-2025 11:59:59 PM UTC",
-        multiplier: 20,
-      },
-      {
-        name: "To Maturity Reward Rate",
-        startDate: "Feb-01-2025 12:00:00 AM UTC",
-        endDate: "Mar-27-2025 12:00:00 AM UTC",
-        multiplier: 15,
       },
     ],
     externalAppURL: "https://app.resolv.xyz/points",
