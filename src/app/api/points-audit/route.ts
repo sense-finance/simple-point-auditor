@@ -17,6 +17,16 @@ interface PointsDataResult {
   externalAppURL?: string;
 }
 
+// To always get the value, use a helper function
+const getExpectedPointsPerDay = (
+  start: string,
+  expectedPointsPerDay: number | ((start: string) => number)
+) => {
+  return typeof expectedPointsPerDay === "function"
+    ? expectedPointsPerDay(start)
+    : expectedPointsPerDay;
+};
+
 /**
  * The core function that fetches and computes all point data.
  * Returns a list of results for each (configItem, pointDef) pair.
@@ -126,7 +136,12 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
           // Compute expected points = daysSinceStart * dailyRate * positionValue
           let expectedPoints = new Big(0);
           if (configItem.fixedValue) {
-            const dailyRate = new Big(pointDef.expectedPointsPerDay.value);
+            const dailyRate = new Big(
+              getExpectedPointsPerDay(
+                configItem.start,
+                pointDef.expectedPointsPerDay.value
+              )
+            );
             const positionValue = new Big(configItem.fixedValue.value);
             if (
               configItem.fixedValue.asset ===
@@ -154,9 +169,9 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
                 const boostEnd = new Date(boost.endDate).getTime();
                 const depositStart = new Date(configItem.start).getTime();
 
-                const effectiveEnd = now > boostEnd ? boostEnd : now;
                 const effectiveStart =
                   depositStart > boostStart ? depositStart : boostStart;
+                const effectiveEnd = now > boostEnd ? boostEnd : now;
 
                 const effectiveBoostDuration = new Big(
                   (effectiveEnd - effectiveStart) / (1000 * 60 * 60 * 24)

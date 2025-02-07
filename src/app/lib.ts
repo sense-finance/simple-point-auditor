@@ -188,7 +188,7 @@ export const CONFIG: Array<{
   points: Array<{
     type: string;
     expectedPointsPerDay: {
-      value: number;
+      value: number | ((start: string) => number);
       baseAsset: AssetType;
     };
     state?: {
@@ -915,7 +915,7 @@ export const CONFIG: Array<{
     boosts: [
       {
         name: "Grand Epoch",
-        startDate: "Jan-5-2025 06:53:59 PM UTC",
+        startDate: "Jan-05-2025 06:53:59 PM UTC",
         endDate: "Jan-23-2026 06:53:59 PM UTC",
         multiplier: 0.25,
       },
@@ -941,7 +941,7 @@ export const CONFIG: Array<{
     boosts: [
       {
         name: "Grand Epoch",
-        startDate: "Jan-5-2025 06:53:59 PM UTC",
+        startDate: "Jan-05-2025 06:53:59 PM UTC",
         endDate: "Jan-23-2026 06:53:59 PM UTC",
         multiplier: 0.25,
       },
@@ -967,7 +967,7 @@ export const CONFIG: Array<{
     boosts: [
       {
         name: "Grand Epoch",
-        startDate: "Jan-5-2025 06:53:59 PM UTC",
+        startDate: "Jan-05-2025 06:53:59 PM UTC",
         endDate: "Jan-23-2026 06:53:59 PM UTC",
         multiplier: 0.25,
       },
@@ -993,7 +993,7 @@ export const CONFIG: Array<{
     boosts: [
       {
         name: "Grand Epoch",
-        startDate: "Jan-5-2025 06:53:59 PM UTC",
+        startDate: "Jan-05-2025 06:53:59 PM UTC",
         endDate: "Jan-23-2026 06:53:59 PM UTC",
         multiplier: 0.25,
       },
@@ -1019,6 +1019,69 @@ export const CONFIG: Array<{
     boosts: [],
     externalAppURL:
       "https://app.pendle.finance/trade/markets/0x4A8036EFA1307F1cA82d932C0895faa18dB0c9eE/swap?view=yt&chain=ethereum",
+  },
+  // Points are earned per YT
+  // The rate is variable depending on how close to maturity the YT is
+  {
+    strategy: "Pendle: USR YTs (25 Mar 2025)",
+    start: "Jan-28-2025 04:01:35 PM UTC",
+    owner: "0xE283020c833186D31292358836b66b2aCb01aC33",
+    fixedValue: { value: 310.2, asset: "USD" }, // asset is YT (itself)
+    points: [
+      {
+        type: POINTS_ID_RESOLV_S1,
+        expectedPointsPerDay: {
+          value: (startDate) => {
+            const initialRate = 20;
+            const secondRate = 15;
+
+            const now = new Date().getTime();
+            const start = new Date(startDate).getTime();
+            const initialRateEnd = new Date(
+              "Jan-31-2025 11:59:59 PM UTC"
+            ).getTime();
+            const maturityTime = new Date(
+              "Mar-27-2025 12:00:00 AM UTC"
+            ).getTime();
+
+            if (now <= initialRateEnd) {
+              return initialRate;
+            }
+            if (start > initialRateEnd) {
+              return secondRate;
+            }
+
+            const initialRateDuration = initialRateEnd - start;
+            const secondRateDuration =
+              now > maturityTime
+                ? maturityTime - initialRateEnd
+                : now - initialRateEnd;
+
+            const blendedRate =
+              (initialRateDuration * initialRate +
+                secondRateDuration * secondRate) /
+              (initialRateDuration + secondRateDuration);
+
+            return blendedRate;
+          },
+          baseAsset: "USD",
+        }, // asset is YT (itself)
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/07",
+          diff: "-100%",
+        },
+      },
+    ],
+    boosts: [
+      {
+        name: "Grand Epoch",
+        startDate: "Jan-05-2025 06:53:59 PM UTC",
+        endDate: "Jan-23-2026 06:53:59 PM UTC",
+        multiplier: 0.25,
+      },
+    ],
+    externalAppURL: "https://app.resolv.xyz/points",
   },
 ];
 
