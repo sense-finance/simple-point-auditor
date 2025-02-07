@@ -1069,7 +1069,7 @@ export const CONFIG: Array<{
         state: {
           value: "verified",
           lastSnapshot: "2025/02/07",
-          diff: "-100%%",
+          diff: "-100%",
         },
       },
     ],
