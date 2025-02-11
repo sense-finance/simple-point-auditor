@@ -86,7 +86,7 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
                       );
                       const points = dataSource.select(raw);
                       // Convert to Big just in case
-                      const pointsAsBig = new Big(points);
+                      const pointsAsBig = new Big(points || 0);
                       // Update local pointsBySource for debugging
                       pointsBySource[url] = pointsAsBig.toString();
                       return pointsAsBig;

@@ -109,8 +109,17 @@ export const APIS: Array<{
           data.reduce(
             (
               acc: number,
-              curr: { user_mellow_points: number; boost: number }
-            ) => curr.user_mellow_points * curr.boost + acc,
+              curr: { user_mellow_points: number; boost: string }
+            ) => {
+              let mellowBoost = 1;
+              if (
+                curr.boost.toString().includes("pendle") ||
+                curr.boost.toString().includes("zircuit")
+              ) {
+                mellowBoost = 2;
+              }
+              return curr.user_mellow_points * mellowBoost + acc;
+            },
             0
           ),
       },
