@@ -1,3 +1,5 @@
+import Big from "big.js";
+
 export const POINTS_ID_ETHENA_SATS_S3 = "POINTS_ID_ETHENA_SATS_S3";
 export const POINTS_ID_KARAK_S2 = "POINTS_ID_KARAK_S2";
 export const POINTS_ID_SYMBIOTIC_S1 = "POINTS_ID_SYMBIOTIC_S1";
@@ -130,8 +132,18 @@ export const APIS: Array<{
     dataSources: [
       {
         getURL: (wallet: string) =>
-          `https://app.symbiotic.al/api/v1/points/${wallet}`,
-        select: (data: any) => data.totalPoints || 0,
+          `https://app.symbiotic.fi/api/v2/dashboard/${wallet}`,
+        select: (data: any) => {
+          let totalPoints = new Big(0);
+          if(data.points){
+            for(let i = 0; i < data.points.length; i++){
+              const points = new Big(data.points[i].points);
+              const decimals = new Big(10).pow(data.points[i].meta.decimals)
+              totalPoints = totalPoints.plus(points.div(decimals));
+            }
+          }
+          return totalPoints;
+        }
       },
       {
         getURL: (wallet: string) =>
@@ -1091,6 +1103,101 @@ export const CONFIG: Array<{
       },
     ],
     externalAppURL: "https://app.resolv.xyz/points",
+  },
+  {
+    strategy: "Symbiotic: wBETH",
+    start: "Feb-12-2025 12:52:47 AM UTC",
+    owner: "0x1A8348e8b60afDf65dcec0d28850341c2ed0E6CD",
+    fixedValue: { value: 4.811, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: .006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x422F5acCC812C396600010f224b320a743695f85",
+  },
+  {
+    strategy: "Symbiotic: Swell swBTC",
+    start: "Feb-12-2025 12:59:35 AM UTC",
+    owner: "0x81B26B60706E5202eCfCa26F53343d8D26d440A2",
+    fixedValue: { value: 2.595, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: .012, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x9e405601B645d3484baeEcf17bBF7aD87680f6e8",
+  },
+  {
+    strategy: "Symbiotic: swETH",
+    start: "Feb-12-2025 01:07:23 AM UTC",
+    owner: "0x20EF479B638a78d2Ea65CE0f78e0Ce014908fBDc",
+    fixedValue: { value: 5.213, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: .006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x38B86004842D3FA4596f0b7A0b53DE90745Ab654",
+  },
+  {
+    strategy: "Symbiotic: LsETH",
+    start: "Feb-12-2025 01:12:11 AM UTC",
+    owner: "0xE761874fC96108F38730B21881705Afd59d9f4E2",
+    fixedValue: { value: 2.646, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: .006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0xB09A50AcFFF7D12B7d18adeF3D1027bC149Bad1c",
+  },
+  {
+    strategy: "Symbiotic: osETH",
+    start: "Feb-12-2025 01:15:47 AM UTC",
+    owner: "0x53d715B35fBb24C6A5A11A05D8Ea877f0feb0781",
+    fixedValue: { value: 5.188, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: .006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x52cB8A621610Cc3cCf498A1981A8ae7AD6B8AB2a",
   },
 ];
 
