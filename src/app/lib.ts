@@ -1092,6 +1092,107 @@ export const CONFIG: Array<{
     ],
     externalAppURL: "https://app.resolv.xyz/points",
   },
+  {
+    strategy: "Symbiotic: mETH",
+    start: "Feb-11-2025 05:07:59 PM UTC",
+    owner: "0x7D499bf53cD16934a734ED3d377B86eD4d93aBD2",
+    fixedValue: { value: 2.607, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    boosts: [],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x475D3Eb031d250070B63Fa145F0fCFC5D97c304a",
+  },
+  {
+    strategy: "Symbiotic: WBTC",
+    start: "Feb-11-2025 05:19:35 PM UTC",
+    owner: "0x006E5B26f63b3b9bAEaAC48CeF8487CC878652A3",
+    fixedValue: { value: 3.933, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    boosts: [],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x971e5b5D4baa5607863f3748FeBf287C7bf82618",
+  },
+  {
+    strategy: "Symbiotic: rETH",
+    start: "Feb-11-2025 05:25:35 PM UTC",
+    owner: "0x2EF46BFb02d871018e8C39E4250eEDdea35532a5",
+    fixedValue: { value: 2.578, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    boosts: [],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x03Bf48b8A1B37FBeAd1EcAbcF15B98B924ffA5AC",
+  },
+  {
+    strategy: "Symbiotic: cbETH",
+    start: "Feb-11-2025 05:28:35 PM UTC",
+    owner: "0x67F96d82b386EdD2A5599bf71DfdBd580dCaC15C",
+    fixedValue: { value: 5.208, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    boosts: [],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0xB26ff591F44b04E78de18f43B46f8b70C6676984",
+  },
+  {
+    strategy: "Symbiotic: ENA",
+    start: "Feb-11-2025 05:36:23 PM UTC",
+    owner: "0xE36C6cDE7AA8100d8A792Dee4375Bc8e7E57157C",
+    fixedValue: { value: .966, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    boosts: [],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0xe39B5f5638a209c1A6b6cDFfE5d37F7Ac99fCC84",
+  },
+
 ];
 
 const memoizedFetchETHPriceUSD = (() => {
