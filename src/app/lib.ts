@@ -1099,7 +1099,7 @@ export const CONFIG: Array<{
         },
       },
     ],
-    externalAppURL: "http://fluid.instadapp.io/nfts/1/3863",
+    externalAppURL: "https://fluid.instadapp.io/nfts/1/3863",
   },
   {
     strategy: "Fluid: Smart Vault sUSDe/USDC-USDT Looping",
