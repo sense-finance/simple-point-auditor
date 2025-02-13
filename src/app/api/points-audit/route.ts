@@ -33,7 +33,11 @@ const getActiveDays = (
   now: number
 ) => {
   const end = new Date(matchingApi?.seasonEnd || now);
-  const start = new Date(matchingApi?.seasonStart || positionStart);
+  const start = new Date(
+    matchingApi?.seasonStart && matchingApi?.seasonStart > positionStart
+      ? matchingApi?.seasonStart
+      : positionStart
+  );
   return new Big(end.getTime() - start.getTime()).div(1000 * 60 * 60 * 24);
 };
 
