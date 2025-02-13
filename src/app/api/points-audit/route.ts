@@ -27,6 +27,16 @@ const getExpectedPointsPerDay = (
     : expectedPointsPerDay;
 };
 
+const getActiveDays = (
+  matchingApi: (typeof APIS)[number] | undefined,
+  positionStart: string,
+  now: number
+) => {
+  const end = new Date(matchingApi?.seasonEnd || now);
+  const start = new Date(matchingApi?.seasonStart || positionStart);
+  return new Big(end.getTime() - start.getTime()).div(1000 * 60 * 60 * 24);
+};
+
 /**
  * The core function that fetches and computes all point data.
  * Returns a list of results for each (configItem, pointDef) pair.
@@ -40,19 +50,16 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
   const typedApis = APIS as typeof APIS;
 
   for (const configItem of typedConfig) {
-    // days since "start"
-    const daysSinceStart = new Big(
-      (now - new Date(configItem.start).getTime()) / (1000 * 60 * 60 * 24)
-    );
-
     for (const pointDef of configItem.points) {
+      const matchingApi = typedApis.find(
+        (api) => api.pointsId === pointDef.type
+      );
+
+      const daysActive = getActiveDays(matchingApi, configItem.start, now);
+
       // Push an immediately-executed async function => returns a Promise<PointsDataResult>
       tasks.push(
         (async (): Promise<PointsDataResult> => {
-          const matchingApi = typedApis.find(
-            (api) => api.pointsId === pointDef.type
-          );
-
           let actualPoints = new Big(0);
           // We'll keep a local pointsBySource for each (configItem, pointDef)
           const pointsBySource: Record<string, string> = {};
@@ -133,7 +140,7 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
             );
           }
 
-          // Compute expected points = daysSinceStart * dailyRate * positionValue
+          // Compute expected points = daysActive * dailyRate * positionValue
           let expectedPoints = new Big(0);
           if (configItem.fixedValue) {
             const dailyRate = new Big(
@@ -147,9 +154,7 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
               configItem.fixedValue.asset ===
               pointDef.expectedPointsPerDay.baseAsset
             ) {
-              expectedPoints = daysSinceStart
-                .times(dailyRate)
-                .times(positionValue);
+              expectedPoints = daysActive.times(dailyRate).times(positionValue);
             } else {
               // If the fixedValue asset differs, convert it
               const positionValueInBaseAsset = await convertValue(
@@ -157,7 +162,7 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
                 pointDef.expectedPointsPerDay.baseAsset as AssetType,
                 positionValue.toNumber()
               );
-              expectedPoints = daysSinceStart
+              expectedPoints = daysActive
                 .times(dailyRate)
                 .times(positionValueInBaseAsset);
             }
@@ -179,7 +184,7 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
 
                 expectedPoints = expectedPoints.plus(
                   baseExpectedPoints
-                    .times(effectiveBoostDuration.div(daysSinceStart))
+                    .times(effectiveBoostDuration.div(daysActive))
                     .times(new Big(boost.multiplier))
                 );
               }
