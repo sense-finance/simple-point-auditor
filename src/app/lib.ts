@@ -431,9 +431,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "verified",
-          lastSnapshot: "2025/01/21",
-          diff: "-1.9%",
+          value: "partial",
+          lastSnapshot: "2025/02/17",
+          diff: "-40.5%",
         },
       },
     ],
@@ -449,9 +449,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "verified",
-          lastSnapshot: "2025/01/21",
-          diff: "-1.9%",
+          value: "partial",
+          lastSnapshot: "2025/02/17",
+          diff: "-40.6%",
         },
       },
       {
@@ -494,9 +494,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "verified",
-          lastSnapshot: "2025/01/21",
-          diff: "-0.7%",
+          value: "partial",
+          lastSnapshot: "2025/02/17",
+          diff: "-50.7%",
         },
       },
     ],
@@ -512,9 +512,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "verified",
-          lastSnapshot: "2025/01/21",
-          diff: "-6.9%",
+          value: "partial",
+          lastSnapshot: "2025/02/17",
+          diff: "-55.1%",
         },
       },
       {
@@ -702,8 +702,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
         state: {
           value: "partial",
-          lastSnapshot: "2025/01/21",
-          diff: "-48.5%",
+          lastSnapshot: "2025/02/17",
+          diff: "-27.9%",
         },
       },
       {
@@ -800,9 +800,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "verified",
-          lastSnapshot: "2025/01/21",
-          diff: "0.3%",
+          value: "partial",
+          lastSnapshot: "2025/02/17",
+          diff: "-50.2%",
         },
       },
       {
@@ -938,9 +938,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "verified",
-          lastSnapshot: "2025/01/21",
-          diff: "-3.1%",
+          value: "partial",
+          lastSnapshot: "2025/02/17",
+          diff: "-51.9%",
         },
       },
     ],
