@@ -1,3 +1,5 @@
+import Big from "big.js";
+
 export const POINTS_ID_ETHENA_SATS_S3 = "POINTS_ID_ETHENA_SATS_S3";
 export const POINTS_ID_KARAK_S2 = "POINTS_ID_KARAK_S2";
 export const POINTS_ID_SYMBIOTIC_S1 = "POINTS_ID_SYMBIOTIC_S1";
@@ -151,12 +153,18 @@ export const APIS: Array<{
       },
       {
         getURL: (wallet: string) =>
-          `https://points.mellow.finance/v1/chain/1/users/${wallet}`,
-        select: (data: any) =>
-          data.reduce(
-            (acc: number, curr: any) => curr.user_symbiotic_points + acc,
-            0
-          ),
+          `https://app.symbiotic.fi/api/v2/dashboard/${wallet}`,
+        select: (data: any) => {
+          let totalPoints = new Big(0);
+          if (data.points) {
+            for (let i = 0; i < data.points.length; i++) {
+              const points = new Big(data.points[i].points);
+              const decimals = new Big(10).pow(data.points[i].meta.decimals);
+              totalPoints = totalPoints.plus(points.div(decimals));
+            }
+          }
+          return totalPoints;
+        },
       },
       {
         getURL: (wallet: string) =>
@@ -1152,6 +1160,106 @@ export const CONFIG: Array<{
       },
     ],
     externalAppURL: "https://app.resolv.xyz/points",
+  },
+  {
+    strategy: "Symbiotic: Guantlet Restaked cbETH",
+    start: "Feb-12-2025 04:08:11 AM UTC",
+    owner: "0xaE3be96b6C6097c4B6B41dF14da93fFeEa4c5A6B",
+    fixedValue: { value: 5.398, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    boosts: [],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0xB8Fd82169a574eB97251bF43e443310D33FF056C",
+  },
+  {
+    strategy: "Symbiotic: FXS",
+    start: "Feb-12-2025 04:11:35 AM UTC",
+    owner: "0x699Df916f192E88126b3BA47BCFA293c597Ab0D2",
+    fixedValue: { value: 6.925, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    boosts: [],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x940750A267c64f3BBcE31B948b67CD168f0843fA",
+  },
+  {
+    strategy: "Symbiotic: TBTC",
+    start: "Feb-12-2025 04:14:11 AM UTC",
+    owner: "0xe74506bcF546a952874344205c952Cc8f82C6d89",
+    fixedValue: { value: 4.147, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    boosts: [],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x0C969ceC0729487d264716e55F232B404299032c",
+  },
+  {
+    strategy: "Symbiotic: Manta",
+    start: "Feb-12-2025 04:16:59 AM UTC",
+    owner: "0xaaB6A798Aa1ffB4E24A8e8fa070427cD8ed15088",
+    fixedValue: { value: 4.896, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    boosts: [],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x594380c06552A4136E2601F89E50b3b9Ad17bd4d",
+  },
+  {
+    strategy: "Symbiotic: Guantlet Restaked wstETH",
+    start: "Feb-12-2025 04:20:47 AM UTC",
+    owner: "0xBDfcdEb7d9af720E9D94b05DFffaF592020b328A",
+    fixedValue: { value: 8.086, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    boosts: [],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0xc10A7f0AC6E3944F4860eE97a937C51572e3a1Da",
   },
 ];
 
