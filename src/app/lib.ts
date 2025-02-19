@@ -212,7 +212,7 @@ export const CONFIG: Array<{
   };
   points: Array<{
     type: string;
-    expectedPointsPerDay: {
+    expectedPointsPerDay?: {
       value: number | ((start: string) => number);
       baseAsset: AssetType;
     };
@@ -234,7 +234,6 @@ export const CONFIG: Array<{
     strategy: "Ethena: Lock USDe",
     start: "Jan-06-2025 10:42:59 PM UTC",
     owner: "0xb2E3A7D691F8e3FD891A64cA794378e25F1d666D",
-
     fixedValue: { value: 5.0, asset: "USD" },
     points: [
       {
