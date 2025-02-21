@@ -1176,7 +1176,7 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: ENA",
     start: "Feb-11-2025 05:36:23 PM UTC",
     owner: "0xE36C6cDE7AA8100d8A792Dee4375Bc8e7E57157C",
-    fixedValue: { value: .966, asset: "USD" },
+    fixedValue: { value: 0.966, asset: "USD" },
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
@@ -1192,7 +1192,277 @@ export const CONFIG: Array<{
     externalAppURL:
       "https://app.symbiotic.fi/vault/0xe39B5f5638a209c1A6b6cDFfE5d37F7Ac99fCC84",
   },
-
+  {
+    strategy: "Symbiotic: wBETH",
+    start: "Feb-12-2025 12:52:47 AM UTC",
+    owner: "0x1A8348e8b60afDf65dcec0d28850341c2ed0E6CD",
+    fixedValue: { value: 4.811, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x422F5acCC812C396600010f224b320a743695f85",
+  },
+  {
+    strategy: "Symbiotic: Swell swBTC",
+    start: "Feb-12-2025 12:59:35 AM UTC",
+    owner: "0x81B26B60706E5202eCfCa26F53343d8D26d440A2",
+    fixedValue: { value: 2.595, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.012, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x9e405601B645d3484baeEcf17bBF7aD87680f6e8",
+  },
+  {
+    strategy: "Symbiotic: swETH",
+    start: "Feb-12-2025 01:07:23 AM UTC",
+    owner: "0x20EF479B638a78d2Ea65CE0f78e0Ce014908fBDc",
+    fixedValue: { value: 5.213, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x38B86004842D3FA4596f0b7A0b53DE90745Ab654",
+  },
+  {
+    strategy: "Symbiotic: LsETH",
+    start: "Feb-12-2025 01:12:11 AM UTC",
+    owner: "0xE761874fC96108F38730B21881705Afd59d9f4E2",
+    fixedValue: { value: 2.646, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0xB09A50AcFFF7D12B7d18adeF3D1027bC149Bad1c",
+  },
+  {
+    strategy: "Symbiotic: osETH",
+    start: "Feb-12-2025 01:15:47 AM UTC",
+    owner: "0x53d715B35fBb24C6A5A11A05D8Ea877f0feb0781",
+    fixedValue: { value: 5.188, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x52cB8A621610Cc3cCf498A1981A8ae7AD6B8AB2a",
+  },
+  {
+    strategy: "Symbiotic: MEV Capital wstETHVault",
+    start: "Feb-12-2025 01:24:47 AM UTC",
+    owner: "0xfb73Ce657D33A89c353109C9BA09B3eC5Babd7b5",
+    fixedValue: { value: 2.706, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.012, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x4e0554959A631B3D3938ffC158e0a7b2124aF9c5",
+  },
+  {
+    strategy: "Symbiotic: sfrxETH",
+    start: "Feb-12-2025 01:37:35 AM UTC",
+    owner: "0x1a9062C07A73526BdC2e5eA6E8DED56427FF9D9a",
+    fixedValue: { value: 2.647, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x5198CB44D7B2E993ebDDa9cAd3b9a0eAa32769D2",
+  },
+  {
+    strategy: "Symbiotic: Guantlet Restaked swETH",
+    start: "Feb-12-2025 03:08:35 AM UTC",
+    owner: "0xcc885EbCdB494502B51cdB3B340D7786CBf251a3",
+    fixedValue: { value: 5.366, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.012, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x65B560d887c010c4993C8F8B36E595C171d69D63",
+  },
+  {
+    strategy: "Symbiotic: ETHFI",
+    start: "Feb-12-2025 03:12:11 AM UTC",
+    owner: "0x79E6BaB78b17af4B318eCAD070beEc6cda2e71AC",
+    fixedValue: { value: 5.651, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x21DbBA985eEA6ba7F27534a72CCB292eBA1D2c7c",
+  },
+  {
+    strategy: "Symbiotic: Guantlet Restaked cbETH",
+    start: "Feb-12-2025 04:08:11 AM UTC",
+    owner: "0xaE3be96b6C6097c4B6B41dF14da93fFeEa4c5A6B",
+    fixedValue: { value: 5.398, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    boosts: [],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0xB8Fd82169a574eB97251bF43e443310D33FF056C",
+  },
+  {
+    strategy: "Symbiotic: FXS",
+    start: "Feb-12-2025 04:11:35 AM UTC",
+    owner: "0x699Df916f192E88126b3BA47BCFA293c597Ab0D2",
+    fixedValue: { value: 6.925, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    boosts: [],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x940750A267c64f3BBcE31B948b67CD168f0843fA",
+  },
+  {
+    strategy: "Symbiotic: TBTC",
+    start: "Feb-12-2025 04:14:11 AM UTC",
+    owner: "0xe74506bcF546a952874344205c952Cc8f82C6d89",
+    fixedValue: { value: 4.147, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    boosts: [],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x0C969ceC0729487d264716e55F232B404299032c",
+  },
+  {
+    strategy: "Symbiotic: Manta",
+    start: "Feb-12-2025 04:16:59 AM UTC",
+    owner: "0xaaB6A798Aa1ffB4E24A8e8fa070427cD8ed15088",
+    fixedValue: { value: 4.896, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    boosts: [],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0x594380c06552A4136E2601F89E50b3b9Ad17bd4d",
+  },
+  {
+    strategy: "Symbiotic: Guantlet Restaked wstETH",
+    start: "Feb-12-2025 04:20:47 AM UTC",
+    owner: "0xBDfcdEb7d9af720E9D94b05DFffaF592020b328A",
+    fixedValue: { value: 8.086, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/12",
+          diff: "TBD",
+        },
+      },
+    ],
+    boosts: [],
+    externalAppURL:
+      "https://app.symbiotic.fi/vault/0xc10A7f0AC6E3944F4860eE97a937C51572e3a1Da",
+  },
 ];
 
 const memoizedFetchETHPriceUSD = (() => {
