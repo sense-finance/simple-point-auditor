@@ -189,6 +189,7 @@ const pointIdToFriendlyName: Record<string, string> = {
   POINTS_ID_MELLOW_S1: "Mellow (S1)",
   POINTS_ID_ZIRCUIT_S3: "Zircuit (S3)",
   POINTS_ID_ETHERFI_S4: "EtherFi (S4)",
+  POINTS_ID_ETHERFI_S5: "EtherFi (S5)",
   POINTS_ID_VEDA_S1: "Veda (S1)",
   POINTS_ID_LOMBARD_LUX_S1: "Lombard Lux (S1)",
   POINTS_ID_RESOLV_S1: "Resolv (S1)",
@@ -518,6 +519,8 @@ export default function PointsAuditByPointsId() {
                     const percentDiff =
                       expected === 0 ? 0 : (diff / expected) * 100;
 
+                    const noExpectedPoints = row.expectedPoints === "0";
+
                     const strategyConfig = CONFIG.find(
                       (c) => c.strategy === row.strategy
                     );
@@ -545,9 +548,13 @@ export default function PointsAuditByPointsId() {
                             />
                           </div>
                         </td>
-                        <td className="py-5 px-2 text-right font-mono text-gray-600">
-                          {expected.toFixed(4)}
-                        </td>
+                        {noExpectedPoints ? (
+                          <td className="py-5 px-2 bg-gray-50"></td>
+                        ) : (
+                          <td className="py-5 px-2 text-right font-mono text-gray-600">
+                            {expected.toFixed(4)}
+                          </td>
+                        )}
                         <td className="py-5 px-2 text-right font-mono text-gray-600">
                           <Tooltip.Provider delayDuration={0}>
                             <Tooltip.Root>
@@ -649,21 +656,25 @@ export default function PointsAuditByPointsId() {
                             </Tooltip.Root>
                           </Tooltip.Provider>
                         </td>
-                        <td
-                          className={`py-5 px-2 text-right font-mono font-medium whitespace-nowrap ${
-                            Math.abs(percentDiff) < 0.1
-                              ? "text-indigo-600 bg-indigo-50"
-                              : diff < 0
-                              ? "text-red-600 bg-red-50"
-                              : "text-emerald-600 bg-emerald-50"
-                          }`}
-                        >
-                          {Math.abs(percentDiff) < 0.1 && "⭐"}{" "}
-                          {Math.abs(diff).toFixed(4)}
-                          <span className="text-xs ml-1">
-                            ({percentDiff.toFixed(1)}%)
-                          </span>
-                        </td>
+                        {noExpectedPoints ? (
+                          <td className="py-5 px-2 bg-gray-50"></td>
+                        ) : (
+                          <td
+                            className={`py-5 px-2 text-right font-mono font-medium whitespace-nowrap ${
+                              Math.abs(percentDiff) < 0.1
+                                ? "text-indigo-600 bg-indigo-50"
+                                : diff < 0
+                                ? "text-red-600 bg-red-50"
+                                : "text-emerald-600 bg-emerald-50"
+                            }`}
+                          >
+                            {Math.abs(percentDiff) < 0.1 && "⭐"}{" "}
+                            {Math.abs(diff).toFixed(4)}
+                            <span className="text-xs ml-1">
+                              ({percentDiff.toFixed(1)}%)
+                            </span>
+                          </td>
+                        )}
                         {state && (
                           <td className="py-5 px-2 text-right">
                             <div className="flex items-center justify-end gap-1.5 font-medium font-mono">

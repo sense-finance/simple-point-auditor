@@ -1,3 +1,5 @@
+import Big from "big.js";
+
 export const POINTS_ID_ETHENA_SATS_S3 = "POINTS_ID_ETHENA_SATS_S3";
 export const POINTS_ID_KARAK_S2 = "POINTS_ID_KARAK_S2";
 export const POINTS_ID_SYMBIOTIC_S1 = "POINTS_ID_SYMBIOTIC_S1";
@@ -6,6 +8,7 @@ export const POINTS_ID_EIGENPIE_S1 = "POINTS_ID_EIGENPIE_S1";
 export const POINTS_ID_MELLOW_S1 = "POINTS_ID_MELLOW_S1";
 export const POINTS_ID_ZIRCUIT_S3 = "POINTS_ID_ZIRCUIT_S3";
 export const POINTS_ID_ETHERFI_S4 = "POINTS_ID_ETHERFI_S4";
+export const POINTS_ID_ETHERFI_S5 = "POINTS_ID_ETHERFI_S5";
 export const POINTS_ID_VEDA_S1 = "POINTS_ID_VEDA_S1";
 export const POINTS_ID_LOMBARD_LUX_S1 = "POINTS_ID_LOMBARD_LUX_S1";
 export const POINTS_ID_RESOLV_S1 = "POINTS_ID_RESOLV_S1";
@@ -15,6 +18,8 @@ const RESOLVE_BEARER_TOKEN = process.env.RESOLVE_BEARER_TOKEN;
 
 export const APIS: Array<{
   pointsId: string;
+  seasonEnd?: string;
+  seasonStart?: string;
   dataSources: {
     getURL: (wallet: string) => string;
     select: (data: any) => number;
@@ -69,12 +74,25 @@ export const APIS: Array<{
   },
   {
     pointsId: POINTS_ID_ETHERFI_S4,
+    seasonEnd: "Feb-01-2025 00:00:00 AM UTC",
     dataSources: [
       {
         getURL: (wallet: string) =>
           `https://app.ether.fi/api/portfolio/v3/${wallet}`,
         select: (data: any) =>
-          data.totalPointsSummaries.LOYALTY.CurrentPoints || 0,
+          data.totalPointsSummaries.LOYALTY.PreviousSeasonPoints || 0,
+      },
+    ],
+  },
+  {
+    pointsId: POINTS_ID_ETHERFI_S5,
+    seasonStart: "Feb-01-2025 00:00:00 AM UTC",
+    dataSources: [
+      {
+        getURL: (wallet: string) =>
+          `https://app.ether.fi/api/portfolio/v3/${wallet}`,
+        select: (data: any) =>
+          data.totalPointsSummaries.LOYALTY.CurrentSeasonPoints || 0,
       },
     ],
   },
@@ -130,8 +148,18 @@ export const APIS: Array<{
     dataSources: [
       {
         getURL: (wallet: string) =>
-          `https://app.symbiotic.al/api/v1/points/${wallet}`,
-        select: (data: any) => data.totalPoints || 0,
+          `https://app.symbiotic.fi/api/v2/dashboard/${wallet}`,
+        select: (data: any) => {
+          let totalPoints = new Big(0);
+          if (data.points) {
+            for (let i = 0; i < data.points.length; i++) {
+              const points = new Big(data.points[i].points);
+              const decimals = new Big(10).pow(data.points[i].meta.decimals);
+              totalPoints = totalPoints.plus(points.div(decimals));
+            }
+          }
+          return totalPoints;
+        },
       },
       {
         getURL: (wallet: string) =>
@@ -184,7 +212,7 @@ export const APIS: Array<{
   },
 ];
 
-export type AssetType = "USD" | "ETH" | "BTC";
+export type AssetType = "USD" | "ETH" | "BTC" | "ENA";
 
 export const CONFIG: Array<{
   strategy: string;
@@ -196,7 +224,7 @@ export const CONFIG: Array<{
   };
   points: Array<{
     type: string;
-    expectedPointsPerDay: {
+    expectedPointsPerDay?: {
       value: number | ((start: string) => number);
       baseAsset: AssetType;
     };
@@ -218,7 +246,6 @@ export const CONFIG: Array<{
     strategy: "Ethena: Lock USDe",
     start: "Jan-06-2025 10:42:59 PM UTC",
     owner: "0xb2E3A7D691F8e3FD891A64cA794378e25F1d666D",
-
     fixedValue: { value: 5.0, asset: "USD" },
     points: [
       {
@@ -277,6 +304,15 @@ export const CONFIG: Array<{
         },
       },
       {
+        type: POINTS_ID_ETHERFI_S5,
+        expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/13",
+          diff: "2.0%",
+        },
+      },
+      {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
@@ -319,6 +355,15 @@ export const CONFIG: Array<{
           value: "verified",
           lastSnapshot: "2025/01/21",
           diff: "-1.7%",
+        },
+      },
+      {
+        type: POINTS_ID_ETHERFI_S5,
+        expectedPointsPerDay: { value: 20000, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/13",
+          diff: "-2.1%",
         },
       },
     ],
@@ -397,9 +442,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "verified",
-          lastSnapshot: "2025/01/21",
-          diff: "-1.9%",
+          value: "partial",
+          lastSnapshot: "2025/02/17",
+          diff: "-40.5%",
         },
       },
     ],
@@ -415,9 +460,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "verified",
-          lastSnapshot: "2025/01/21",
-          diff: "-1.9%",
+          value: "partial",
+          lastSnapshot: "2025/02/17",
+          diff: "-40.6%",
         },
       },
       {
@@ -460,9 +505,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "verified",
-          lastSnapshot: "2025/01/21",
-          diff: "-0.7%",
+          value: "partial",
+          lastSnapshot: "2025/02/17",
+          diff: "-50.7%",
         },
       },
     ],
@@ -478,9 +523,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "verified",
-          lastSnapshot: "2025/01/21",
-          diff: "-6.9%",
+          value: "partial",
+          lastSnapshot: "2025/02/17",
+          diff: "-55.1%",
         },
       },
       {
@@ -555,6 +600,15 @@ export const CONFIG: Array<{
           diff: "3.8%",
         },
       },
+      {
+        type: POINTS_ID_ETHERFI_S5,
+        expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/13",
+          diff: "4.0%",
+        },
+      },
     ],
     externalAppURL: "https://fluid.instadapp.io/vaults/1/16",
   },
@@ -589,6 +643,15 @@ export const CONFIG: Array<{
           value: "verified",
           lastSnapshot: "2025/01/21",
           diff: "3.0%",
+        },
+      },
+      {
+        type: POINTS_ID_ETHERFI_S5,
+        expectedPointsPerDay: { value: 35000, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/13",
+          diff: "4.2%",
         },
       },
     ],
@@ -650,8 +713,17 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
         state: {
           value: "partial",
-          lastSnapshot: "2025/01/21",
-          diff: "-48.5%",
+          lastSnapshot: "2025/02/17",
+          diff: "-27.9%",
+        },
+      },
+      {
+        type: POINTS_ID_ETHERFI_S5,
+        expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/13",
+          diff: "-1.4%",
         },
       },
     ],
@@ -739,9 +811,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "verified",
-          lastSnapshot: "2025/01/21",
-          diff: "0.3%",
+          value: "partial",
+          lastSnapshot: "2025/02/17",
+          diff: "-50.2%",
         },
       },
       {
@@ -877,9 +949,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "verified",
-          lastSnapshot: "2025/01/21",
-          diff: "-3.1%",
+          value: "partial",
+          lastSnapshot: "2025/02/17",
+          diff: "-51.9%",
         },
       },
     ],
@@ -1076,7 +1148,7 @@ export const CONFIG: Array<{
           baseAsset: "USD",
         }, // asset is YT (itself)
         state: {
-          value: "verified",
+          value: "delayed",
           lastSnapshot: "2025/02/07",
           diff: "-100%",
         },
@@ -1485,6 +1557,16 @@ const memoizedFetchBTCPriceUSD = (() => {
   };
 })();
 
+const memoizedFetchENAPriceUSD = (() => {
+  let cache: number | null = null;
+  return async () => {
+    if (cache === null) {
+      cache = await fetchPriceUSD("ethena");
+    }
+    return cache;
+  };
+})();
+
 export async function convertValue(
   fromAsset: AssetType,
   toAsset: AssetType,
@@ -1492,6 +1574,7 @@ export async function convertValue(
 ): Promise<number> {
   const ethPriceUSD = (await memoizedFetchETHPriceUSD()) as number;
   const btcPriceUSD = (await memoizedFetchBTCPriceUSD()) as number;
+  const enaPriceUSD = (await memoizedFetchENAPriceUSD()) as number;
 
   if (fromAsset === toAsset) return value;
 
@@ -1501,7 +1584,9 @@ export async function convertValue(
       ? value
       : fromAsset === "ETH"
       ? value * ethPriceUSD
-      : value * btcPriceUSD;
+      : fromAsset === "BTC"
+      ? value * btcPriceUSD
+      : value * enaPriceUSD;
 
   // Then convert USD to target
   return toAsset === "USD"
@@ -1511,7 +1596,7 @@ export async function convertValue(
     : valueInUSD / btcPriceUSD;
 }
 
-export async function fetchPriceUSD(asset: "ethereum" | "bitcoin") {
+export async function fetchPriceUSD(asset: "ethereum" | "bitcoin" | "ethena") {
   const coinGeckoApiKey = process.env.COIN_GECKO_API_KEY;
   if (!coinGeckoApiKey) {
     throw new Error("no coin gecko api key");
