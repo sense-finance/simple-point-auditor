@@ -1168,15 +1168,15 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: mETH",
     start: "Feb-11-2025 05:07:59 PM UTC",
     owner: "0x7D499bf53cD16934a734ED3d377B86eD4d93aBD2",
-    fixedValue: { value: 2.607, asset: "USD" },
+    fixedValue: { value: 0.0009469, asset: "ETH" },
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "3.2",
         },
       },
     ],
@@ -1188,15 +1188,15 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: WBTC",
     start: "Feb-11-2025 05:19:35 PM UTC",
     owner: "0x006E5B26f63b3b9bAEaAC48CeF8487CC878652A3",
-    fixedValue: { value: 3.933, asset: "USD" },
+    fixedValue: { value: 0.00004112, asset: "BTC" },
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "0.9",
         },
       },
     ],
@@ -1208,15 +1208,15 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: rETH",
     start: "Feb-11-2025 05:25:35 PM UTC",
     owner: "0x2EF46BFb02d871018e8C39E4250eEDdea35532a5",
-    fixedValue: { value: 2.578, asset: "USD" },
+    fixedValue: { value: 0.0008904, asset: "ETH" },
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "14.0",
         },
       },
     ],
@@ -1228,15 +1228,15 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: cbETH",
     start: "Feb-11-2025 05:28:35 PM UTC",
     owner: "0x67F96d82b386EdD2A5599bf71DfdBd580dCaC15C",
-    fixedValue: { value: 5.208, asset: "USD" },
+    fixedValue: { value: 0.001834, asset: "ETH" },
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "3.0%",
         },
       },
     ],
@@ -1248,15 +1248,15 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: ENA",
     start: "Feb-11-2025 05:36:23 PM UTC",
     owner: "0xE36C6cDE7AA8100d8A792Dee4375Bc8e7E57157C",
-    fixedValue: { value: 0.966, asset: "USD" },
+    fixedValue: { value: 0.966, asset: "USD" }, // TODO: ENA
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "-0.7%",
         },
       },
     ],
@@ -1268,15 +1268,15 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: wBETH",
     start: "Feb-12-2025 12:52:47 AM UTC",
     owner: "0x1A8348e8b60afDf65dcec0d28850341c2ed0E6CD",
-    fixedValue: { value: 4.811, asset: "USD" },
+    fixedValue: { value: 0.001739, asset: "ETH" },
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "7.7%",
         },
       },
     ],
@@ -1287,16 +1287,10 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: Swell swBTC",
     start: "Feb-12-2025 12:59:35 AM UTC",
     owner: "0x81B26B60706E5202eCfCa26F53343d8D26d440A2",
-    fixedValue: { value: 2.595, asset: "USD" },
+    fixedValue: { value: 0.00002713, asset: "BTC" },
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
-        expectedPointsPerDay: { value: 0.012, baseAsset: "USD" },
-        state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
-        },
       },
     ],
     externalAppURL:
@@ -1306,15 +1300,15 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: swETH",
     start: "Feb-12-2025 01:07:23 AM UTC",
     owner: "0x20EF479B638a78d2Ea65CE0f78e0Ce014908fBDc",
-    fixedValue: { value: 5.213, asset: "USD" },
+    fixedValue: { value: 0.001848, asset: "ETH" },
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "9.8%",
         },
       },
     ],
@@ -1325,15 +1319,15 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: LsETH",
     start: "Feb-12-2025 01:12:11 AM UTC",
     owner: "0xE761874fC96108F38730B21881705Afd59d9f4E2",
-    fixedValue: { value: 2.646, asset: "USD" },
+    fixedValue: { value: 0.0009393, asset: "ETH" },
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "9.7%",
         },
       },
     ],
@@ -1344,15 +1338,15 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: osETH",
     start: "Feb-12-2025 01:15:47 AM UTC",
     owner: "0x53d715B35fBb24C6A5A11A05D8Ea877f0feb0781",
-    fixedValue: { value: 5.188, asset: "USD" },
+    fixedValue: { value: 0.001924, asset: "ETH" },
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "5.3%",
         },
       },
     ],
@@ -1363,16 +1357,10 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: MEV Capital wstETHVault",
     start: "Feb-12-2025 01:24:47 AM UTC",
     owner: "0xfb73Ce657D33A89c353109C9BA09B3eC5Babd7b5",
-    fixedValue: { value: 2.706, asset: "USD" },
+    fixedValue: { value: 0.0008384, asset: "ETH" },
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
-        expectedPointsPerDay: { value: 0.012, baseAsset: "USD" },
-        state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
-        },
       },
     ],
     externalAppURL:
@@ -1382,15 +1370,15 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: sfrxETH",
     start: "Feb-12-2025 01:37:35 AM UTC",
     owner: "0x1a9062C07A73526BdC2e5eA6E8DED56427FF9D9a",
-    fixedValue: { value: 2.647, asset: "USD" },
+    fixedValue: { value: 0.000898, asset: "ETH" },
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "12.9%",
         },
       },
     ],
@@ -1401,16 +1389,10 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: Guantlet Restaked swETH",
     start: "Feb-12-2025 03:08:35 AM UTC",
     owner: "0xcc885EbCdB494502B51cdB3B340D7786CBf251a3",
-    fixedValue: { value: 5.366, asset: "USD" },
+    fixedValue: { value: 0.001848, asset: "ETH" },
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
-        expectedPointsPerDay: { value: 0.012, baseAsset: "USD" },
-        state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
-        },
       },
     ],
     externalAppURL:
@@ -1420,15 +1402,15 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: ETHFI",
     start: "Feb-12-2025 03:12:11 AM UTC",
     owner: "0x79E6BaB78b17af4B318eCAD070beEc6cda2e71AC",
-    fixedValue: { value: 5.651, asset: "USD" },
+    fixedValue: { value: 5.651, asset: "USD" }, // todo: ethfi
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "4.2%",
         },
       },
     ],
@@ -1439,16 +1421,10 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: Guantlet Restaked cbETH",
     start: "Feb-12-2025 04:08:11 AM UTC",
     owner: "0xaE3be96b6C6097c4B6B41dF14da93fFeEa4c5A6B",
-    fixedValue: { value: 5.398, asset: "USD" },
+    fixedValue: { value: 0.001835, asset: "ETH" },
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
-        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
-        state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
-        },
       },
     ],
     boosts: [],
@@ -1459,15 +1435,15 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: FXS",
     start: "Feb-12-2025 04:11:35 AM UTC",
     owner: "0x699Df916f192E88126b3BA47BCFA293c597Ab0D2",
-    fixedValue: { value: 6.925, asset: "USD" },
+    fixedValue: { value: 6.925, asset: "USD" }, // todo: fxs
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "1.1%",
         },
       },
     ],
@@ -1479,15 +1455,15 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: TBTC",
     start: "Feb-12-2025 04:14:11 AM UTC",
     owner: "0xe74506bcF546a952874344205c952Cc8f82C6d89",
-    fixedValue: { value: 4.147, asset: "USD" },
+    fixedValue: { value: 0.00004342, asset: "BTC" },
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "0.3%",
         },
       },
     ],
@@ -1499,15 +1475,15 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: Manta",
     start: "Feb-12-2025 04:16:59 AM UTC",
     owner: "0xaaB6A798Aa1ffB4E24A8e8fa070427cD8ed15088",
-    fixedValue: { value: 4.896, asset: "USD" },
+    fixedValue: { value: 4.896, asset: "USD" }, // todo: manta
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "4.0%",
         },
       },
     ],
@@ -1519,16 +1495,10 @@ export const CONFIG: Array<{
     strategy: "Symbiotic: Guantlet Restaked wstETH",
     start: "Feb-12-2025 04:20:47 AM UTC",
     owner: "0xBDfcdEb7d9af720E9D94b05DFffaF592020b328A",
-    fixedValue: { value: 8.086, asset: "USD" },
+    fixedValue: { value: 0.002515, asset: "ETH" },
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
-        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
-        state: {
-          value: "partial",
-          lastSnapshot: "2025/02/12",
-          diff: "TBD",
-        },
       },
     ],
     boosts: [],

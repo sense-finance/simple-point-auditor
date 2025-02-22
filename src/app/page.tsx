@@ -549,7 +549,9 @@ export default function PointsAuditByPointsId() {
                           </div>
                         </td>
                         {noExpectedPoints ? (
-                          <td className="py-5 px-2 bg-gray-50"></td>
+                          <td className="py-5 px-2 bg-gray-50 text-right font-mono text-gray-600">
+                            N/A
+                          </td>
                         ) : (
                           <td className="py-5 px-2 text-right font-mono text-gray-600">
                             {expected.toFixed(4)}
