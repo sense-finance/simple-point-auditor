@@ -1505,6 +1505,456 @@ export const CONFIG: Array<{
     externalAppURL:
       "https://app.symbiotic.fi/vault/0xc10A7f0AC6E3944F4860eE97a937C51572e3a1Da",
   },
+  {
+    strategy: "Mellow: Hold DVstETH",
+    start: "Feb-04-2025 10:00:35 AM UTC",
+    owner: "0x1a66531fc0FE9A6155dd85596B642E0B52D1210A",
+    fixedValue: { value: 0.000185, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "0.6%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-dvsteth",
+  },
+  {
+    strategy: "Mellow: Hold pzETH",
+    start: "Feb-04-2025 10:17:35 AM UTC",
+    owner: "0xa9e537f53ACbf9fbaa8601eb542eB16345D86a72",
+    fixedValue: { value: 0.00185, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "-16%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/21",
+          diff: "-0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-pzeth",
+  },
+  {
+    strategy: "Mellow: Hold rsENA",
+    start: "Feb-04-2025 10:17:35 AM UTC",
+    owner: "0x6ac16eeAac13B57d9Ee2e507A769C952f303bedf",
+    fixedValue: { value: 7.922888, asset: "ENA" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "4.8%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/21",
+          diff: "-0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-rsena",
+  },
+  {
+    strategy: "Mellow: Hold amphrBTC",
+    start: "Feb-04-2025 11:30:11 AM UTC",
+    owner: "0x818c0376468CDf4Fe733CbC1BA685FfCaAf68Aba",
+    fixedValue: { value: 0.00005116, asset: "BTC" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "-0.6%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/21",
+          diff: "-0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-amphrbtc",
+  },
+  {
+    strategy: "Mellow: Hold steakLRT",
+    start: "Feb-04-2025 11:36:23 AM UTC",
+    owner: "0x27B33F1c2962993724D0e397a443b20FA8dcd9eB",
+    fixedValue: { value: 0.00185, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "-15.9%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/21",
+          diff: "-0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-steaklrt",
+  },
+  {
+    strategy: "Mellow: Hold HYVEX",
+    start: "Feb-04-2025 11:48:11 AM UTC",
+    owner: "0xDF1d2C86EC651A0a286eA771aD5458FFd8E59034",
+    fixedValue: { value: 0.00185, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "-16.1%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/21",
+          diff: "-0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-hyvex",
+  },
+  {
+    strategy: "Mellow: Hold Re7rtBTC",
+    start: "Feb-13-2025 10:04:11 AM UTC",
+    owner: "0xAAB87986A0ad62d35DAcFB271DB695a600591475",
+    fixedValue: { value: 0.0000517588, asset: "BTC" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "-0.9%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/21",
+          diff: "-0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-re7rtbtc",
+  },
+  {
+    strategy: "Mellow: Hold ifsETH",
+    start: "Feb-04-2025 12:56:35 PM UTC",
+    owner: "0x1dEdfFeb88E8c4BA56AD3Af1e1D517Db8f432592",
+    fixedValue: { value: 0.00185, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "-16.2%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/21",
+          diff: "-0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-ifseth",
+  },
+  {
+    strategy: "Mellow: Hold cp0xlrt",
+    start: "Feb-04-2025 01:01:47 PM UTC",
+    owner: "0x8CaB78b549D95944F8422632746ba2be302E9C7A",
+    fixedValue: { value: 0.00185, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "-16.2%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/21",
+          diff: "-0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-cp0xlrt",
+  },
+  {
+    strategy: "Mellow: Hold urLRT",
+    start: "Feb-04-2025 01:11:47 PM UTC",
+    owner: "0x56963c8E28bfb85224c90277966Fb64b55D10eFC",
+    fixedValue: { value: 0.00185, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "-16.2%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/21",
+          diff: "-0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-urlrt",
+  },
+  {
+    strategy: "Mellow: Hold coETH",
+    start: "Feb-04-2025 01:15:35 PM UTC",
+    owner: "0x9958CC882029860DDf2059b5558d7958AE8cF20f",
+    fixedValue: { value: 0.00185, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "-16.2%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/21",
+          diff: "-0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-coeth",
+  },
+  {
+    strategy: "Mellow: Hold hcETH",
+    start: "Feb-04-2025 01:23:23 PM UTC",
+    owner: "0xDCf75816a2aaCd4aAd5102fC27EBBA71516B6a94",
+    fixedValue: { value: 0.00185, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "-16.1%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/21",
+          diff: "-0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-hceth",
+  },
+  {
+    strategy: "Mellow: Hold isETH",
+    start: "Feb-05-2025 10:57:47 AM UTC",
+    owner: "0xa19a209D27a229a64C85B341e9c87eD1AbbfdDB7",
+    fixedValue: { value: 0.00185, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "-16.3%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/21",
+          diff: "-0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-iseth",
+  },
+  {
+    strategy: "Mellow: Hold siBTC",
+    start: "Feb-05-2025 11:10:11 AM UTC",
+    owner: "0x22288C456E535e0c305Eb7089Fa61630bDBf3aD3",
+    fixedValue: { value: 0.00005217, asset: "BTC" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "-1.3%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/21",
+          diff: "-0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-sibtc",
+  },
+  {
+    strategy: "Mellow: Hold LugaETH",
+    start: "Feb-05-2025 11:17:23 AM UTC",
+    owner: "0xAF9e9FB37ccB46DEE01bd715Ec0927B861Ec13E0",
+    fixedValue: { value: 0.00185, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "-16.2%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/21",
+          diff: "-0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-lugaeth",
+  },
+  {
+    strategy: "Mellow: Hold roETH",
+    start: "Feb-05-2025 11:21:47 AM UTC",
+    owner: "0x01f4f7E48b6362Bc8f799629c383655BFC63614c",
+    fixedValue: { value: 0.00185, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "-16.4%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/21",
+          diff: "-0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-roeth",
+  },
+  {
+    strategy: "Mellow: Hold rsuniBTC",
+    start: "Feb-05-2025 11:27:47 AM UTC",
+    owner: "0xf897a7ce9494D4AE9F54A9a3c4433f6590835c1f",
+    fixedValue: { value: 0.00005417, asset: "BTC" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/21",
+          diff: "-2.3%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/21",
+          diff: "-0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-rsunibtc",
+  },
 ];
 
 const memoizedFetchETHPriceUSD = (() => {
