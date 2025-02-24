@@ -1623,9 +1623,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_SYMBIOTIC_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
-          value: "delayed",
-          lastSnapshot: "2025/02/21",
-          diff: "-0%",
+          value: "verified",
+          lastSnapshot: "2025/02/24",
+          diff: "6.5%",
         },
       },
     ],
