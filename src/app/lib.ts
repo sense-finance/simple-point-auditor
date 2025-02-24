@@ -1284,7 +1284,7 @@ export const CONFIG: Array<{
       "https://app.symbiotic.fi/vault/0x422F5acCC812C396600010f224b320a743695f85",
   },
   {
-    strategy: "Symbiotic: Swell swBTC",
+    strategy: "Symbiotic: Swell Restaked wBTC",
     start: "Feb-12-2025 12:59:35 AM UTC",
     owner: "0x81B26B60706E5202eCfCa26F53343d8D26d440A2",
     fixedValue: { value: 0.00002713, asset: "BTC" },
@@ -1354,7 +1354,7 @@ export const CONFIG: Array<{
       "https://app.symbiotic.fi/vault/0x52cB8A621610Cc3cCf498A1981A8ae7AD6B8AB2a",
   },
   {
-    strategy: "Symbiotic: MEV Capital wstETHVault",
+    strategy: "Symbiotic: MEV Capital wstETH",
     start: "Feb-12-2025 01:24:47 AM UTC",
     owner: "0xfb73Ce657D33A89c353109C9BA09B3eC5Babd7b5",
     fixedValue: { value: 0.0008384, asset: "ETH" },
@@ -1386,7 +1386,7 @@ export const CONFIG: Array<{
       "https://app.symbiotic.fi/vault/0x5198CB44D7B2E993ebDDa9cAd3b9a0eAa32769D2",
   },
   {
-    strategy: "Symbiotic: Guantlet Restaked swETH",
+    strategy: "Symbiotic: Gauntlet Restaked swETH",
     start: "Feb-12-2025 03:08:35 AM UTC",
     owner: "0xcc885EbCdB494502B51cdB3B340D7786CBf251a3",
     fixedValue: { value: 0.001848, asset: "ETH" },
@@ -1418,7 +1418,7 @@ export const CONFIG: Array<{
       "https://app.symbiotic.fi/vault/0x21DbBA985eEA6ba7F27534a72CCB292eBA1D2c7c",
   },
   {
-    strategy: "Symbiotic: Guantlet Restaked cbETH",
+    strategy: "Symbiotic: Gauntlet Restaked cbETH",
     start: "Feb-12-2025 04:08:11 AM UTC",
     owner: "0xaE3be96b6C6097c4B6B41dF14da93fFeEa4c5A6B",
     fixedValue: { value: 0.001835, asset: "ETH" },
@@ -1492,7 +1492,7 @@ export const CONFIG: Array<{
       "https://app.symbiotic.fi/vault/0x594380c06552A4136E2601F89E50b3b9Ad17bd4d",
   },
   {
-    strategy: "Symbiotic: Guantlet Restaked wstETH",
+    strategy: "Symbiotic: Gauntlet Restaked wstETH",
     start: "Feb-12-2025 04:20:47 AM UTC",
     owner: "0xBDfcdEb7d9af720E9D94b05DFffaF592020b328A",
     fixedValue: { value: 0.002515, asset: "ETH" },
