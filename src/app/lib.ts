@@ -6,6 +6,7 @@ export const POINTS_ID_SYMBIOTIC_S1 = "POINTS_ID_SYMBIOTIC_S1";
 export const POINTS_ID_EIGENLAYER_S3 = "POINTS_ID_EIGENLAYER_S3";
 export const POINTS_ID_EIGENPIE_S1 = "POINTS_ID_EIGENPIE_S1";
 export const POINTS_ID_MELLOW_S1 = "POINTS_ID_MELLOW_S1";
+export const POINTS_ID_MERITS_S1 = "POINTS_ID_MERITS_S1";
 export const POINTS_ID_ZIRCUIT_S3 = "POINTS_ID_ZIRCUIT_S3";
 export const POINTS_ID_ETHERFI_S4 = "POINTS_ID_ETHERFI_S4";
 export const POINTS_ID_ETHERFI_S5 = "POINTS_ID_ETHERFI_S5";
@@ -207,6 +208,21 @@ export const APIS: Array<{
         headers: {
           Authorization: RESOLVE_BEARER_TOKEN,
         },
+      },
+    ],
+  },
+  {
+    pointsId: POINTS_ID_MERITS_S1,
+    dataSources: [
+      {
+        getURL: (wallet: string) =>
+          `https://points.mellow.finance/v1/chain/1/users/${wallet}`,
+        select: (data: any) =>
+          data.reduce(
+            (acc: number, curr: { user_merits_points: number }) =>
+              curr.user_merits_points + acc,
+            0
+          ),
       },
     ],
   },
@@ -474,6 +490,9 @@ export const CONFIG: Array<{
           diff: "-1.9%",
         },
       },
+      {
+        type: POINTS_ID_MERITS_S1,
+      },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-re7lrt",
   },
@@ -510,6 +529,9 @@ export const CONFIG: Array<{
           diff: "-50.7%",
         },
       },
+      {
+        type: POINTS_ID_MERITS_S1,
+      },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-rsteth",
   },
@@ -536,6 +558,9 @@ export const CONFIG: Array<{
           lastSnapshot: "2025/01/21",
           diff: "-6.9%",
         },
+      },
+      {
+        type: POINTS_ID_MERITS_S1,
       },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-re7rwbtc",
@@ -833,6 +858,9 @@ export const CONFIG: Array<{
           lastSnapshot: "2025/01/21",
           diff: "0.2%",
         },
+      },
+      {
+        type: POINTS_ID_MERITS_S1,
       },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-rsusde",
@@ -1520,6 +1548,7 @@ export const CONFIG: Array<{
           diff: "0.6%",
         },
       },
+      { type: POINTS_ID_MERITS_S1 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-dvsteth",
   },
@@ -1547,6 +1576,7 @@ export const CONFIG: Array<{
           diff: "-0%",
         },
       },
+      { type: POINTS_ID_MERITS_S1 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-pzeth",
   },
@@ -1574,6 +1604,7 @@ export const CONFIG: Array<{
           diff: "-0%",
         },
       },
+      { type: POINTS_ID_MERITS_S1 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-rsena",
   },
@@ -1601,6 +1632,7 @@ export const CONFIG: Array<{
           diff: "-0%",
         },
       },
+      { type: POINTS_ID_MERITS_S1 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-amphrbtc",
   },
@@ -1628,6 +1660,7 @@ export const CONFIG: Array<{
           diff: "6.5%",
         },
       },
+      { type: POINTS_ID_MERITS_S1 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-steaklrt",
   },
@@ -1655,6 +1688,7 @@ export const CONFIG: Array<{
           diff: "-0%",
         },
       },
+      { type: POINTS_ID_MERITS_S1 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-hyvex",
   },
@@ -1682,6 +1716,7 @@ export const CONFIG: Array<{
           diff: "-0%",
         },
       },
+      { type: POINTS_ID_MERITS_S1 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-re7rtbtc",
   },
@@ -1709,6 +1744,7 @@ export const CONFIG: Array<{
           diff: "-0%",
         },
       },
+      { type: POINTS_ID_MERITS_S1 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-ifseth",
   },
@@ -1736,6 +1772,7 @@ export const CONFIG: Array<{
           diff: "-0%",
         },
       },
+      { type: POINTS_ID_MERITS_S1 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-cp0xlrt",
   },
@@ -1763,6 +1800,7 @@ export const CONFIG: Array<{
           diff: "-0%",
         },
       },
+      { type: POINTS_ID_MERITS_S1 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-urlrt",
   },
@@ -1790,6 +1828,7 @@ export const CONFIG: Array<{
           diff: "-0%",
         },
       },
+      { type: POINTS_ID_MERITS_S1 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-coeth",
   },
@@ -1817,6 +1856,7 @@ export const CONFIG: Array<{
           diff: "-0%",
         },
       },
+      { type: POINTS_ID_MERITS_S1 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-hceth",
   },
@@ -1844,6 +1884,7 @@ export const CONFIG: Array<{
           diff: "-0%",
         },
       },
+      { type: POINTS_ID_MERITS_S1 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-iseth",
   },
@@ -1871,6 +1912,7 @@ export const CONFIG: Array<{
           diff: "-0%",
         },
       },
+      { type: POINTS_ID_MERITS_S1 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-sibtc",
   },
@@ -1898,6 +1940,7 @@ export const CONFIG: Array<{
           diff: "-0%",
         },
       },
+      { type: POINTS_ID_MERITS_S1 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-lugaeth",
   },
@@ -1925,6 +1968,7 @@ export const CONFIG: Array<{
           diff: "-0%",
         },
       },
+      { type: POINTS_ID_MERITS_S1 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-roeth",
   },
@@ -1952,6 +1996,7 @@ export const CONFIG: Array<{
           diff: "-0%",
         },
       },
+      { type: POINTS_ID_MERITS_S1 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-rsunibtc",
   },
