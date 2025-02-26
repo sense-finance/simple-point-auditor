@@ -44,6 +44,7 @@ export async function GET(request: Request) {
       [key: string]: {
         realizedTotalGrowth: number;
         realizedPointsPerDay: number;
+        realizedPointsPerDollarPerDay: number;
         totalExpectedPoints: number | null;
         expectedPointsPerDay: number | null;
         percentageDiff: number | null;
@@ -61,6 +62,7 @@ export async function GET(request: Request) {
         pointsMetrics[pointsId] = {
           realizedTotalGrowth: 0,
           realizedPointsPerDay: 0,
+          realizedPointsPerDollarPerDay: 0,
           totalExpectedPoints: 0,
           expectedPointsPerDay: 0,
           percentageDiff: 0,
@@ -78,10 +80,12 @@ export async function GET(request: Request) {
          LIMIT 1;
       `;
       const latestLog = latestLogRows[0];
+
       if (!latestLog) {
         pointsMetrics[pointsId] = {
           realizedTotalGrowth: 0,
           realizedPointsPerDay: 0,
+          realizedPointsPerDollarPerDay: 0,
           totalExpectedPoints: 0,
           expectedPointsPerDay: 0,
           percentageDiff: 0,
@@ -111,9 +115,7 @@ export async function GET(request: Request) {
           dedupedLogs[dedupedLogs.length - 1].actual_points !==
             row.actual_points
         ) {
-          if (row.actual_points !== logsRows[0].actual_points) {
-            dedupedLogs.push(row);
-          }
+          dedupedLogs.push(row);
         }
       }
 
@@ -136,6 +138,7 @@ export async function GET(request: Request) {
       const realizedTotalGrowth =
         Number(effectiveEndLog.actual_points) -
         Number(chosenStartLog.actual_points);
+
       const realizedPointsPerDay =
         daysDifference > 0 ? realizedTotalGrowth / daysDifference : 0;
 
@@ -175,9 +178,18 @@ export async function GET(request: Request) {
             : 0;
       }
 
+      const positionValueUSD = await convertValue(
+        strategyConfig.fixedValue.asset as AssetType,
+        "USD",
+        strategyConfig.fixedValue.value
+      );
+
       pointsMetrics[pointsId] = {
         realizedTotalGrowth: Number(realizedTotalGrowth.toFixed(6)),
         realizedPointsPerDay: Number(realizedPointsPerDay.toFixed(6)),
+        realizedPointsPerDollarPerDay: Number(
+          (realizedPointsPerDay / positionValueUSD).toFixed(6)
+        ),
         totalExpectedPoints: totalExpectedPoints
           ? Number(totalExpectedPoints.toFixed(6))
           : null,
