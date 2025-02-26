@@ -15,7 +15,9 @@ export async function GET(request: Request) {
   // Allow comma-separated list of strategies.
   const requestedStrategies = strategyParam.split(",").map((s) => s.trim());
   const selectedConfigs = CONFIG.filter((s) =>
-    requestedStrategies.includes(s.strategy)
+    requestedStrategies
+      .map((s) => s.toLowerCase())
+      .includes(s.strategy.toLowerCase())
   );
   if (selectedConfigs.length === 0) {
     return NextResponse.json(
