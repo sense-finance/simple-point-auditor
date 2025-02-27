@@ -1605,6 +1605,7 @@ export const CONFIG: Array<{
         },
       },
       { type: POINTS_ID_MERITS_S1 },
+      { type: POINTS_ID_ETHENA_SATS_S3 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-rsena",
   },
