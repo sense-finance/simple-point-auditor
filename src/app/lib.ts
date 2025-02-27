@@ -1099,7 +1099,7 @@ export const CONFIG: Array<{
         },
       },
     ],
-    externalAppURL: "https://fluid.instadapp.io/nfts/1/3863",
+    externalAppURL: "https://fluid.instadapp.io/vaults/1/92",
   },
   {
     strategy: "Fluid: Smart Vault sUSDe/USDC-USDT Looping",
@@ -1117,7 +1117,36 @@ export const CONFIG: Array<{
         },
       },
     ],
-    externalAppURL: "https://fluid.instadapp.io/nfts/1/3864",
+    externalAppURL: "https://fluid.instadapp.io/vaults/1/50",
+  },
+  {
+    strategy: "Fluid: Smart Vault eBTC-cbBTC/wBTC Looping",
+    start: "Feb-27-2025 10:14:59 PM UTC",
+    owner: "0xC176945679Af78f5db1E4173c84531860BBD37ee",
+    fixedValue: { value: 0.0000067542, asset: "BTC" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_ETHERFI_S4,
+        expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
+      },
+      {
+        type: POINTS_ID_LOMBARD_LUX_S1,
+        expectedPointsPerDay: { value: 2, baseAsset: "BTC" },
+      },
+      {
+        type: POINTS_ID_VEDA_S1,
+        expectedPointsPerDay: { value: 0.03, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_KARAK_S2,
+        expectedPointsPerDay: { value: 1.2, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL: "https://fluid.instadapp.io/vaults/1/96",
   },
   {
     strategy: "Fluid: Smart Vault USDe-USDT/USDT Looping",
@@ -1135,7 +1164,7 @@ export const CONFIG: Array<{
         },
       },
     ],
-    externalAppURL: "https://fluid.instadapp.io/nfts/1/3866",
+    externalAppURL: "https://fluid.instadapp.io/vaults/1/93",
   },
 ];
 
