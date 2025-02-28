@@ -2012,8 +2012,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
           value: "verified",
-          lastSnapshot: "2025/02/26",
-          diff: "0%",
+          lastSnapshot: "2025/02/28",
+          diff: "3.1%",
         },
       },
       {
@@ -2039,8 +2039,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
           value: "verified",
-          lastSnapshot: "2025/02/26",
-          diff: "0%",
+          lastSnapshot: "2025/02/28",
+          diff: "3.7%",
         },
       },
       {
@@ -2066,8 +2066,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
           value: "verified",
-          lastSnapshot: "2025/02/26",
-          diff: "0%",
+          lastSnapshot: "2025/02/28",
+          diff: "1.4%",
         },
       },
       {
@@ -2093,8 +2093,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
           value: "verified",
-          lastSnapshot: "2025/02/26",
-          diff: "0%",
+          lastSnapshot: "2025/02/28",
+          diff: "1.6%",
         },
       },
       {
@@ -2120,8 +2120,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
           value: "verified",
-          lastSnapshot: "2025/02/26",
-          diff: "0%",
+          lastSnapshot: "2025/02/28",
+          diff: "1.8%",
         },
       },
       {
@@ -2147,8 +2147,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
           value: "verified",
-          lastSnapshot: "2025/02/26",
-          diff: "0%",
+          lastSnapshot: "2025/02/28",
+          diff: "2.1%",
         },
       },
       {
@@ -2174,8 +2174,8 @@ export const CONFIG: Array<{
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
           value: "verified",
-          lastSnapshot: "2025/02/26",
-          diff: "0%",
+          lastSnapshot: "2025/02/28",
+          diff: "1.0%",
         },
       },
       {
