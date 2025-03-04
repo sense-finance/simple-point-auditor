@@ -23,7 +23,7 @@ export const APIS: Array<{
   seasonStart?: string;
   dataSources: {
     getURL: (wallet: string) => string;
-    select: (data: any) => number;
+    select: (data: any, wallet: string) => number;
     catchError?: boolean;
     headers?: any;
   }[];
@@ -202,11 +202,16 @@ export const APIS: Array<{
     pointsId: POINTS_ID_RESOLV_S1,
     dataSources: [
       {
-        getURL: (wallet: string) =>
-          `https://api.fuul.xyz/api/v1/payouts/leaderboard?user_address=${wallet}`,
-        select: (data: any) => data?.results?.[0]?.total_amount,
-        headers: {
-          Authorization: RESOLVE_BEARER_TOKEN,
+        getURL: (wallet) =>
+          `https://api.resolv.im/points/leaderboard/slice?address=${wallet}`,
+        select: (data, wallet) => {
+          const rows = data?.rows || [];
+          for (const row of rows) {
+            if (row.address.toLowerCase() === wallet.toLowerCase()) {
+              return Number(row.points);
+            }
+          }
+          return 0;
         },
       },
     ],

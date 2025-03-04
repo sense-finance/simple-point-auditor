@@ -95,7 +95,7 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
                       const raw = await fetch(url, { headers }).then((r) =>
                         r.json()
                       );
-                      const points = dataSource.select(raw);
+                      const points = dataSource.select(raw, configItem.owner);
                       // Convert to Big just in case
                       const pointsAsBig = new Big(points || 0);
                       // Update local pointsBySource for debugging
