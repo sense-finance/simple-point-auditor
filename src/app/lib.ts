@@ -228,7 +228,7 @@ export const APIS: Array<{
   },
 ];
 
-export type AssetType = "USD" | "ETH" | "BTC" | "ENA";
+export type AssetType = "USD" | "ETH" | "BTC" | "ENA" | "POND";
 
 export const CONFIG: Array<{
   strategy: string;
@@ -2001,6 +2001,195 @@ export const CONFIG: Array<{
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-rsunibtc",
   },
+  {
+    strategy: "Mellow: MEV Capital Lidov3 stVault x Kiln",
+    start: "Feb-26-2025 08:51:35 PM UTC",
+    owner: "0xfce536545fa0203964e9aF00d4053291e99Be62d",
+    fixedValue: { value: 0.00185, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/28",
+          diff: "3.1%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/26",
+          diff: "0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-mevcapital-lidov3-stvault-kiln",
+  },
+  {
+    strategy: "Mellow: MEV Capital Lidov3 stVault x Nodeinfra",
+    start: "Feb-26-2025 09:06:23 PM UTC",
+    owner: "0x61eD7c521b340d7538196aa8EEce7Ad8eDD18AD6",
+    fixedValue: { value: 0.00185, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/28",
+          diff: "3.7%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/26",
+          diff: "0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-mevcapital-lidov3-stvault-nodeinfra",
+  },
+  {
+    strategy: "Mellow: MEV Capital Lidov3 stVault x Blockscape",
+    start: "Feb-26-2025 09:11:35 PM UTC",
+    owner: "0x891a0F51922A630E6097996FB51cfdf5409cdE08",
+    fixedValue: { value: 0.00185, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/28",
+          diff: "1.4%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/26",
+          diff: "0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-mevcapital-lidov3-stvault-blockscape",
+  },
+  {
+    strategy: "Mellow: MEV Capital Lidov3 stVault x Alchemy",
+    start: "Feb-26-2025 09:15:35 PM UTC",
+    owner: "0x7f6B9ef55acf7C6B590203a1607A1953c3D83b82",
+    fixedValue: { value: 0.00185, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/28",
+          diff: "1.6%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/26",
+          diff: "0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-mevcapital-lidov3-stvault-alchemy",
+  },
+  {
+    strategy: "Mellow: A41 Vault",
+    start: "Feb-26-2025 09:20:59 PM UTC",
+    owner: "0x4343CdE10b142b41cF8B3a3ED6908054aE338891",
+    fixedValue: { value: 0.00185, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/28",
+          diff: "1.8%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/26",
+          diff: "0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-a41-vault",
+  },
+  {
+    strategy: "Mellow: Stakefish Lido v3 Restaked ETH",
+    start: "Feb-26-2025 09:28:23 PM UTC",
+    owner: "0x49aF5D12D86def1ee9199478777C9Da3Aa5f0eD3",
+    fixedValue: { value: 0.00185, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/28",
+          diff: "2.1%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/26",
+          diff: "0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-stakefish-lidov3-restaked-eth",
+  },
+  {
+    strategy: "Mellow: Marlin POND LRT",
+    start: "Feb-26-2025 09:44:23 PM UTC",
+    owner: "0x09e8F3eb788f7Db92a19D066d7a7E9B363210C80",
+    fixedValue: { value: 360.813, asset: "POND" },
+    points: [
+      {
+        type: POINTS_ID_MELLOW_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/02/28",
+          diff: "1.0%",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "delayed",
+          lastSnapshot: "2025/02/26",
+          diff: "0%",
+        },
+      },
+    ],
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-rspond",
+  },
 ];
 
 const memoizedFetchETHPriceUSD = (() => {
@@ -2033,6 +2222,16 @@ const memoizedFetchENAPriceUSD = (() => {
   };
 })();
 
+const memoizedFetchPONDPriceUSD = (() => {
+  let cache: number | null = null;
+  return async () => {
+    if (cache === null) {
+      cache = await fetchPriceUSD("marlin");
+    }
+    return cache;
+  };
+})();
+
 export async function convertValue(
   fromAsset: AssetType,
   toAsset: AssetType,
@@ -2041,6 +2240,7 @@ export async function convertValue(
   const ethPriceUSD = (await memoizedFetchETHPriceUSD()) as number;
   const btcPriceUSD = (await memoizedFetchBTCPriceUSD()) as number;
   const enaPriceUSD = (await memoizedFetchENAPriceUSD()) as number;
+  const pondPriceUSD = (await memoizedFetchPONDPriceUSD()) as number;
 
   if (fromAsset === toAsset) return value;
 
@@ -2052,7 +2252,9 @@ export async function convertValue(
       ? value * ethPriceUSD
       : fromAsset === "BTC"
       ? value * btcPriceUSD
-      : value * enaPriceUSD;
+      : fromAsset === "ENA"
+      ? value * enaPriceUSD
+      : value * pondPriceUSD;
 
   // Then convert USD to target
   return toAsset === "USD"
@@ -2062,7 +2264,7 @@ export async function convertValue(
     : valueInUSD / btcPriceUSD;
 }
 
-export async function fetchPriceUSD(asset: "ethereum" | "bitcoin" | "ethena") {
+export async function fetchPriceUSD(asset: "ethereum" | "bitcoin" | "ethena" | "marlin") {
   const coinGeckoApiKey = process.env.COIN_GECKO_API_KEY;
   if (!coinGeckoApiKey) {
     throw new Error("no coin gecko api key");
