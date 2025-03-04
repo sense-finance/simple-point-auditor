@@ -15,8 +15,6 @@ export const POINTS_ID_LOMBARD_LUX_S1 = "POINTS_ID_LOMBARD_LUX_S1";
 export const POINTS_ID_RESOLV_S1 = "POINTS_ID_RESOLV_S1";
 const MAINNET_AGETH = "0xe1B4d34E8754600962Cd944B535180Bd758E6c2e";
 
-const RESOLVE_BEARER_TOKEN = process.env.RESOLVE_BEARER_TOKEN;
-
 export const APIS: Array<{
   pointsId: string;
   seasonEnd?: string;
@@ -1181,9 +1179,9 @@ export const CONFIG: Array<{
           baseAsset: "USD",
         }, // asset is YT (itself)
         state: {
-          value: "delayed",
-          lastSnapshot: "2025/02/07",
-          diff: "-100%",
+          value: "verified",
+          lastSnapshot: "2025/03/04",
+          diff: "0.3%",
         },
       },
     ],
@@ -2031,7 +2029,8 @@ export const CONFIG: Array<{
         },
       },
     ],
-    externalAppURL: "https://app.mellow.finance/vaults/ethereum-mevcapital-lidov3-stvault-kiln",
+    externalAppURL:
+      "https://app.mellow.finance/vaults/ethereum-mevcapital-lidov3-stvault-kiln",
   },
   {
     strategy: "Mellow: MEV Capital Lidov3 stVault x Nodeinfra",
@@ -2058,7 +2057,8 @@ export const CONFIG: Array<{
         },
       },
     ],
-    externalAppURL: "https://app.mellow.finance/vaults/ethereum-mevcapital-lidov3-stvault-nodeinfra",
+    externalAppURL:
+      "https://app.mellow.finance/vaults/ethereum-mevcapital-lidov3-stvault-nodeinfra",
   },
   {
     strategy: "Mellow: MEV Capital Lidov3 stVault x Blockscape",
@@ -2085,7 +2085,8 @@ export const CONFIG: Array<{
         },
       },
     ],
-    externalAppURL: "https://app.mellow.finance/vaults/ethereum-mevcapital-lidov3-stvault-blockscape",
+    externalAppURL:
+      "https://app.mellow.finance/vaults/ethereum-mevcapital-lidov3-stvault-blockscape",
   },
   {
     strategy: "Mellow: MEV Capital Lidov3 stVault x Alchemy",
@@ -2112,7 +2113,8 @@ export const CONFIG: Array<{
         },
       },
     ],
-    externalAppURL: "https://app.mellow.finance/vaults/ethereum-mevcapital-lidov3-stvault-alchemy",
+    externalAppURL:
+      "https://app.mellow.finance/vaults/ethereum-mevcapital-lidov3-stvault-alchemy",
   },
   {
     strategy: "Mellow: A41 Vault",
@@ -2166,7 +2168,8 @@ export const CONFIG: Array<{
         },
       },
     ],
-    externalAppURL: "https://app.mellow.finance/vaults/ethereum-stakefish-lidov3-restaked-eth",
+    externalAppURL:
+      "https://app.mellow.finance/vaults/ethereum-stakefish-lidov3-restaked-eth",
   },
   {
     strategy: "Mellow: Marlin POND LRT",
@@ -2269,7 +2272,9 @@ export async function convertValue(
     : valueInUSD / btcPriceUSD;
 }
 
-export async function fetchPriceUSD(asset: "ethereum" | "bitcoin" | "ethena" | "marlin") {
+export async function fetchPriceUSD(
+  asset: "ethereum" | "bitcoin" | "ethena" | "marlin"
+) {
   const coinGeckoApiKey = process.env.COIN_GECKO_API_KEY;
   if (!coinGeckoApiKey) {
     throw new Error("no coin gecko api key");
