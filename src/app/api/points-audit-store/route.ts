@@ -1,6 +1,6 @@
 import { neon } from "@neondatabase/serverless";
 
-import { getAllPointsData } from "../points-audit/route";
+import { getAllPointsData } from "../points-audit/utils";
 import { NextResponse } from "next/server";
 import { fetchPriceUSD } from "@/app/lib";
 
