@@ -1259,6 +1259,8 @@ export const CONFIG: Array<{
       },
     ],
     externalAppURL: "https://fluid.instadapp.io/vaults/1/93",
+  },
+  {
     strategy: "Symbiotic: mETH",
     start: "Feb-11-2025 05:07:59 PM UTC",
     owner: "0x7D499bf53cD16934a734ED3d377B86eD4d93aBD2",
