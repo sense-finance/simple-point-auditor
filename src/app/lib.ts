@@ -1178,6 +1178,89 @@ export const CONFIG: Array<{
     externalAppURL: "https://app.resolv.xyz/points",
   },
   {
+    strategy: "Fluid: Smart Vault sUSDe-USDT/USDT Looping",
+    start: "Jan-30-2025 05:27:59 AM UTC",
+    owner: "0xCA6ed3BE5CDC34D11f42C319755b289EED3DDaef",
+    fixedValue: { value: 6, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/10",
+          diff: "-27.8%",
+        },
+      },
+    ],
+    externalAppURL: "https://fluid.instadapp.io/vaults/1/92",
+  },
+  {
+    strategy: "Fluid: Smart Vault sUSDe/USDC-USDT Looping",
+    start: "Jan-30-2025 05:39:23 AM UTC",
+    owner: "0x60e8f1609866Ad7240Ec27935C503159bF1d488c",
+    fixedValue: { value: 6, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/10",
+          diff: "-17.1%",
+        },
+      },
+    ],
+    externalAppURL: "https://fluid.instadapp.io/vaults/1/50",
+  },
+  {
+    strategy: "Fluid: Smart Vault eBTC-cbBTC/wBTC Looping",
+    start: "Feb-27-2025 10:14:59 PM UTC",
+    owner: "0xC176945679Af78f5db1E4173c84531860BBD37ee",
+    fixedValue: { value: 0.0000067542, asset: "BTC" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_ETHERFI_S4,
+        expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
+      },
+      {
+        type: POINTS_ID_LOMBARD_LUX_S1,
+        expectedPointsPerDay: { value: 2, baseAsset: "BTC" },
+      },
+      {
+        type: POINTS_ID_VEDA_S1,
+        expectedPointsPerDay: { value: 0.03, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_KARAK_S2,
+        expectedPointsPerDay: { value: 1.2, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL: "https://fluid.instadapp.io/vaults/1/96",
+  },
+  {
+    strategy: "Fluid: Smart Vault USDe-USDT/USDT Looping",
+    start: "Jan-30-2025 05:36:59 AM UTC",
+    owner: "0xFDC8184953Fda238a2367A5313D541850Ae58D8C",
+    fixedValue: { value: 6, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
+        state: {
+          value: "partial",
+          lastSnapshot: "2025/02/10",
+          diff: "-21.8%",
+        },
+      },
+    ],
+    externalAppURL: "https://fluid.instadapp.io/vaults/1/93",
+  },
+  {
     strategy: "Symbiotic: mETH",
     start: "Feb-11-2025 05:07:59 PM UTC",
     owner: "0x7D499bf53cD16934a734ED3d377B86eD4d93aBD2",
