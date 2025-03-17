@@ -123,6 +123,19 @@ export async function GET(request: Request) {
         }
       }
 
+      if (dedupedLogs.length === 0) {
+        pointsMetrics[pointsId] = {
+          realizedTotalGrowth: 0,
+          realizedPointsPerDay: 0,
+          realizedPointsPerDollarPerDay: 0,
+          totalExpectedPoints: 0,
+          expectedPointsPerDay: 0,
+          percentageDiff: 0,
+          daysOfData: 0,
+        };
+        continue;
+      }
+
       // Use the last (i.e. most recent) deduped log as the effective end update.
       const effectiveEndLog = dedupedLogs[dedupedLogs.length - 1];
       const effectiveEndTime = new Date(effectiveEndLog.created_at).getTime();
