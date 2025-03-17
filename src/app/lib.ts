@@ -2263,6 +2263,187 @@ export const CONFIG: Array<{
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-rspond",
   },
+  {
+    strategy: "Contango: AaveV3 sUSDe/USDC",
+    start: "Mar-14-2025 02:32:35 PM UTC",
+    owner: "0xcdb19f51b440BBD4fe91129190A7bD416699E6F2",
+    fixedValue: { value: 16.57, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+        state: {
+          value: "TBD",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+    ],
+    externalAppURL: "https://app.contango.xyz/", // connect as wallet - no position page
+  },
+  {
+    strategy: "Contango: AaveV3 sUSDe/USDT",
+    start: "Mar-14-2025 02:54:23 PM UTC",
+    owner: "0x5b59Df8d64aE744177CbFA85D36F771537Fce1B1",
+    fixedValue: { value: 147, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+        state: {
+          value: "TBD",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+    ],
+    externalAppURL: "https://app.contango.xyz/", // connect as wallet - no position page
+  },
+  {
+    strategy: "Contango: AaveV3 sUSDe/DAI",
+    start: "Mar-14-2025 03:00:35 PM UTC",
+    owner: "0xB6391102fd6A23e2E78EeFAEA7be3Cf7e89d1ebf",
+    fixedValue: { value: 29.34, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+        state: {
+          value: "TBD",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+    ],
+    externalAppURL: "https://app.contango.xyz/", // connect as wallet - no position page
+  },
+  {
+    strategy: "Contango: AaveV3 sUSDe/USDS",
+    start: "Mar-14-2025 03:18:11 PM UTC",
+    owner: "0xF7d93e424445dd965647B524589fE51810F8e78C",
+    fixedValue: { value: 90.89, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+        state: {
+          value: "TBD",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+    ],
+    externalAppURL: "https://app.contango.xyz/", // connect as wallet - no position page
+  },
+  {
+    strategy: "Contango: AaveV3 weETH/ETH",
+    start: "Mar-14-2025 03:25:59 PM UTC",
+    owner: "0xFD8b6a712Bc3C639b88c0119ACD009F711E63815",
+    fixedValue: { value: 0.084, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_ETHERFI_S5,
+        expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
+        state: {
+          value: "TBD",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+    ],
+    externalAppURL: "https://app.contango.xyz/", // connect as wallet - no position page
+  },
+  {
+    strategy: "Contango: AaveV3 weETH/wstETH",
+    start: "Mar-14-2025 03:28:59 PM UTC",
+    owner: "0xc06994006D62fA9A02BfF2465900128f7a4A72f6",
+    fixedValue: { value: 0.092, asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_ETHERFI_S5,
+        expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
+        state: {
+          value: "TBD",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+    ],
+    externalAppURL: "https://app.contango.xyz/", // connect as wallet - no position page
+  },
+  {
+    strategy: "Contango: Morpho sUSDe/USDC",
+    start: "Mar-14-2025 04:36:59 PM UTC",
+    owner: "0xF3f04c73d1B321e59747219307ff08c28a67945E",
+    fixedValue: { value: 103.37, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+        state: {
+          value: "TBD",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+    ],
+    externalAppURL: "https://app.contango.xyz/", // connect as wallet - no position page
+  },
+  {
+    strategy: "Contango: Morpho sUSDe/USDT",
+    start: "Mar-14-2025 04:45:11 PM UTC",
+    owner: "0xD13D8C614181bDebD03691A41353677Bc8a5d497",
+    fixedValue: { value: 86, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+        state: {
+          value: "TBD",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+    ],
+    externalAppURL: "https://app.contango.xyz/", // connect as wallet - no position page
+  },
+  {
+    strategy: "Contango: Morpho sUSDe/DAI",
+    start: "Mar-14-2025 04:49:11 PM UTC",
+    owner: "0xA724084eC73553B1B312FB75DA43184D2065A0Fa",
+    fixedValue: { value: 53.05, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S3,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+        state: {
+          value: "TBD",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+    ],
+    externalAppURL: "https://app.contango.xyz/", // connect as wallet - no position page
+  },
+
+  {
+    strategy: "Contango: Morpho weETH/ETH",
+    start: "Mar-17-2025 03:38:23 PM UTC",
+    owner: "0xd5a66efea1500507970f1A8A992523ee75582209",
+    fixedValue: { value: ".078", asset: "ETH" },
+    points: [
+      {
+        type: POINTS_ID_ETHERFI_S5,
+        expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
+        state: {
+          value: "TBD",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+    ],
+    externalAppURL: "https://app.contango.xyz/", // connect as wallet - no position page
+  },
 ];
 
 const memoizedFetchETHPriceUSD = (() => {
