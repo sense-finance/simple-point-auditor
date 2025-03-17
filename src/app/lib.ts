@@ -1,4 +1,5 @@
 import Big from "big.js";
+import { getAddress } from "viem";
 
 export const POINTS_ID_ETHENA_SATS_S3 = "POINTS_ID_ETHENA_SATS_S3";
 export const POINTS_ID_KARAK_S2 = "POINTS_ID_KARAK_S2";
@@ -31,7 +32,7 @@ export const APIS: Array<{
     dataSources: [
       {
         getURL: (wallet: string) =>
-          `https://app.ethena.fi/api/referral/get-referree?address=${wallet}`,
+          `https://app.ethena.fi/api/rewards?address=${getAddress(wallet)}`,
         select: (data: any) =>
           data?.queryWallet?.[0]?.accumulatedTotalShardsEarned || 0,
       },
