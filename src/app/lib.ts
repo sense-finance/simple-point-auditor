@@ -129,14 +129,7 @@ export const APIS: Array<{
               acc: number,
               curr: { user_mellow_points: number; boost: string }
             ) => {
-              let mellowBoost = 1;
-              if (
-                curr.boost.toString().includes("pendle") ||
-                curr.boost.toString().includes("zircuit")
-              ) {
-                mellowBoost = 2;
-              }
-              return curr.user_mellow_points * mellowBoost + acc;
+              return curr.user_mellow_points * Number(curr.boost) + acc;
             },
             0
           ),
@@ -917,9 +910,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 5, baseAsset: "USD" },
         state: {
-          value: "delayed",
-          lastSnapshot: "2025/01/21",
-          diff: "-100.0%",
+          value: "partial",
+          lastSnapshot: "2025/03/17",
+          diff: "-31.5%",
         },
       },
       {
@@ -945,9 +938,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 10, baseAsset: "USD" },
         state: {
-          value: "delayed",
-          lastSnapshot: "2025/01/21",
-          diff: "-100.0%",
+          value: "verified",
+          lastSnapshot: "2025/03/17",
+          diff: "-2.9%",
         },
       },
       {
@@ -980,11 +973,11 @@ export const CONFIG: Array<{
     points: [
       {
         type: POINTS_ID_LOMBARD_LUX_S1,
-        expectedPointsPerDay: { value: 3, baseAsset: "BTC" },
+        expectedPointsPerDay: { value: 3000, baseAsset: "BTC" },
         state: {
-          value: "partial",
-          lastSnapshot: "2025/01/21",
-          diff: "-53.1%",
+          value: "verified",
+          lastSnapshot: "2025/03/17",
+          diff: "-0.4%",
         },
       },
     ],
@@ -1188,9 +1181,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 30, baseAsset: "USD" },
         state: {
-          value: "partial",
-          lastSnapshot: "2025/02/10",
-          diff: "-27.8%",
+          value: "verified",
+          lastSnapshot: "2025/03/17",
+          diff: "-16.9%",
         },
       },
     ],
@@ -1206,9 +1199,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 5, baseAsset: "USD" },
         state: {
-          value: "partial",
-          lastSnapshot: "2025/02/10",
-          diff: "-17.1%",
+          value: "verified",
+          lastSnapshot: "2025/03/17",
+          diff: "-14.3%",
         },
       },
     ],
@@ -1253,9 +1246,9 @@ export const CONFIG: Array<{
         type: POINTS_ID_ETHENA_SATS_S3,
         expectedPointsPerDay: { value: 30, baseAsset: "USD" },
         state: {
-          value: "partial",
-          lastSnapshot: "2025/02/10",
-          diff: "-21.8%",
+          value: "verified",
+          lastSnapshot: "2025/03/17",
+          diff: "-5.1%",
         },
       },
     ],
@@ -2063,7 +2056,7 @@ export const CONFIG: Array<{
         state: {
           value: "delayed",
           lastSnapshot: "2025/02/21",
-          diff: "-0%",
+          diff: "-100%",
         },
       },
       { type: POINTS_ID_MERITS_S1 },

@@ -117,7 +117,9 @@ export async function GET(request: Request) {
           dedupedLogs[dedupedLogs.length - 1].actual_points !==
             row.actual_points
         ) {
-          dedupedLogs.push(row);
+          if (Number(row.actual_points) !== 0) {
+            dedupedLogs.push(row);
+          }
         }
       }
 
@@ -127,12 +129,23 @@ export async function GET(request: Request) {
 
       // Define the desired start time as 7 days prior to the effective end.
       const desiredStartMillis = effectiveEndTime - 7 * 24 * 60 * 60 * 1000;
-      let chosenStartLog = dedupedLogs.find(
-        (row) => new Date(row.created_at).getTime() >= desiredStartMillis
-      );
-      if (!chosenStartLog) {
-        chosenStartLog = dedupedLogs[0];
-      }
+      let chosenStartLog = dedupedLogs.reduce((closest: any, current: any) => {
+        const currentTime = new Date(current.created_at).getTime();
+        const closestTime = closest
+          ? new Date(closest.created_at).getTime()
+          : null;
+
+        // If we don't have a closest yet, or if this entry is closer to the desired start time
+        if (
+          !closest ||
+          (closestTime !== null &&
+            Math.abs(currentTime - desiredStartMillis) <
+              Math.abs(closestTime - desiredStartMillis))
+        ) {
+          return current;
+        }
+        return closest;
+      }, null);
 
       const startTime = new Date(chosenStartLog.created_at).getTime();
       const daysDifference =
