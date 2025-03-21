@@ -2430,7 +2430,7 @@ export const CONFIG: Array<{
     strategy: "Contango: Morpho weETH/ETH",
     start: "Mar-17-2025 03:38:23 PM UTC",
     owner: "0xd5a66efea1500507970f1A8A992523ee75582209",
-    fixedValue: { value: ".078", asset: "ETH" },
+    fixedValue: { value: 0.078, asset: "ETH" },
     points: [
       {
         type: POINTS_ID_ETHERFI_S5,
