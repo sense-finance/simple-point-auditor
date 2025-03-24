@@ -29,12 +29,14 @@ export const APIS: Array<{
 }> = [
   {
     pointsId: POINTS_ID_ETHENA_SATS_S3,
+    seasonEnd: "Mar-24-2025 00:00:00 AM UTC",
     dataSources: [
       {
         getURL: (wallet: string) =>
-          `https://app.ethena.fi/api/rewards?address=${getAddress(wallet)}`,
-        select: (data: any) =>
-          data?.queryWallet?.[0]?.accumulatedTotalShardsEarned || 0,
+          `https://app.ethena.fi/api/users/get-user?address=${getAddress(
+            wallet
+          )}`,
+        select: (data: any) => data?.totalS3Points || 0,
       },
     ],
   },
