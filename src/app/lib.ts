@@ -2,6 +2,7 @@ import Big from "big.js";
 import { getAddress } from "viem";
 
 export const POINTS_ID_ETHENA_SATS_S3 = "POINTS_ID_ETHENA_SATS_S3";
+export const POINTS_ID_ETHENA_SATS_S4 = "POINTS_ID_ETHENA_SATS_S4";
 export const POINTS_ID_KARAK_S2 = "POINTS_ID_KARAK_S2";
 export const POINTS_ID_SYMBIOTIC_S1 = "POINTS_ID_SYMBIOTIC_S1";
 export const POINTS_ID_EIGENLAYER_S3 = "POINTS_ID_EIGENLAYER_S3";
@@ -37,6 +38,20 @@ export const APIS: Array<{
             wallet
           )}`,
         select: (data: any) => data?.totalS3Points || 0,
+      },
+    ],
+  },
+  {
+    pointsId: POINTS_ID_ETHENA_SATS_S4,
+    seasonStart: "Mar-24-2025 00:00:00 AM UTC",
+    dataSources: [
+      {
+        getURL: (wallet) =>
+          `https://app.ethena.fi/api/referral/get-referree?address=${wallet}`,
+        select: (data) =>
+          Big(
+            data?.queryWallet?.[0]?.accumulatedTotalShardsEarned || 0
+          ).toNumber(),
       },
     ],
   },
@@ -272,6 +287,10 @@ export const CONFIG: Array<{
           diff: "-1.2%",
         },
       },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 20, baseAsset: "USD" },
+      },
     ],
     externalAppURL: "https://app.ethena.fi/liquidity",
   },
@@ -289,6 +308,10 @@ export const CONFIG: Array<{
           lastSnapshot: "2025/01/21",
           diff: "-17.6%",
         },
+      },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
       },
     ],
     externalAppURL:
@@ -398,6 +421,10 @@ export const CONFIG: Array<{
           lastSnapshot: "2025/01/21",
           diff: "-6.0%",
         },
+      },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 15, baseAsset: "USD" },
       },
       {
         type: POINTS_ID_ZIRCUIT_S3,
@@ -511,6 +538,10 @@ export const CONFIG: Array<{
         },
       },
       {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 10, baseAsset: "USD" },
+      },
+      {
         type: POINTS_ID_MELLOW_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
@@ -578,6 +609,10 @@ export const CONFIG: Array<{
           lastSnapshot: "2025/01/21",
           diff: "-13.1%",
         },
+      },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
       },
     ],
     externalAppURL: "https://fluid.instadapp.io/vaults/1/18",
@@ -696,6 +731,10 @@ export const CONFIG: Array<{
           diff: "-9.2%",
         },
       },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+      },
     ],
     externalAppURL: "https://fluid.instadapp.io/vaults/1/56",
   },
@@ -713,6 +752,10 @@ export const CONFIG: Array<{
           lastSnapshot: "2025/03/17",
           diff: "-13.7%",
         },
+      },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
       },
     ],
     externalAppURL: "https://fluid.instadapp.io/vaults/1/17",
@@ -765,6 +808,10 @@ export const CONFIG: Array<{
           diff: "-6.7%",
         },
       },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 20, baseAsset: "USD" },
+      },
     ],
     externalAppURL: "https://app.karak.network/pool/ethereum/USDe",
   },
@@ -810,6 +857,10 @@ export const CONFIG: Array<{
           diff: "-15.8%",
         },
       },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 10, baseAsset: "USD" },
+      },
     ],
     externalAppURL: "https://app.symbiotic.fi/restake/susde",
   },
@@ -838,6 +889,10 @@ export const CONFIG: Array<{
         },
       },
       {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 10, baseAsset: "USD" },
+      },
+      {
         type: POINTS_ID_MELLOW_S1,
         expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
@@ -861,6 +916,9 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_KARAK_S2,
       },
+      {
+        type: POINTS_ID_ZIRCUIT_S3,
+      },
     ],
     externalAppURL: "https://kelpdao.xyz/gain/airdrop-gain/",
   },
@@ -878,6 +936,10 @@ export const CONFIG: Array<{
           lastSnapshot: "2025/01/21",
           diff: "-15.8%",
         },
+      },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
       },
     ],
     externalAppURL:
@@ -898,6 +960,10 @@ export const CONFIG: Array<{
           diff: "-9.8%",
         },
       },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
+      },
     ],
     externalAppURL:
       "https://app.pendle.finance/trade/markets/0xcDd26Eb5EB2Ce0f203a84553853667aE69Ca29Ce/swap?view=yt&chain=ethereum",
@@ -916,6 +982,10 @@ export const CONFIG: Array<{
           lastSnapshot: "2025/03/17",
           diff: "-31.5%",
         },
+      },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
       },
       {
         type: POINTS_ID_KARAK_S2,
@@ -944,6 +1014,10 @@ export const CONFIG: Array<{
           lastSnapshot: "2025/03/17",
           diff: "-2.9%",
         },
+      },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 10, baseAsset: "USD" },
       },
       {
         type: POINTS_ID_MELLOW_S1,
@@ -1105,6 +1179,10 @@ export const CONFIG: Array<{
           diff: "-10.5%",
         },
       },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 50, baseAsset: "USD" },
+      },
     ],
     boosts: [],
     externalAppURL:
@@ -1188,6 +1266,10 @@ export const CONFIG: Array<{
           diff: "-16.9%",
         },
       },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
+      },
     ],
     externalAppURL: "https://fluid.instadapp.io/vaults/1/92",
   },
@@ -1205,6 +1287,10 @@ export const CONFIG: Array<{
           lastSnapshot: "2025/03/17",
           diff: "-14.3%",
         },
+      },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
       },
     ],
     externalAppURL: "https://fluid.instadapp.io/vaults/1/50",
@@ -1252,6 +1338,10 @@ export const CONFIG: Array<{
           lastSnapshot: "2025/03/17",
           diff: "-5.1%",
         },
+      },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
       },
     ],
     externalAppURL: "https://fluid.instadapp.io/vaults/1/93",
@@ -1670,6 +1760,7 @@ export const CONFIG: Array<{
       },
       { type: POINTS_ID_MERITS_S1 },
       { type: POINTS_ID_ETHENA_SATS_S3 },
+      { type: POINTS_ID_ETHENA_SATS_S4 },
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-rsena",
   },
@@ -2274,6 +2365,10 @@ export const CONFIG: Array<{
           diff: "-3.5%",
         },
       },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+      },
     ],
     externalAppURL: "https://app.contango.xyz/", // connect as wallet - no position page
   },
@@ -2291,6 +2386,10 @@ export const CONFIG: Array<{
           lastSnapshot: "2025/03/21",
           diff: "-2.9%",
         },
+      },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
       },
     ],
     externalAppURL: "https://app.contango.xyz/", // connect as wallet - no position page
@@ -2310,6 +2409,10 @@ export const CONFIG: Array<{
           diff: "-3.2%",
         },
       },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+      },
     ],
     externalAppURL: "https://app.contango.xyz/", // connect as wallet - no position page
   },
@@ -2327,6 +2430,10 @@ export const CONFIG: Array<{
           lastSnapshot: "2025/03/21",
           diff: "-3.1%",
         },
+      },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
       },
     ],
     externalAppURL: "https://app.contango.xyz/", // connect as wallet - no position page
@@ -2382,6 +2489,10 @@ export const CONFIG: Array<{
           diff: "-2.4%",
         },
       },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+      },
     ],
     externalAppURL: "https://app.contango.xyz/", // connect as wallet - no position page
   },
@@ -2399,6 +2510,10 @@ export const CONFIG: Array<{
           lastSnapshot: "2025/03/21",
           diff: "-2.3%",
         },
+      },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
       },
     ],
     externalAppURL: "https://app.contango.xyz/", // connect as wallet - no position page
@@ -2418,10 +2533,13 @@ export const CONFIG: Array<{
           diff: "-2.2%",
         },
       },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+      },
     ],
     externalAppURL: "https://app.contango.xyz/", // connect as wallet - no position page
   },
-
   {
     strategy: "Contango: Morpho weETH/ETH",
     start: "Mar-17-2025 03:38:23 PM UTC",
@@ -2440,6 +2558,103 @@ export const CONFIG: Array<{
     ],
     externalAppURL: "https://app.contango.xyz/", // connect as wallet - no position page
   },
+
+  {
+    strategy: "Fluid: Smart Vault sUSDe-USDT/USDC-USDT Looping",
+    start: "Apr-02-2025 07:42:59 PM UTC",
+    owner: "0xC2A5E04E8bEd03F5E357D850b7bD6DFe84517082",
+    fixedValue: { value: 13.656, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL: "https://fluid.instadapp.io/vaults/1/98",
+  },
+  {
+    strategy: "Fluid: Smart Vault USDe-USDT/USDC-USDT Looping",
+    start: "Apr-02-2025 07:49:23 PM UTC",
+    owner: "0x096c5A008238735ee53a5DE8860c24bcf077C6EA",
+    fixedValue: { value: 0.5, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 10, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL: "https://fluid.instadapp.io/vaults/1/99",
+  },
+
+  {
+    strategy: "Pendle: Hold YT-lvlUSD-29MAY2025",
+    start: "Apr-02-2025 07:51:23 PM UTC",
+    owner: "0xce25894164473EA22C6CE1ff70dAF3bb50ea064a",
+    fixedValue: { value: 3.73, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0xe45d2ce15abba3c67b9ff1e7a69225c855d3da82/swap?view=yt&py=output&chain=ethereum",
+  },
+
+  {
+    strategy: "Pendle: Hold YT-EBTC-26JUN2025",
+    start: "Apr-02-2025 07:53:35 PM UTC",
+    owner: "0x8B2F0f3A646166dbC1f464827127e6fc4b7A67dc",
+    fixedValue: { value: 0.00003885, asset: "BTC" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+      {
+        type: POINTS_ID_ETHERFI_S5,
+        expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
+      },
+      {
+        type: POINTS_ID_KARAK_S2,
+      },
+      {
+        type: POINTS_ID_LOMBARD_LUX_S1,
+      },
+      {
+        type: POINTS_ID_VEDA_S1,
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x523f9441853467477b4dde653c554942f8e17162/swap?view=yt&py=output&chain=ethereum",
+  },
+
+  {
+    strategy: "Mellow: Re7 Resolv Restaked wstUSR",
+    start: "Apr-02-2025 07:57:47 PM UTC",
+    owner: "0x5D1eF1a6047d80eb2FDe76e02b69FC5a91EdC2aA",
+    fixedValue: { value: 3.55, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+      },
+      {
+        type: POINTS_ID_MELLOW_S1,
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0xe45d2ce15abba3c67b9ff1e7a69225c855d3da82/swap?view=yt&py=output&chain=ethereum",
+  },
+
+  // {
+  //   strategy: "Contango: Morpho srUSD/USDC",
+  //   start: "Apr-02-2025 07:52:23 PM UTC",
+  //   owner: "0x4c4229964445DbBF0e626c765973A07b25DCA0Ed",
+  //   fixedValue: { value: 0.5, asset: "USD" },
+  //   points: [
+  //   ],
+  //   externalAppURL: "https://app.contango.xyz/",
+  // },
 ];
 
 const memoizedFetchETHPriceUSD = (() => {
