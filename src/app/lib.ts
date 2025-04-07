@@ -2567,7 +2567,7 @@ export const CONFIG: Array<{
     points: [
       {
         type: POINTS_ID_ETHENA_SATS_S4,
-        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
       },
     ],
     externalAppURL: "https://fluid.instadapp.io/vaults/1/98",
@@ -2580,7 +2580,7 @@ export const CONFIG: Array<{
     points: [
       {
         type: POINTS_ID_ETHENA_SATS_S4,
-        expectedPointsPerDay: { value: 10, baseAsset: "USD" },
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
       },
     ],
     externalAppURL: "https://fluid.instadapp.io/vaults/1/99",
@@ -2641,11 +2641,15 @@ export const CONFIG: Array<{
       {
         type: POINTS_ID_MELLOW_S1,
       },
+      {
+        type: POINTS_ID_RESOLV_S1,
+      },
     ],
     externalAppURL:
       "https://app.pendle.finance/trade/markets/0xe45d2ce15abba3c67b9ff1e7a69225c855d3da82/swap?view=yt&py=output&chain=ethereum",
   },
 
+  // No points for the following strat yet supported
   // {
   //   strategy: "Contango: Morpho srUSD/USDC",
   //   start: "Apr-02-2025 07:52:23 PM UTC",
