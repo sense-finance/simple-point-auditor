@@ -2742,6 +2742,83 @@ export const CONFIG: Array<{
     externalAppURL:
       "https://app.pendle.finance/trade/markets/0xda57abf95a7c21eb9df08fbaada182f749f6c62f/swap?view=yt&chain=ethereum",
   },
+  {
+    strategy: "Pendle: Hold lvlUSD YTs (24 Sep 2025)",
+    start: "Apr-24-2025 01:51:59 AM UTC",
+    owner: "0x512eC399d92cB79cfb9E34FaAFFCA58a0DDF5C9d",
+    fixedValue: { value: 313.48, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x461bc2ac3f80801bc11b0f20d63b73fef60c8076/swap?view=yt&chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold USR YTs (28 May 2025)",
+    start: "Apr-24-2025 01:54:35 AM UTC",
+    owner: "0xb13Ea0cC1b203D012835E76FD44EA268B31d7ae5",
+    fixedValue: { value: 1157.46, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_RESOLV_S1,
+        expectedPointsPerDay: { value: 45, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x35a18cd59a214c9e797e14b1191b700eea251f6a/swap?view=yt&chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold wstUSR YTs (24 Sep 2025)",
+    start: "Apr-24-2025 01:57:47 AM UTC",
+    owner: "0x3Cf259Ead56656283867293F1faA6146F0991957",
+    fixedValue: { value: 212.65, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_RESOLV_S1,
+        expectedPointsPerDay: {
+          value: (startDate) => {
+            const initialRate = 25;
+            const secondRate = 15;
+
+            const now = new Date().getTime();
+            const start = new Date(startDate).getTime();
+            const initialRateEnd = new Date(
+              "Apr-17-2025 11:59:59 PM UTC"
+            ).getTime();
+            const maturityTime = new Date(
+              "Sep-24-2025 12:00:00 AM UTC"
+            ).getTime();
+
+            if (now <= initialRateEnd) {
+              return initialRate;
+            }
+            if (start > initialRateEnd) {
+              return secondRate;
+            }
+
+            const initialRateDuration = initialRateEnd - start;
+            const secondRateDuration =
+              now > maturityTime
+                ? maturityTime - initialRateEnd
+                : now - initialRateEnd;
+
+            const blendedRate =
+              (initialRateDuration * initialRate +
+                secondRateDuration * secondRate) /
+              (initialRateDuration + secondRateDuration);
+
+            return blendedRate;
+          },
+          baseAsset: "USD",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x09fa04aac9c6d1c6131352ee950cd67ecc6d4fb9/swap?view=yt&chain=ethereum",
+  },
   // No points for the following strat yet supported
   // {
   //   strategy: "Contango: Morpho srUSD/USDC",
