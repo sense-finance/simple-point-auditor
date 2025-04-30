@@ -212,7 +212,7 @@ export const APIS: Array<{
     dataSources: [
       {
         getURL: (wallet) =>
-          `https://api.resolv.im/points/leaderboard/slice?address=${wallet}`,
+          `https://api.resolv.xyz/points/leaderboard/slice?address=${wallet}`,
         select: (data, wallet) => {
           const rows = data?.rows || [];
           for (const row of rows) {
@@ -1676,7 +1676,7 @@ export const CONFIG: Array<{
   {
     strategy: "Symbiotic: Gauntlet Restaked wstETH",
     start: "Feb-12-2025 04:20:47 AM UTC",
-    owner: "0xBDfcdEb7d9af720E9D94b05DFffaF592020b328A",
+    owner: "0xbBa9d6349d63E667d42Ef1F3c4D180917BF6124A",
     fixedValue: { value: 0.002515, asset: "ETH" },
     points: [
       {
@@ -2645,8 +2645,7 @@ export const CONFIG: Array<{
         type: POINTS_ID_RESOLV_S1,
       },
     ],
-    externalAppURL:
-      "https://app.pendle.finance/trade/markets/0xe45d2ce15abba3c67b9ff1e7a69225c855d3da82/swap?view=yt&py=output&chain=ethereum",
+    externalAppURL: "https://app.mellow.finance/vaults/ethereum-rstusr",
   },
 
   // No points for the following strat yet supported
