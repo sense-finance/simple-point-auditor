@@ -212,7 +212,7 @@ export const APIS: Array<{
     dataSources: [
       {
         getURL: (wallet) =>
-          `https://api.resolv.im/points/leaderboard/slice?address=${wallet}`,
+          `https://api.resolv.xyz/points/leaderboard/slice?address=${wallet}`,
         select: (data, wallet) => {
           const rows = data?.rows || [];
           for (const row of rows) {
@@ -2587,7 +2587,7 @@ export const CONFIG: Array<{
   },
 
   {
-    strategy: "Pendle: Hold YT-lvlUSD-29MAY2025",
+    strategy: "Pendle: Hold lvlUSD YTs (29 May 2025)",
     start: "Apr-02-2025 07:51:23 PM UTC",
     owner: "0xce25894164473EA22C6CE1ff70dAF3bb50ea064a",
     fixedValue: { value: 3.73, asset: "USD" },
@@ -2827,7 +2827,7 @@ export const CONFIG: Array<{
     points: [
       {
         type: POINTS_ID_SYMBIOTIC_S1,
-        expectedPointsPerDay: { value: 0.006, baseAsset: "ETH" },
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
           value: "verified",
           lastSnapshot: "",
@@ -2870,7 +2870,7 @@ export const CONFIG: Array<{
     strategy: "Pendle: Hold weETHk YTs (25 Jun 2025)",
     start: "Apr-24-2025 02:03:47 AM UTC",
     owner: "0x5c72B23F190a59C85c4e73C132a2d7785CF8Bedd",
-    fixedValue: { value: 0.5413, asset: "USD" }, // .005 ETH
+    fixedValue: { value: 0.5413, asset: "ETH" }, // .005 ETH
     points: [
       {
         type: POINTS_ID_ETHERFI_S5,
@@ -2902,7 +2902,7 @@ export const CONFIG: Array<{
     points: [
       {
         type: POINTS_ID_ETHERFI_S5,
-        expectedPointsPerDay: { value: 30000, baseAsset: "BTC" },
+        expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
         state: {
           value: "verified",
           lastSnapshot: "",
@@ -2911,7 +2911,7 @@ export const CONFIG: Array<{
       },
       {
         type: POINTS_ID_SYMBIOTIC_S1,
-        expectedPointsPerDay: { value: 0.006, baseAsset: "BTC" },
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
         state: {
           value: "verified",
           lastSnapshot: "",
