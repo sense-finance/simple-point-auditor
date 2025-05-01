@@ -2587,7 +2587,7 @@ export const CONFIG: Array<{
   },
 
   {
-    strategy: "Pendle: Hold YT-lvlUSD-29MAY2025",
+    strategy: "Pendle: Hold lvlUSD YTs (29 May 2025)",
     start: "Apr-02-2025 07:51:23 PM UTC",
     owner: "0xce25894164473EA22C6CE1ff70dAF3bb50ea064a",
     fixedValue: { value: 3.73, asset: "USD" },
@@ -2628,7 +2628,6 @@ export const CONFIG: Array<{
     externalAppURL:
       "https://app.pendle.finance/trade/markets/0x523f9441853467477b4dde653c554942f8e17162/swap?view=yt&py=output&chain=ethereum",
   },
-
   {
     strategy: "Mellow: Re7 Resolv Restaked wstUSR",
     start: "Apr-02-2025 07:57:47 PM UTC",
@@ -2647,7 +2646,309 @@ export const CONFIG: Array<{
     ],
     externalAppURL: "https://app.mellow.finance/vaults/ethereum-rstusr",
   },
+  {
+    strategy: "Pendle: Hold sUSDe YTs (28 May 2025)",
+    start: "Apr-24-2025 01:36:59 AM UTC",
+    owner: "0xF3B59b655A0a3a603E4f45eB7ABca4144DAFc93e",
+    fixedValue: { value: 909.66, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/03/21",
+          diff: "1000",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0xb162b764044697cf03617c2efbcb1f42e31e4766/swap?view=yt&chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold sUSDe YTs (30 Jul 2025)",
+    start: "Apr-24-2025 01:41:35 AM UTC",
+    owner: "0x50473F085a48EBe5731fD9Cf18e66dfaD79aCbF6",
+    fixedValue: { value: 397.16, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/03/21",
+          diff: "1000",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x4339ffe2b7592dc783ed13cce310531ab366deac/swap?view=yt&chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold eUSDe YTs (28 May 2025)",
+    start: "Apr-24-2025 01:43:35 AM UTC",
+    owner: "0x9e458e4aA6BFfdc408b5b65Ec095A4633566DB12",
+    fixedValue: { value: 878.53, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 50, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x85667e484a32d884010cf16427d90049ccf46e97/swap?view=yt&chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold USDe YTs (30 Jul 2025)",
+    start: "Apr-24-2025 01:46:47 AM UTC",
+    owner: "0x9D02986a34E9a8DDF2b4495727976263858F65a9",
+    fixedValue: { value: 511.1, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 60, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/03/21",
+          diff: "1000",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x9df192d13d61609d1852461c4850595e1f56e714/swap?view=yt&chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold sENA (24 Sep 2025)",
+    start: "Apr-24-2025 01:49:23 AM UTC",
+    owner: "0x4F359c54fBE8F3Bfa26b7444Ad8bbaC2E3dDb900",
+    fixedValue: { value: 281.94, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 40, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "2025/03/21",
+          diff: "1000",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0xda57abf95a7c21eb9df08fbaada182f749f6c62f/swap?view=yt&chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold lvlUSD YTs (24 Sep 2025)",
+    start: "Apr-24-2025 01:51:59 AM UTC",
+    owner: "0x512eC399d92cB79cfb9E34FaAFFCA58a0DDF5C9d",
+    fixedValue: { value: 313.48, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x461bc2ac3f80801bc11b0f20d63b73fef60c8076/swap?view=yt&chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold USR YTs (28 May 2025)",
+    start: "Apr-24-2025 01:54:35 AM UTC",
+    owner: "0xb13Ea0cC1b203D012835E76FD44EA268B31d7ae5",
+    fixedValue: { value: 1157.46, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_RESOLV_S1,
+        expectedPointsPerDay: { value: 45, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x35a18cd59a214c9e797e14b1191b700eea251f6a/swap?view=yt&chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold wstUSR YTs (24 Sep 2025)",
+    start: "Apr-24-2025 01:57:47 AM UTC",
+    owner: "0x3Cf259Ead56656283867293F1faA6146F0991957",
+    fixedValue: { value: 212.65, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_RESOLV_S1,
+        expectedPointsPerDay: {
+          value: (startDate) => {
+            const initialRate = 25;
+            const secondRate = 15;
 
+            const now = new Date().getTime();
+            const start = new Date(startDate).getTime();
+            const initialRateEnd = new Date(
+              "Apr-17-2025 11:59:59 PM UTC"
+            ).getTime();
+            const maturityTime = new Date(
+              "Sep-24-2025 12:00:00 AM UTC"
+            ).getTime();
+
+            if (now <= initialRateEnd) {
+              return initialRate;
+            }
+            if (start > initialRateEnd) {
+              return secondRate;
+            }
+
+            const initialRateDuration = initialRateEnd - start;
+            const secondRateDuration =
+              now > maturityTime
+                ? maturityTime - initialRateEnd
+                : now - initialRateEnd;
+
+            const blendedRate =
+              (initialRateDuration * initialRate +
+                secondRateDuration * secondRate) /
+              (initialRateDuration + secondRateDuration);
+
+            return blendedRate;
+          },
+          baseAsset: "USD",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x09fa04aac9c6d1c6131352ee950cd67ecc6d4fb9/swap?view=yt&chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold weETHs YTs (25 Jun 2025)",
+    start: "Apr-24-2025 01:59:47 AM UTC",
+    owner: "0xC8c44f6afDddd84fbB8249f696BAA64CB5fee24B",
+    fixedValue: { value: 0.466, asset: "ETH" }, // .005 ETH
+    points: [
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+      {
+        type: POINTS_ID_ETHERFI_S5,
+        expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0xcba3b226ca62e666042cb4a1e6e4681053885f75/swap?view=yt&chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold eETH YTs (25 June 2025)",
+    start: "Apr-24-2025 02:01:35 AM UTC",
+    owner: "0xBbf034f2f8a0ef8A0f3507a02F9a4566b186188f",
+    fixedValue: { value: 0.7787, asset: "ETH" }, // .005 ETH
+    points: [
+      {
+        type: POINTS_ID_ETHERFI_S5,
+        expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0xf4cf59259d007a96c641b41621ab52c93b9691b1/swap?view=yt&chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold weETHk YTs (25 Jun 2025)",
+    start: "Apr-24-2025 02:03:47 AM UTC",
+    owner: "0x5c72B23F190a59C85c4e73C132a2d7785CF8Bedd",
+    fixedValue: { value: 0.5413, asset: "ETH" }, // .005 ETH
+    points: [
+      {
+        type: POINTS_ID_ETHERFI_S5,
+        expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+      {
+        type: POINTS_ID_KARAK_S2,
+        expectedPointsPerDay: { value: 3, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x9e612ff1902c5feea4fd69eb236375d5299e0ffc/swap?view=yt&chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold eBTC YTs (25 June 2025)",
+    start: "Apr-24-2025 02:06:47 AM UTC",
+    owner: "0x79090e428aab0EF89d77e57095223cD30adB907d",
+    fixedValue: { value: 0.02809, asset: "BTC" }, // .005 ETH
+    points: [
+      {
+        type: POINTS_ID_ETHERFI_S5,
+        expectedPointsPerDay: { value: 30000, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+      {
+        type: POINTS_ID_SYMBIOTIC_S1,
+        expectedPointsPerDay: { value: 0.006, baseAsset: "USD" },
+        state: {
+          value: "verified",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+      {
+        type: POINTS_ID_KARAK_S2,
+        expectedPointsPerDay: { value: 3, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x523f9441853467477b4dde653c554942f8e17162/swap?view=yt&chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold agETH YTs (25 June 2025)",
+    start: "Apr-24-2025 02:12:35 AM UTC",
+    owner: "0xA15a58BCcdDf80A7e9474Cd1abF0c3ad5E823561",
+    fixedValue: { value: 0.683, asset: "ETH" }, // .006 ETH
+    points: [
+      {
+        type: POINTS_ID_ZIRCUIT_S3,
+        expectedPointsPerDay: { value: 2, baseAsset: "ETH" },
+        state: {
+          value: "verified",
+          lastSnapshot: "",
+          diff: "",
+        },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0xbe8549a20257917a0a9ef8911daf18190a8842a4/swap?view=yt&chain=ethereum",
+  },
   // No points for the following strat yet supported
   // {
   //   strategy: "Contango: Morpho srUSD/USDC",
