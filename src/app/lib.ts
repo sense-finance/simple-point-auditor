@@ -273,6 +273,91 @@ export const CONFIG: Array<{
   externalAppURL?: string;
 }> = [
   {
+    strategy: "Fluid: Smart Vault GHO-SUSDE/GHO-USDC Looping",
+    start: "Jun-05-2025 10:30:59 PM UTC",
+    owner: "0xd0e2eeeaf60908a9d53f9740533ce228866b384e",
+    fixedValue: { value: 4.83, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL: "https://fluid.io/vaults/1/125",
+  },
+  {
+    strategy: "Fluid: Smart Vault SUSDE-USDT/USDC-USDT Looping",
+    start: "Jun-05-2025 10:37:23 PM UTC",
+    owner: "0xb7385d98952ffc37788ba540959ebabf4d0975ae",
+    fixedValue: { value: 4.84, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL: "https://fluid.io/vaults/1/126",
+  },
+  {
+    strategy: "Fluid: Smart Vault USDE-USDT/USDC-USDT Looping",
+    start: "Jun-05-2025 10:41:47 PM UTC",
+    owner: "0xd564b1638c64e03c5596aa74c8907e56575c61ab",
+    fixedValue: { value: 4.84, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL: "https://fluid.io/vaults/1/127",
+  },
+  {
+    strategy: "Pendle: Hold eUSDe YTs (13 Aug 2025)",
+    start: "Jun-05-2025 10:44:47 PM UTC",
+    owner: "0x22599909eb96dd5d7854261ea3f296ad93097013",
+    fixedValue: { value: 4.78, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 50, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0xe93b4a93e80bd3065b290394264af5d82422ee70/swap",
+  },
+];
+
+// ---
+
+export const CONFIG_OLD: Array<{
+  strategy: string;
+  start: string;
+  owner: string;
+  fixedValue?: {
+    value: number;
+    asset: AssetType;
+  };
+  points: Array<{
+    type: string;
+    expectedPointsPerDay?: {
+      value: number | ((start: string) => number);
+      baseAsset: AssetType;
+    };
+    state?: {
+      value: "verified" | "delayed" | "partial";
+      lastSnapshot: string;
+      diff: string;
+    };
+  }>;
+  boosts?: {
+    name: string;
+    startDate: string;
+    endDate: string;
+    multiplier: number;
+  }[];
+  externalAppURL?: string;
+}> = [
+  {
     strategy: "Ethena: Lock USDe",
     start: "Jan-06-2025 10:42:59 PM UTC",
     owner: "0xb2E3A7D691F8e3FD891A64cA794378e25F1d666D",
@@ -2961,6 +3046,14 @@ export const CONFIG: Array<{
   // },
 ];
 
+console.log(
+  "Total points for all strategies:",
+  JSON.stringify(
+    CONFIG.map((c) => c.owner),
+    null,
+    2
+  )
+);
 const memoizedFetchETHPriceUSD = (() => {
   let cache: number | null = null;
   return async () => {

@@ -182,6 +182,7 @@ function InfoTooltip({
 // 1. Friendly label map
 const pointIdToFriendlyName: Record<string, string> = {
   POINTS_ID_ETHENA_SATS_S3: "Ethena Sats (S3)",
+  POINTS_ID_ETHENA_SATS_S4: "Ethena Sats (S4)",
   POINTS_ID_KARAK_S2: "Karak (S2)",
   POINTS_ID_SYMBIOTIC_S1: "Symbiotic (S1)",
   POINTS_ID_EIGENLAYER_S3: "EigenLayer (S3)",
