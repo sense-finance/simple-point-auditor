@@ -289,7 +289,7 @@ export const APIS: Api[] = [
     pointsId: POINTS_ID_SENTIMENT_S1,
     dataSources: [
       {
-        getURL: (wallet: string) => `https://app.sentiment.xyz/api/points`,
+        getURL: () => `https://app.sentiment.xyz/api/points`,
         select: (data: any, user: string) => {
           const userObj = data?.users?.find(
             (u: any) => u.user.toLowerCase() === user.toLowerCase()
