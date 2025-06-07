@@ -47,7 +47,9 @@ export const APIS: Array<{
     dataSources: [
       {
         getURL: (wallet) =>
-          `https://app.ethena.fi/api/referral/get-referree?address=${wallet}`,
+          `https://app.ethena.fi/api/referral/get-referree?address=${getAddress(
+            wallet
+          )}`,
         select: (data) =>
           Big(
             data?.queryWallet?.[0]?.accumulatedTotalShardsEarned || 0
