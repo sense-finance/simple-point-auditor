@@ -1,6 +1,9 @@
 import { neon } from "@neondatabase/serverless";
 import { NextResponse } from "next/server";
-import { CONFIG, convertValue, AssetType } from "@/app/lib";
+import { convertValue } from "@/app/lib";
+import { AssetType } from "@/app/types";
+import { ETH_CONFIG } from "@/app/config/ethStrategies";
+import { HYPE_EVM_CONFIG } from "@/app/config/hypeEvmStrategies";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -14,6 +17,8 @@ export async function GET(request: Request) {
 
   // Allow comma-separated list of strategies.
   const requestedStrategies = strategyParam.split(",").map((s) => s.trim());
+
+  const CONFIG = [...ETH_CONFIG, ...HYPE_EVM_CONFIG];
   const selectedConfigs = CONFIG.filter((s) =>
     requestedStrategies
       .map((s) => s.toLowerCase())

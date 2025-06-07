@@ -1,6 +1,8 @@
 // Adjust imports to your actual paths/types
-import { CONFIG, APIS, convertValue, AssetType } from "@/app/lib";
+import { convertValue } from "@/app/lib";
+import { APIS } from "@/app/config/apis";
 import { Big } from "big.js";
+import { Strategy, AssetType } from "@/app/types";
 
 export const maxDuration = 180;
 
@@ -45,18 +47,20 @@ const getActiveDays = (
  * The core function that fetches and computes all point data.
  * Returns a list of results for each (configItem, pointDef) pair.
  */
-export async function getAllPointsData(): Promise<PointsDataResult[]> {
+export async function getAllPointsData(
+  config: Strategy[]
+): Promise<PointsDataResult[]> {
   const now = Date.now();
   const tasks: Array<Promise<PointsDataResult>> = [];
 
-  // Cast your CONFIG and APIS to the interfaces if needed
-  const typedConfig = CONFIG as typeof CONFIG;
-  const typedApis = APIS as typeof APIS;
+  // Cast your config and APIS to the interfaces if needed
+  const typedConfig = config;
+  const typedApis = APIS;
 
   for (const configItem of typedConfig) {
     for (const pointDef of configItem.points) {
       const matchingApi = typedApis.find(
-        (api) => api.pointsId === pointDef.type
+        (api: any) => api.pointsId === pointDef.type
       );
 
       const daysActive = getActiveDays(matchingApi, configItem.start, now);
@@ -84,17 +88,26 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
                 try {
                   const url = dataSource.getURL(configItem.owner);
                   const headers = dataSource.headers ? dataSource.headers : {};
+                  const method = dataSource.method ? dataSource.method : "GET";
+                  const body = dataSource.getBody
+                    ? dataSource.getBody(
+                        configItem.owner,
+                        new Date(configItem.start).getTime(),
+                        new Date().getTime()
+                      )
+                    : undefined;
                   let attempts = 0;
                   const maxAttempts = 3;
                   let lastError: unknown;
 
-                  console.log("Fetching:", url);
-
                   while (attempts < maxAttempts) {
                     try {
-                      const raw = await fetch(url, { headers }).then((r) =>
-                        r.json()
-                      );
+                      const raw = await fetch(url, {
+                        method,
+                        headers,
+                        body,
+                        cache: "no-store",
+                      }).then((r) => r.json());
                       const points = dataSource.select(raw, configItem.owner);
                       // Convert to Big just in case
                       const pointsAsBig = new Big(points || 0);
@@ -139,7 +152,7 @@ export async function getAllPointsData(): Promise<PointsDataResult[]> {
 
             // Sum all results
             actualPoints = parallelResults.reduce(
-              (sum, value) => sum.plus(value),
+              (sum: Big, value: Big) => sum.plus(value),
               new Big(0)
             );
           }
