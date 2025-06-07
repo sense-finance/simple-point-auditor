@@ -24,9 +24,6 @@ function formatGraphQLQuery(query: string): string {
   return query.replace(/\s+/g, " ").trim();
 }
 
-// //app.ethena.fi/api/referral/get-referree?address=0xd564b1638c64e03c5596aa74c8907e56575c61ab
-// https: //app.ethena.fi/api/referral/get-referree?address=0xD0E2EEeAF60908A9D53f9740533cE228866B384E
-
 export const APIS: Api[] = [
   {
     pointsId: POINTS_ID_ETHENA_SATS_S3,

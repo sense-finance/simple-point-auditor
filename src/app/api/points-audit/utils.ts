@@ -53,13 +53,9 @@ export async function getAllPointsData(
   const now = Date.now();
   const tasks: Array<Promise<PointsDataResult>> = [];
 
-  // Cast your config and APIS to the interfaces if needed
-  const typedConfig = config;
-  const typedApis = APIS;
-
-  for (const configItem of typedConfig) {
+  for (const configItem of config) {
     for (const pointDef of configItem.points) {
-      const matchingApi = typedApis.find(
+      const matchingApi = APIS.find(
         (api: any) => api.pointsId === pointDef.type
       );
 
@@ -100,6 +96,7 @@ export async function getAllPointsData(
                   const maxAttempts = 3;
                   let lastError: unknown;
 
+                  console.log("Fetching:", url);
                   while (attempts < maxAttempts) {
                     try {
                       const raw = await fetch(url, {
