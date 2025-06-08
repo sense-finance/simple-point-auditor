@@ -21,7 +21,6 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     points: [
       {
         type: POINTS_ID_HYPERBEAT_S1,
-        expectedPointsPerDay: { value: 1, baseAsset: "USD" },
       },
       // {
       //   type: POINTS_ID_HYPERLEND_S1,
@@ -59,7 +58,6 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     points: [
       {
         type: POINTS_ID_SENTIMENT_S1,
-        expectedPointsPerDay: { value: 1, baseAsset: "USD" },
       },
     ],
     externalAppURL:
@@ -74,7 +72,6 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     points: [
       {
         type: POINTS_ID_SENTIMENT_S1,
-        expectedPointsPerDay: { value: 1, baseAsset: "USD" },
       },
     ],
     externalAppURL: "https://app.sentiment.xyz/create-position",
