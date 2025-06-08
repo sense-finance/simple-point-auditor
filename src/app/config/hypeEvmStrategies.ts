@@ -1,4 +1,4 @@
-import { AssetType, Strategy } from "../types";
+import { Strategy } from "../types";
 
 import {
   POINTS_ID_HYPERBEAT_S1,
