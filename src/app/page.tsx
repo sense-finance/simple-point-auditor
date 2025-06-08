@@ -7,6 +7,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import { ETH_CONFIG } from "@/app/config/ethStrategies";
 import { HYPE_EVM_CONFIG } from "@/app/config/hypeEvmStrategies";
+import { POINTS_ID_HYPERBEAT_S1 } from "./config/constants";
 
 type HistoricalData = {
   actualPoints: string;
@@ -197,6 +198,8 @@ const pointIdToFriendlyName: Record<string, string> = {
   POINTS_ID_LOMBARD_LUX_S1: "Lombard Lux (S1)",
   POINTS_ID_RESOLV_S1: "Resolv (S1)",
   POINTS_ID_MERITS_S1: "Merits (S1)",
+  POINTS_ID_HYPERBEAT_S1: "Hyperbeat (S1)",
+  POINTS_ID_SENTIMENT_S1: "Sentiment (S1)",
 };
 
 // 2. Helper to group data by pointsId

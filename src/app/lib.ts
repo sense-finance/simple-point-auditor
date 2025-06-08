@@ -40,6 +40,16 @@ const memoizedFetchPONDPriceUSD = (() => {
   };
 })();
 
+const memoizedFetchHYPEPriceUSD = (() => {
+  let cache: number | null = null;
+  return async () => {
+    if (cache === null) {
+      cache = await fetchPriceUSD("hyperliquid");
+    }
+    return cache;
+  };
+})();
+
 export async function convertValue(
   fromAsset: AssetType,
   toAsset: AssetType,
@@ -49,6 +59,7 @@ export async function convertValue(
   const btcPriceUSD = (await memoizedFetchBTCPriceUSD()) as number;
   const enaPriceUSD = (await memoizedFetchENAPriceUSD()) as number;
   const pondPriceUSD = (await memoizedFetchPONDPriceUSD()) as number;
+  const hypePriceUSD = (await memoizedFetchHYPEPriceUSD()) as number;
 
   if (fromAsset === toAsset) return value;
 
@@ -62,6 +73,8 @@ export async function convertValue(
       ? value * btcPriceUSD
       : fromAsset === "ENA"
       ? value * enaPriceUSD
+      : fromAsset === "HYPE"
+      ? value * hypePriceUSD
       : value * pondPriceUSD;
 
   // Then convert USD to target
@@ -69,11 +82,13 @@ export async function convertValue(
     ? valueInUSD
     : toAsset === "ETH"
     ? valueInUSD / ethPriceUSD
+    : toAsset === "HYPE"
+    ? valueInUSD / hypePriceUSD
     : valueInUSD / btcPriceUSD;
 }
 
 export async function fetchPriceUSD(
-  asset: "ethereum" | "bitcoin" | "ethena" | "marlin"
+  asset: "ethereum" | "bitcoin" | "ethena" | "marlin" | "hyperliquid"
 ) {
   const coinGeckoApiKey = process.env.COIN_GECKO_API_KEY;
   if (!coinGeckoApiKey) {

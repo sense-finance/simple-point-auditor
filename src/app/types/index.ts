@@ -18,7 +18,7 @@ export type Api = {
   }[];
 };
 
-export type AssetType = "USD" | "ETH" | "BTC" | "ENA" | "POND";
+export type AssetType = "USD" | "ETH" | "BTC" | "ENA" | "POND" | "HYPE";
 
 export type Strategy = {
   strategy: string;

@@ -17,7 +17,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     start: "Jun-06-2025 3:02:03 PM UTC",
     // owner: "0xd048870caa5a3037f507583b4762a7598251a2fc", // Example whale with points
     owner: "0x49532bc64C515D6bfe061d44EE0834a996b7c684", // Actual test address
-    fixedValue: { value: 6.71, asset: "USD" }, // .2 hype
+    fixedValue: { value: 0.2, asset: "HYPE" },
     points: [
       {
         type: POINTS_ID_HYPERBEAT_S1,
