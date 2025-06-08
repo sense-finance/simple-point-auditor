@@ -7,7 +7,6 @@ import * as Dialog from "@radix-ui/react-dialog";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import { ETH_CONFIG } from "@/app/config/ethStrategies";
 import { HYPE_EVM_CONFIG } from "@/app/config/hypeEvmStrategies";
-import { POINTS_ID_HYPERBEAT_S1 } from "./config/constants";
 
 type HistoricalData = {
   actualPoints: string;

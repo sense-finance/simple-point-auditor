@@ -250,7 +250,7 @@ export const APIS: Api[] = [
         },
         getBody: (
           wallet: string,
-          startTimestamp?: number,
+          _startTimestamp?: number,
           endTimestamp?: number
         ) => {
           const query = {

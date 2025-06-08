@@ -84,7 +84,11 @@ export async function convertValue(
     ? valueInUSD / ethPriceUSD
     : toAsset === "HYPE"
     ? valueInUSD / hypePriceUSD
-    : valueInUSD / btcPriceUSD;
+    : toAsset === "BTC"
+    ? valueInUSD / btcPriceUSD
+    : toAsset === "ENA"
+    ? valueInUSD / enaPriceUSD
+    : valueInUSD / pondPriceUSD;
 }
 
 export async function fetchPriceUSD(
