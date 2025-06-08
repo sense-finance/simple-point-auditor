@@ -1,8 +1,9 @@
 import { neon } from "@neondatabase/serverless";
-
 import { getAllPointsData } from "../points-audit/utils";
 import { NextResponse } from "next/server";
 import { fetchPriceUSD } from "@/app/lib";
+import { ETH_CONFIG } from "@/app/config/ethStrategies";
+import { HYPE_EVM_CONFIG } from "@/app/config/hypeEvmStrategies";
 
 export const maxDuration = 180;
 
@@ -28,7 +29,8 @@ export async function GET() {
       return NextResponse.json({ status: "skipped" }, { status: 200 });
     }
 
-    const data = await getAllPointsData();
+    const CONFIG = [...ETH_CONFIG, ...HYPE_EVM_CONFIG];
+    const data = await getAllPointsData(CONFIG);
 
     await sql.transaction((tx) => {
       // Create all queries first without executing them
