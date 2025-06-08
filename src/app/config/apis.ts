@@ -243,7 +243,7 @@ export const APIS: Api[] = [
     pointsId: POINTS_ID_HYPERBEAT_S1,
     dataSources: [
       {
-        getURL: (wallet: string) => `https://app.hyperbeat.org/api/points`,
+        getURL: () => `https://app.hyperbeat.org/api/points`,
         method: "POST",
         headers: {
           "Content-Type": "application/json",

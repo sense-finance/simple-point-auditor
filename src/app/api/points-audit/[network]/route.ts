@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getAllPointsData } from "../utils";
 import { ETH_CONFIG } from "@/app/config/ethStrategies";
 import { HYPE_EVM_CONFIG } from "@/app/config/hypeEvmStrategies";
@@ -6,8 +6,8 @@ import { HYPE_EVM_CONFIG } from "@/app/config/hypeEvmStrategies";
 export const maxDuration = 180;
 
 export async function GET(
-  request: Request,
-  { params }: { params: { network: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ network: string }> }
 ) {
   try {
     const { network } = await params;
