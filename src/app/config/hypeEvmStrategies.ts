@@ -1,17 +1,14 @@
 import { Strategy } from "../types";
 
 import {
-  POINTS_ID_ETHENA_SATS_S4,
   POINTS_ID_HYPERBEAT_S1,
   // POINTS_ID_HYPERLEND_S1,
   // POINTS_ID_HYPURRFI_S1,
   // POINTS_ID_HYPERSWAP_S1,
   // POINTS_ID_TIMESWAP_S1,
   // POINTS_ID_SILHOUETTE_S1,
-  // POINTS_ID_UPSHIFT_S1,
   POINTS_ID_SENTIMENT_S1,
   POINTS_ID_UPSHIFT_S1,
-  POINTS_ID_RESOLV_S1,
 } from "./constants";
 
 export const HYPE_EVM_CONFIG: Strategy[] = [
@@ -76,14 +73,20 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     ],
     externalAppURL: "https://app.sentiment.xyz/create-position",
   },
-  {
-    strategy: "Hyperbeat: USDT",
-    start: "Jun-24-2025 01:48:03 PM UTC",
-    owner: "0x6a99970fbec57b3349FC2d06a6DD410BA6e5A78a",
-    fixedValue: { value: 11.08, asset: "USD" },
-    points: [{ type: POINTS_ID_HYPERBEAT_S1 }],
-    externalAppURL: "https://app.hyperbeat.org/vaults/usdt",
-  },
+  // {
+  //   strategy: "Hyperbeat: USDT",
+  //   start: "Jun-24-2025 01:48:03 PM UTC",
+  //   owner: "0x6a99970fbec57b3349FC2d06a6DD410BA6e5A78a",
+  //   fixedValue: { value: 11.08, asset: "USD" },
+  //   points: [
+  //     { type: POINTS_ID_HYPERBEAT_S1 },
+  //     {
+  //       type: POINTS_ID_RESOLV_S1,
+  //       expectedPointsPerDay: { value: 30, baseAsset: "USD" },
+  //     },
+  //   ],
+  //   externalAppURL: "https://app.hyperbeat.org/vaults/usdt",
+  // },
   {
     strategy: "Hyperbeat: Ultra UBTC",
     start: "Jun-24-2025 01:57:45 PM UTC",
@@ -105,31 +108,25 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     start: "Jun-24-2025 2:19:58 PM UTC",
     owner: "0xf1424A4714621ed6e858f926Ab9Ea7719826f2f0",
     fixedValue: { value: 13.01, asset: "USD" },
-    points: [
-      { type: POINTS_ID_HYPERBEAT_S1 },
-      // {
-      //   type: POINTS_ID_RESOLV_S1,
-      //   expectedPointsPerDay: { value: 30, baseAsset: "USD" },
-      // },
-    ],
+    points: [{ type: POINTS_ID_HYPERBEAT_S1 }],
     externalAppURL:
       "https://app.hyperbeat.org/earn/0x53a333e51e96fe288bc9add7cdc4b1ead2cd2ffa",
   },
-  {
-    strategy: "Hyperbeat: Gauntlet USDe Core",
-    start: "Jun-24-2025 2:27:12 PM UTC",
-    owner: "0xE51F8F2F64F75864463472f7346867371996Fe61 ",
-    fixedValue: { value: 15.02, asset: "USD" },
-    points: [
-      { type: POINTS_ID_HYPERBEAT_S1 },
-      // {
-      //   type: POINTS_ID_ETHENA_SATS_S4,
-      //   expectedPointsPerDay: { value: 20, baseAsset: "USD" },
-      // },
-    ],
-    externalAppURL:
-      "https://app.hyperbeat.org/earn/0x5eec795d919fa97688fb9844eeb0072e6b846f9d",
-  },
+  // {
+  //   strategy: "Hyperbeat: Gauntlet USDe Core",
+  //   start: "Jun-24-2025 2:27:12 PM UTC",
+  //   owner: "0xE51F8F2F64F75864463472f7346867371996Fe61 ",
+  //   fixedValue: { value: 15.02, asset: "USD" },
+  //   points: [
+  //     { type: POINTS_ID_HYPERBEAT_S1 },
+  //     {
+  //       type: POINTS_ID_ETHENA_SATS_S4,
+  //       expectedPointsPerDay: { value: 20, baseAsset: "USD" },
+  //     },
+  //   ],
+  //   externalAppURL:
+  //     "https://app.hyperbeat.org/earn/0x5eec795d919fa97688fb9844eeb0072e6b846f9d",
+  // },
   {
     strategy: "Hyperbeat: MEV Capital HYPE",
     start: "Jun-24-2025 02:40:02 PM UTC",
