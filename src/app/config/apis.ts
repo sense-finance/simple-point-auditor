@@ -275,9 +275,7 @@ export const APIS: Api[] = [
           return JSON.stringify(query);
         },
         select: (data: any) => {
-          console.log(data);
           const arr = data.data?.cron_get_ranked_points_by_timestamp;
-          console.log(arr);
           return Array.isArray(arr) && arr.length > 0
             ? new Big(arr[0].total_value).div(1_000_000).toNumber()
             : 0;
