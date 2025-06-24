@@ -17,6 +17,7 @@ import {
   POINTS_ID_HYPERBEAT_S1,
   POINTS_ID_SENTIMENT_S1,
   MAINNET_AGETH,
+  POINTS_ID_UPSHIFT_S1,
 } from "./constants";
 
 // Utility to safely format GraphQL queries as a single line
@@ -292,6 +293,27 @@ export const APIS: Api[] = [
             (u: any) => u.user.toLowerCase() === user.toLowerCase()
           );
           return userObj?.totalPoints || 0;
+        },
+      },
+    ],
+  },
+  {
+    pointsId: POINTS_ID_UPSHIFT_S1,
+    dataSources: [
+      {
+        getURL: (wallet: string) =>
+          `https://api.hyperfolio.xyz/points?address=${wallet}`,
+        headers: {
+          "x-api-key": process.env.HYPERFOLIO_API_KEY,
+        },
+        select: (data: any) => {
+          if (Array.isArray(data)) {
+            const upshiftProtocol = data.find(
+              (protocol: any) => protocol.protocolName === "Upshift"
+            );
+            return upshiftProtocol?.points || 0;
+          }
+          return 0;
         },
       },
     ],
