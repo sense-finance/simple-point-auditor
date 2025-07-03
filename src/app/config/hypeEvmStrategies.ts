@@ -9,6 +9,7 @@ import {
   // POINTS_ID_SILHOUETTE_S1,
   POINTS_ID_SENTIMENT_S1,
   POINTS_ID_UPSHIFT_S1,
+  POINTS_ID_FELIX_S1,
 } from "./constants";
 
 export const HYPE_EVM_CONFIG: Strategy[] = [
@@ -144,5 +145,71 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     points: [{ type: POINTS_ID_HYPERBEAT_S1 }],
     externalAppURL:
       "https://app.hyperbeat.org/earn/0x0571362ba5ea9784a97605f57483f865a37dbeaa",
+  },
+
+  {
+    strategy: "Felix: HYPE Stability Pool",
+    start: "Jun-06-2025 3:24:03 PM UTC",
+    // owner: "0x7527557858b4b40f9199a49ab3746179f36bd9d8", // Example whale with points
+    owner: "0x689f2e7b0c957Ff5198E2C7E0f063fa3C95E195e", // Actual test address
+    fixedValue: { value: 151.13, asset: "USD" }, //4.4773 wstHype
+    points: [
+      {
+        type: POINTS_ID_FELIX_S1,
+      },
+    ],
+    externalAppURL: "https://www.usefelix.xyz/earn",
+  },
+  {
+    strategy: "Felix: UBTC Stability Pool",
+    start: "Jun-06-2025 3:24:03 PM UTC",
+    // owner: "0x7527557858b4b40f9199a49ab3746179f36bd9d8", // Example whale with points
+    owner: "0x689f2e7b0c957Ff5198E2C7E0f063fa3C95E195e", // Actual test address
+    fixedValue: { value: 151.13, asset: "USD" }, //4.4773 wstHype
+    points: [
+      {
+        type: POINTS_ID_FELIX_S1,
+      },
+    ],
+    externalAppURL: "https://www.usefelix.xyz/earn",
+  },
+  {
+    strategy: "Felix: USDe lending",
+    start: "Jun-06-2025 3:24:03 PM UTC",
+    // owner: "0x7527557858b4b40f9199a49ab3746179f36bd9d8", // Example whale with points
+    owner: "0x689f2e7b0c957Ff5198E2C7E0f063fa3C95E195e", // Actual test address
+    fixedValue: { value: 151.13, asset: "USD" }, //4.4773 wstHype
+    points: [
+      {
+        type: POINTS_ID_FELIX_S1,
+      },
+    ],
+    externalAppURL: "https://www.usefelix.xyz/vanilla-earn",
+  },
+  {
+    strategy: "Felix: USDT0 lending",
+    start: "Jun-06-2025 3:24:03 PM UTC",
+    // owner: "0x7527557858b4b40f9199a49ab3746179f36bd9d8", // Example whale with points
+    owner: "0x689f2e7b0c957Ff5198E2C7E0f063fa3C95E195e", // Actual test address
+    fixedValue: { value: 151.13, asset: "USD" }, //4.4773 wstHype
+    points: [
+      {
+        type: POINTS_ID_FELIX_S1,
+      },
+    ],
+    externalAppURL: "https://www.usefelix.xyz/vanilla-earn",
+  },
+  {
+    strategy: "Felix: USDhl lending",
+    start: "Jun-06-2025 3:24:03 PM UTC",
+    // owner: "0x7527557858b4b40f9199a49ab3746179f36bd9d8", // Example whale with points
+    owner: "0x689f2e7b0c957Ff5198E2C7E0f063fa3C95E195e", // Actual test address
+    fixedValue: { value: 151.13, asset: "USD" }, //4.4773 wstHype
+    points: [
+      {
+        type: POINTS_ID_FELIX_S1,
+      },
+    ],
+    externalAppURL: "https://www.usefelix.xyz/vanilla-earn",
   },
 ];
