@@ -18,6 +18,7 @@ import {
   POINTS_ID_SENTIMENT_S1,
   MAINNET_AGETH,
   POINTS_ID_UPSHIFT_S1,
+  POINTS_ID_UPSHIFT_S2,
 } from "./constants";
 
 // Utility to safely format GraphQL queries as a single line
@@ -298,7 +299,7 @@ export const APIS: Api[] = [
     ],
   },
   {
-    pointsId: POINTS_ID_UPSHIFT_S1,
+    pointsId: POINTS_ID_UPSHIFT_S2,
     dataSources: [
       {
         getURL: (wallet: string) =>
