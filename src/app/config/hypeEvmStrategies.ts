@@ -8,7 +8,8 @@ import {
   // POINTS_ID_TIMESWAP_S1,
   // POINTS_ID_SILHOUETTE_S1,
   POINTS_ID_SENTIMENT_S1,
-  POINTS_ID_UPSHIFT_S1,
+  POINTS_ID_UPSHIFT_S2,
+  POINTS_ID_FELIX_S1,
 } from "./constants";
 
 export const HYPE_EVM_CONFIG: Strategy[] = [
@@ -42,7 +43,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
       //   type: POINTS_ID_SILHOUETTE_S1,
       //   expectedPointsPerDay: { value: 1, baseAsset: "USD" },
       // },
-      { type: POINTS_ID_UPSHIFT_S1 },
+      { type: POINTS_ID_UPSHIFT_S2 },
     ],
     externalAppURL: "https://app.hyperbeat.org/vaults/hype",
   },
@@ -92,7 +93,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     start: "Jun-24-2025 01:57:45 PM UTC",
     owner: "0x20cAA3c6d9eb86cdd83685a04eBBa9d68c291cb9",
     fixedValue: { value: 14.79, asset: "USD" },
-    points: [{ type: POINTS_ID_HYPERBEAT_S1 }, { type: POINTS_ID_UPSHIFT_S1 }],
+    points: [{ type: POINTS_ID_HYPERBEAT_S1 }, { type: POINTS_ID_UPSHIFT_S2 }],
     externalAppURL: "https://app.hyperbeat.org/vaults/ubtc",
   },
   {
@@ -144,5 +145,66 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     points: [{ type: POINTS_ID_HYPERBEAT_S1 }],
     externalAppURL:
       "https://app.hyperbeat.org/earn/0x0571362ba5ea9784a97605f57483f865a37dbeaa",
+  },
+
+  {
+    strategy: "Felix: HYPE Stability Pool",
+    start: "7/7/2025, 12:35:07 AM",
+    owner: "0x1FD49583571bc81B5A8a4cb74934Ad564b4D2b39",
+    fixedValue: { value: 1.184, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_FELIX_S1,
+      },
+    ],
+    externalAppURL: "https://www.usefelix.xyz/earn",
+  },
+  {
+    strategy: "Felix: UBTC Stability Pool",
+    start: "7/7/2025, 12:40:26 AM",
+    owner: "0x50e10C68114dCA01b64510B0777Ec401074206a6",
+    fixedValue: { value: 1.184, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_FELIX_S1,
+      },
+    ],
+    externalAppURL: "https://www.usefelix.xyz/earn",
+  },
+  {
+    strategy: "Felix: USDe lending",
+    start: "7/7/2025, 12:43:49 AM",
+    owner: "0xAf09cbf02D0c40251d2720449CBe0777ca79F0C6",
+    fixedValue: { value: 1.19, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_FELIX_S1,
+      },
+    ],
+    externalAppURL: "https://www.usefelix.xyz/vanilla-earn",
+  },
+  {
+    strategy: "Felix: USDT0 lending",
+    start: "7/7/2025, 12:45:59 AM",
+    owner: "0x0435952a9cEe1130EE6D4658eb1f712614Da3E40",
+    fixedValue: { value: 1.19, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_FELIX_S1,
+      },
+    ],
+    externalAppURL: "https://www.usefelix.xyz/vanilla-earn",
+  },
+  {
+    strategy: "Felix: USDhl lending",
+    start: "7/7/2025, 12:48:41 AM",
+    owner: "0x3aaa38AF3c4Abe9E8D7cb2EC3c0f72b6Ecdb8948",
+    fixedValue: { value: 1.19, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_FELIX_S1,
+      },
+    ],
+    externalAppURL: "https://www.usefelix.xyz/vanilla-earn",
   },
 ];

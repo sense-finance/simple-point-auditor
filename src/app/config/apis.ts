@@ -17,7 +17,8 @@ import {
   POINTS_ID_HYPERBEAT_S1,
   POINTS_ID_SENTIMENT_S1,
   MAINNET_AGETH,
-  POINTS_ID_UPSHIFT_S1,
+  // POINTS_ID_UPSHIFT_S2,
+  POINTS_ID_FELIX_S1,
 } from "./constants";
 
 // Utility to safely format GraphQL queries as a single line
@@ -248,6 +249,20 @@ export const APIS: Api[] = [
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          accept: "*/*",
+          "accept-encoding": "gzip, deflate, br, zstd",
+          "accept-language": "en-US,en;q=0.9",
+          dnt: "1",
+          origin: "https://app.hyperbeat.org",
+          referer: "https://app.hyperbeat.org/hyperfolio",
+          "sec-ch-ua": '"Not)A;Brand";v="8", "Chromium";v="138"',
+          "sec-ch-ua-mobile": "?0",
+          "sec-ch-ua-platform": '"macOS"',
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "same-origin",
+          "user-agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
         },
         getBody: (
           wallet: string,
@@ -297,21 +312,57 @@ export const APIS: Api[] = [
       },
     ],
   },
+  // {
+  //   pointsId: POINTS_ID_UPSHIFT_S2,
+  //   dataSources: [
+  //     {
+  //       getURL: (wallet: string) =>
+  //         `https://api.hyperfolio.xyz/points?address=${wallet}`,
+  //       headers: {
+  //         "x-api-key": process.env.HYPERFOLIO_API_KEY,
+  //       },
+  //       select: (data: any) => {
+  //         if (Array.isArray(data)) {
+  //           const upshiftProtocol = data.find(
+  //             (protocol: any) => protocol.protocolName === "Upshift"
+  //           );
+  //           return upshiftProtocol?.points || 0;
+  //         }
+  //         return 0;
+  //       },
+  //     },
+  //   ],
+  // },
   {
-    pointsId: POINTS_ID_UPSHIFT_S1,
+    pointsId: POINTS_ID_FELIX_S1,
     dataSources: [
       {
-        getURL: (wallet: string) =>
-          `https://api.hyperfolio.xyz/points?address=${wallet}`,
+        getURL: () => `https://www.usefelix.xyz/portfolio`,
+        method: "POST",
         headers: {
-          "x-api-key": process.env.HYPERFOLIO_API_KEY,
+          accept: "text/x-component",
+          "accept-encoding": "gzip, deflate, br, zstd",
+          "accept-language": "en-US,en;q=0.9",
+          "content-type": "text/plain;charset=UTF-8",
+          dnt: "1",
+          "next-action": "c0b38f249b4e82d81339646958e523b6da7a6c7ff2",
+          "next-router-state-tree":
+            "%5B%22%22%2C%7B%22children%22%3A%5B%22(dashboard)%22%2C%7B%22children%22%3A%5B%22portfolio%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2C%22%2Fportfolio%22%2C%22refresh%22%5D%7D%5D%7D%2Cnull%2Cnull%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
+          origin: "https://www.usefelix.xyz",
+          referer: "https://www.usefelix.xyz/portfolio",
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "same-origin",
+          "user-agent":
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+        },
+        getBody: (wallet: string) => {
+          return JSON.stringify([wallet]);
         },
         select: (data: any) => {
-          if (Array.isArray(data)) {
-            const upshiftProtocol = data.find(
-              (protocol: any) => protocol.protocolName === "Upshift"
-            );
-            return upshiftProtocol?.points || 0;
+          if (Array.isArray(data) && data.length > 1) {
+            const pointsData = data[1];
+            return pointsData?.totalPoints || 0;
           }
           return 0;
         },
