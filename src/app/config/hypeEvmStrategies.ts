@@ -8,7 +8,7 @@ import {
   // POINTS_ID_TIMESWAP_S1,
   // POINTS_ID_SILHOUETTE_S1,
   POINTS_ID_SENTIMENT_S1,
-  POINTS_ID_UPSHIFT_S1,
+  POINTS_ID_UPSHIFT_S2,
   POINTS_ID_FELIX_S1,
 } from "./constants";
 
@@ -43,7 +43,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
       //   type: POINTS_ID_SILHOUETTE_S1,
       //   expectedPointsPerDay: { value: 1, baseAsset: "USD" },
       // },
-      { type: POINTS_ID_UPSHIFT_S1 },
+      { type: POINTS_ID_UPSHIFT_S2 },
     ],
     externalAppURL: "https://app.hyperbeat.org/vaults/hype",
   },
@@ -93,7 +93,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     start: "Jun-24-2025 01:57:45 PM UTC",
     owner: "0x20cAA3c6d9eb86cdd83685a04eBBa9d68c291cb9",
     fixedValue: { value: 14.79, asset: "USD" },
-    points: [{ type: POINTS_ID_HYPERBEAT_S1 }, { type: POINTS_ID_UPSHIFT_S1 }],
+    points: [{ type: POINTS_ID_HYPERBEAT_S1 }, { type: POINTS_ID_UPSHIFT_S2 }],
     externalAppURL: "https://app.hyperbeat.org/vaults/ubtc",
   },
   {
@@ -149,10 +149,9 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
 
   {
     strategy: "Felix: HYPE Stability Pool",
-    start: "Jun-06-2025 3:24:03 PM UTC",
-    // owner: "0x7527557858b4b40f9199a49ab3746179f36bd9d8", // Example whale with points
-    owner: "0x689f2e7b0c957Ff5198E2C7E0f063fa3C95E195e", // Actual test address
-    fixedValue: { value: 151.13, asset: "USD" }, //4.4773 wstHype
+    start: "7/7/2025, 12:35:07 AM",
+    owner: "0x1FD49583571bc81B5A8a4cb74934Ad564b4D2b39",
+    fixedValue: { value: 1.184, asset: "USD" },
     points: [
       {
         type: POINTS_ID_FELIX_S1,
@@ -162,10 +161,9 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
   },
   {
     strategy: "Felix: UBTC Stability Pool",
-    start: "Jun-06-2025 3:24:03 PM UTC",
-    // owner: "0x7527557858b4b40f9199a49ab3746179f36bd9d8", // Example whale with points
-    owner: "0x689f2e7b0c957Ff5198E2C7E0f063fa3C95E195e", // Actual test address
-    fixedValue: { value: 151.13, asset: "USD" }, //4.4773 wstHype
+    start: "7/7/2025, 12:40:26 AM",
+    owner: "0x50e10C68114dCA01b64510B0777Ec401074206a6",
+    fixedValue: { value: 1.184, asset: "USD" },
     points: [
       {
         type: POINTS_ID_FELIX_S1,
@@ -175,10 +173,9 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
   },
   {
     strategy: "Felix: USDe lending",
-    start: "Jun-06-2025 3:24:03 PM UTC",
-    // owner: "0x7527557858b4b40f9199a49ab3746179f36bd9d8", // Example whale with points
-    owner: "0x689f2e7b0c957Ff5198E2C7E0f063fa3C95E195e", // Actual test address
-    fixedValue: { value: 151.13, asset: "USD" }, //4.4773 wstHype
+    start: "7/7/2025, 12:43:49 AM",
+    owner: "0xAf09cbf02D0c40251d2720449CBe0777ca79F0C6",
+    fixedValue: { value: 1.19, asset: "USD" },
     points: [
       {
         type: POINTS_ID_FELIX_S1,
@@ -188,10 +185,9 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
   },
   {
     strategy: "Felix: USDT0 lending",
-    start: "Jun-06-2025 3:24:03 PM UTC",
-    // owner: "0x7527557858b4b40f9199a49ab3746179f36bd9d8", // Example whale with points
-    owner: "0x689f2e7b0c957Ff5198E2C7E0f063fa3C95E195e", // Actual test address
-    fixedValue: { value: 151.13, asset: "USD" }, //4.4773 wstHype
+    start: "7/7/2025, 12:45:59 AM",
+    owner: "0x0435952a9cEe1130EE6D4658eb1f712614Da3E40",
+    fixedValue: { value: 1.19, asset: "USD" },
     points: [
       {
         type: POINTS_ID_FELIX_S1,
@@ -201,10 +197,9 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
   },
   {
     strategy: "Felix: USDhl lending",
-    start: "Jun-06-2025 3:24:03 PM UTC",
-    // owner: "0x7527557858b4b40f9199a49ab3746179f36bd9d8", // Example whale with points
-    owner: "0x689f2e7b0c957Ff5198E2C7E0f063fa3C95E195e", // Actual test address
-    fixedValue: { value: 151.13, asset: "USD" }, //4.4773 wstHype
+    start: "7/7/2025, 12:48:41 AM",
+    owner: "0x3aaa38AF3c4Abe9E8D7cb2EC3c0f72b6Ecdb8948",
+    fixedValue: { value: 1.19, asset: "USD" },
     points: [
       {
         type: POINTS_ID_FELIX_S1,

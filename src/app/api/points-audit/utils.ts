@@ -99,12 +99,39 @@ export async function getAllPointsData(
                   console.log("Fetching:", url);
                   while (attempts < maxAttempts) {
                     try {
-                      const raw = await fetch(url, {
+                      const response = await fetch(url, {
                         method,
                         headers,
                         body,
                         cache: "no-store",
-                      }).then((r) => r.json());
+                      });
+
+                      let raw;
+                      if (url.includes("usefelix.xyz")) {
+                        // Felix API returns text that needs special parsing
+                        const text = await response.text();
+                        // Remove the numbered prefixes (e.g., "1:", "2:", etc.)
+                        const cleanedText = text.replace(/^\d+:/gm, "");
+                        // Parse each line as JSON
+                        const lines = cleanedText
+                          .split("\n")
+                          .filter((line) => line.trim());
+                        raw = lines.map((line) => JSON.parse(line));
+                      } else {
+                        // Check if response is JSON or an error message
+                        const text = await response.text();
+                        if (!response.ok) {
+                          throw new Error(`HTTP ${response.status}: ${text}`);
+                        }
+                        try {
+                          raw = JSON.parse(text);
+                        } catch (parseError) {
+                          // If it's not valid JSON, log the response and throw
+                          console.log("Non-JSON response:", text);
+                          throw new Error(`Invalid JSON response: ${text.substring(0, 100)}...`);
+                        }
+                      }
+
                       const points = dataSource.select(raw, configItem.owner);
                       // Convert to Big just in case
                       const pointsAsBig = new Big(points || 0);
@@ -112,6 +139,7 @@ export async function getAllPointsData(
                       pointsBySource[url] = pointsAsBig.toString();
                       return pointsAsBig;
                     } catch (e) {
+                      console.log("Error fetching:", url, body, e);
                       lastError = e;
                       attempts++;
                       if (attempts < maxAttempts) {
