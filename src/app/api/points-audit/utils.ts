@@ -127,8 +127,13 @@ export async function getAllPointsData(
                           raw = JSON.parse(text);
                         } catch (parseError) {
                           // If it's not valid JSON, log the response and throw
-                          console.log("Non-JSON response:", text);
-                          throw new Error(`Invalid JSON response: ${text.substring(0, 100)}...`);
+                          console.log("Non-JSON response:", text, parseError);
+                          throw new Error(
+                            `Invalid JSON response: ${text.substring(
+                              0,
+                              100
+                            )}...`
+                          );
                         }
                       }
 
