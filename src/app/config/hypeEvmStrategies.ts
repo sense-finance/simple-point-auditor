@@ -149,7 +149,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
 
   {
     strategy: "Felix: HYPE Stability Pool",
-    start: "7/7/2025, 12:35:07 AM",
+    start: "Jul-07-2025 7:35:07 AM UTC",
     owner: "0x1FD49583571bc81B5A8a4cb74934Ad564b4D2b39",
     fixedValue: { value: 1.184, asset: "USD" },
     points: [
@@ -161,7 +161,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
   },
   {
     strategy: "Felix: UBTC Stability Pool",
-    start: "7/7/2025, 12:40:26 AM",
+    start: "Jul-07-2025 7:40:26 AM UTC",
     owner: "0x50e10C68114dCA01b64510B0777Ec401074206a6",
     fixedValue: { value: 1.184, asset: "USD" },
     points: [
@@ -173,7 +173,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
   },
   {
     strategy: "Felix: USDe lending",
-    start: "7/7/2025, 12:43:49 AM",
+    start: "Jul-07-2025 7:43:49 AM UTC",
     owner: "0xAf09cbf02D0c40251d2720449CBe0777ca79F0C6",
     fixedValue: { value: 1.19, asset: "USD" },
     points: [
@@ -185,7 +185,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
   },
   {
     strategy: "Felix: USDT0 lending",
-    start: "7/7/2025, 12:45:59 AM",
+    start: "Jul-07-2025 7:45:59 AM UTC",
     owner: "0x0435952a9cEe1130EE6D4658eb1f712614Da3E40",
     fixedValue: { value: 1.19, asset: "USD" },
     points: [
@@ -197,7 +197,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
   },
   {
     strategy: "Felix: USDhl lending",
-    start: "7/7/2025, 12:48:41 AM",
+    start: "Jul-07-2025 7:48:41 AM UTC",
     owner: "0x3aaa38AF3c4Abe9E8D7cb2EC3c0f72b6Ecdb8948",
     fixedValue: { value: 1.19, asset: "USD" },
     points: [
