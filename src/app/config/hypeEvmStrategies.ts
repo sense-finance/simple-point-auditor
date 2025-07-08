@@ -198,7 +198,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
   {
     strategy: "Felix: USDhl lending",
     start: "Jul-07-2025 7:48:41 AM UTC",
-    owner: "0x3aaa38AF3c4Abe9E8D7cb2EC3c0f72b6Ecdb8948",
+    owner: "0x18eF394afFe7ACcf3553891E8EB0b8cc303D090D",
     fixedValue: { value: 1.19, asset: "USD" },
     points: [
       {

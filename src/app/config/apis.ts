@@ -19,6 +19,7 @@ import {
   MAINNET_AGETH,
   // POINTS_ID_UPSHIFT_S2,
   POINTS_ID_FELIX_S1,
+  POINTS_ID_UPSHIFT_S2,
 } from "./constants";
 
 // Utility to safely format GraphQL queries as a single line
@@ -301,27 +302,18 @@ export const APIS: Api[] = [
       },
     ],
   },
-  // {
-  //   pointsId: POINTS_ID_UPSHIFT_S2,
-  //   dataSources: [
-  //     {
-  //       getURL: (wallet: string) =>
-  //         `https://api.hyperfolio.xyz/points?address=${wallet}`,
-  //       headers: {
-  //         "x-api-key": process.env.HYPERFOLIO_API_KEY,
-  //       },
-  //       select: (data: any) => {
-  //         if (Array.isArray(data)) {
-  //           const upshiftProtocol = data.find(
-  //             (protocol: any) => protocol.protocolName === "Upshift"
-  //           );
-  //           return upshiftProtocol?.points || 0;
-  //         }
-  //         return 0;
-  //       },
-  //     },
-  //   ],
-  // },
+  {
+    pointsId: POINTS_ID_UPSHIFT_S2,
+    dataSources: [
+      {
+        getURL: (wallet: string) =>
+          `https://app.upshift.finance/api/proxy/points/total?wallet=${wallet}&chainId=999`,
+        select: (data: any) => {
+          return data?.data?.points["999"]?.totalPoints || 0;
+        },
+      },
+    ],
+  },
   {
     pointsId: POINTS_ID_FELIX_S1,
     dataSources: [
