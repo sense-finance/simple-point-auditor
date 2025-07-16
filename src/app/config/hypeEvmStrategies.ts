@@ -10,6 +10,7 @@ import {
   POINTS_ID_SENTIMENT_S1,
   POINTS_ID_UPSHIFT_S2,
   POINTS_ID_FELIX_S1,
+  POINTS_ID_KINETIQ_S1,
 } from "./constants";
 
 export const HYPE_EVM_CONFIG: Strategy[] = [
@@ -206,5 +207,29 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
       },
     ],
     externalAppURL: "https://www.usefelix.xyz/vanilla-earn",
+  },
+  {
+    strategy: "Kinetiq: Hold kHYPE",
+    start: "Jul-16-2025 04:52:21 PM UTC",
+    owner: "0xc2ac06f12abb6e093d38cc7d09d74c03d5d15d19",
+    fixedValue: { value: 0.05, asset: "HYPE" },
+    points: [
+      {
+        type: POINTS_ID_KINETIQ_S1,
+      },
+    ],
+    externalAppURL: "https://kinetiq.xyz/stake",
+  },
+  {
+    strategy: "Hyperbeat: Hold lstHYPE",
+    start: "Jul-16-2025 04:59:34 PM UTC",
+    owner: "0xe37b6889bffe562d855cf7bede75e5f6f2239bff",
+    fixedValue: { value: 0.0398, asset: "HYPE" },
+    points: [
+      {
+        type: POINTS_ID_KINETIQ_S1,
+      },
+    ],
+    externalAppURL: "https://app.hyperbeat.org/vaults/lsthype",
   },
 ];
