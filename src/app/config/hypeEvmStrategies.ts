@@ -24,6 +24,9 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
       {
         type: POINTS_ID_HYPERBEAT_S1,
       },
+      {
+        type: POINTS_ID_KINETIQ_S1,
+      },
       // {
       //   type: POINTS_ID_HYPERLEND_S1,
       //   expectedPointsPerDay: { value: 1, baseAsset: "USD" },
