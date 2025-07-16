@@ -229,6 +229,12 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
       {
         type: POINTS_ID_KINETIQ_S1,
       },
+      {
+        type: POINTS_ID_HYPERBEAT_S1,
+      },
+      {
+        type: POINTS_ID_FELIX_S1,
+      },
     ],
     externalAppURL: "https://app.hyperbeat.org/vaults/lsthype",
   },
