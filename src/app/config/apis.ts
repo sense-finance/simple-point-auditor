@@ -20,6 +20,7 @@ import {
   // POINTS_ID_UPSHIFT_S2,
   POINTS_ID_FELIX_S1,
   POINTS_ID_UPSHIFT_S2,
+  POINTS_ID_KINETIQ_S1,
 } from "./constants";
 
 // Utility to safely format GraphQL queries as a single line
@@ -346,6 +347,17 @@ export const APIS: Api[] = [
             return pointsData?.totalPoints || 0;
           }
           return 0;
+        },
+      },
+    ],
+  },
+  {
+    pointsId: POINTS_ID_KINETIQ_S1,
+    dataSources: [
+      {
+        getURL: (wallet: string) => `https://kinetiq.xyz/api/points/${wallet}`,
+        select: (data: any) => {
+          return data?.points || 0;
         },
       },
     ],
