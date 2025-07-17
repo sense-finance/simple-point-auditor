@@ -299,7 +299,13 @@ export default function PointsAuditByPointsId() {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedNetwork, setSelectedNetwork] = useState<string>("ethereum");
+  const [selectedNetwork, setSelectedNetwork] = useState<string>(() => {
+    // Try to get from localStorage, fallback to "ethereum"
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("selectedNetwork") || "ethereum";
+    }
+    return "ethereum";
+  });
   const [config, setConfig] = useState(ETH_CONFIG);
   const [historicalData, setHistoricalData] = useState<
     Record<string, HistoricalData>
@@ -357,9 +363,12 @@ export default function PointsAuditByPointsId() {
         <ToggleGroup.Root
           type="single"
           value={selectedNetwork}
-          onValueChange={(value: string | undefined) =>
-            value && setSelectedNetwork(value)
-          }
+          onValueChange={(value: string | undefined) => {
+            if (value) {
+              setSelectedNetwork(value);
+              localStorage.setItem("selectedNetwork", value);
+            }
+          }}
           className="inline-flex rounded-lg border border-gray-200 bg-gray-50 p-1 shadow-md"
         >
           <ToggleGroup.Item
