@@ -355,9 +355,10 @@ export const APIS: Api[] = [
     pointsId: POINTS_ID_KINETIQ_S1,
     dataSources: [
       {
-        getURL: (wallet: string) => `https://kinetiq.xyz/api/points/${wallet}`,
+        getURL: (wallet: string) =>
+          `https://kinetiq.xyz/api/points/${wallet}?chainId=999`,
         select: (data: any) => {
-          return data?.points || 0;
+          return Big(data?.points || 0);
         },
       },
     ],
