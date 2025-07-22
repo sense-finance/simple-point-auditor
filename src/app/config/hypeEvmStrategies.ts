@@ -241,4 +241,16 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     ],
     externalAppURL: "https://app.hyperbeat.org/vaults/lsthype",
   },
+  {
+    strategy: "Hyperbeat: Hold beHYPE",
+    start: "Jul-21-2025 04:31:42 PM UTC",
+    owner: "0xdd2c151A221F3bfA2416CDb06E3Dee2aC49F70df",
+    fixedValue: { value: 0.2, asset: "HYPE" },
+    points: [
+      {
+        type: POINTS_ID_HYPERBEAT_S1,
+      },
+    ],
+    externalAppURL: "https://app.hyperbeat.org/staking/behype",
+  },
 ];

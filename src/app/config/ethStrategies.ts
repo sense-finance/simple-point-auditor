@@ -69,6 +69,62 @@ export const ETH_CONFIG: Strategy[] = [
     externalAppURL:
       "https://app.pendle.finance/trade/markets/0xe93b4a93e80bd3065b290394264af5d82422ee70/swap",
   },
+  {
+    strategy: "Pendle: Hold USDe YTs (25 Sept 2025)",
+    start: "Jul-21-2025 02:52:23 PM UTC",
+    owner: "0xD5A55F37Ab7d461A9A7a6D5C69d2189191270b8C",
+    fixedValue: { value: 364.5, asset: "USD" }, // $5 of yts = 333.01 YTs x 50
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 60, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x6d98a2b6cdbf44939362a3e99793339ba2016af4/swap?view=yt&chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold sUSDe YTs (25 Sept 2025)",
+    start: "Jul-21-2025 02:52:23 PM UTC",
+    owner: "0x5bd05Ba3ADe9b3a481c35316361fe94e48Fd3168",
+    fixedValue: { value: 379.5, asset: "USD" }, // $5 of yts = 333.01 YTs x 50
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 25, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0xa36b60a14a1a5247912584768c6e53e1a269a9f7/swap?view=yt&chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold USDe LP (25 Sept 2025)",
+    start: "Jul-21-2025 02:59:11 PM UTC",
+    owner: "0x496b3424C49d2500e63AA35863f076BcBCa97c86",
+    fixedValue: { value: 8.44, asset: "USD" }, // 8.44 USDe LPd
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 60, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/pools/0x6d98a2b6cdbf44939362a3e99793339ba2016af4/zap/in?chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold sUSDe LP (25 Sept 2025)",
+    start: "Jul-21-2025 02:52:23 PM UTC",
+    owner: "0x96D6974b18E067a4cB75D016a0a1a268f238895B",
+    fixedValue: { value: 7.12, asset: "USD" }, // 7.12 sUSDe LPd
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 25, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/pools/0x4339ffe2b7592dc783ed13cce310531ab366deac/zap/in?chain=ethereum",
+  },
 ];
 
 // ---
