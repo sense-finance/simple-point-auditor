@@ -18,11 +18,13 @@ function InfoTooltip({
   owner,
   dataSourceURLs,
   pointsBySource,
+  selectedNetwork,
 }: {
   externalAppURL?: string;
   owner: string;
   dataSourceURLs: string[];
   pointsBySource: Record<string, string>;
+  selectedNetwork: string;
 }) {
   const [open, setOpen] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -93,7 +95,9 @@ function InfoTooltip({
 
           <div className="mb-3 flex items-center gap-3">
             <a
-              href={`https://etherscan.io/address/${owner}`}
+              href={`https://${
+                selectedNetwork === "ethereum" ? "etherscan" : "hyperevmscan"
+              }.io/address/${owner}`}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-2 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 rounded-md transition-colors"
@@ -576,6 +580,7 @@ export default function PointsAuditByPointsId() {
                                   owner={row.owner}
                                   dataSourceURLs={row.dataSourceURLs}
                                   pointsBySource={row.pointsBySource}
+                                  selectedNetwork={selectedNetwork}
                                 />
                               </div>
                             </td>

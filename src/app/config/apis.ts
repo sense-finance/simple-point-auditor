@@ -319,24 +319,16 @@ export const APIS: Api[] = [
     pointsId: POINTS_ID_FELIX_S1,
     dataSources: [
       {
-        getURL: () => `https://www.usefelix.xyz/portfolio`,
+        getURL: () => `https://www.usefelix.xyz/points`,
         method: "POST",
         headers: {
-          accept: "text/x-component",
-          "accept-encoding": "gzip, deflate, br, zstd",
-          "accept-language": "en-US,en;q=0.9",
+          accept: "application/json",
           "content-type": "text/plain;charset=UTF-8",
-          dnt: "1",
-          "next-action": "c0b38f249b4e82d81339646958e523b6da7a6c7ff2",
+          "next-action": "c02a6722280afd3d9d9ea252161adb964e1e6f68e0",
           "next-router-state-tree":
-            "%5B%22%22%2C%7B%22children%22%3A%5B%22(dashboard)%22%2C%7B%22children%22%3A%5B%22portfolio%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2C%22%2Fportfolio%22%2C%22refresh%22%5D%7D%5D%7D%2Cnull%2Cnull%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
+            "%5B%22%22%2C%7B%22children%22%3A%5B%22(dashboard)%22%2C%7B%22children%22%3A%5B%22points%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2C%22%2Fpoints%22%2C%22refresh%22%5D%7D%5D%7D%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
           origin: "https://www.usefelix.xyz",
-          referer: "https://www.usefelix.xyz/portfolio",
-          "sec-fetch-dest": "empty",
-          "sec-fetch-mode": "cors",
-          "sec-fetch-site": "same-origin",
-          "user-agent":
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+          referer: "https://www.usefelix.xyz/points",
         },
         getBody: (wallet: string) => {
           return JSON.stringify([wallet]);
@@ -355,7 +347,8 @@ export const APIS: Api[] = [
     pointsId: POINTS_ID_KINETIQ_S1,
     dataSources: [
       {
-        getURL: (wallet: string) => `https://kinetiq.xyz/api/points/${wallet}`,
+        getURL: (wallet: string) =>
+          `https://kinetiq.xyz/api/points/${wallet}?chainId=999`,
         select: (data: any) => {
           return data?.points || 0;
         },
