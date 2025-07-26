@@ -580,6 +580,7 @@ export default function PointsAuditByPointsId() {
                                   owner={row.owner}
                                   dataSourceURLs={row.dataSourceURLs}
                                   pointsBySource={row.pointsBySource}
+                                  selectedNetwork={selectedNetwork}
                                 />
                               </div>
                             </td>
