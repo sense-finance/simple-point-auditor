@@ -125,6 +125,84 @@ export const ETH_CONFIG: Strategy[] = [
     externalAppURL:
       "https://app.pendle.finance/trade/pools/0x4339ffe2b7592dc783ed13cce310531ab366deac/zap/in?chain=ethereum",
   },
+  {
+    strategy: "Fluid: Smart Vault GHO-USDe/GHO Looping",
+    start: "Jul-21-2025 03:24:11 PM UTC",
+    owner: "0x2BC127a4BD3932f1eb9D2ceD3A7cc47171c07c0b",
+    fixedValue: { value: 114.39, asset: "USD" }, // leveraged value of collateral, not just USDe
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 60, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL: "https://fluid.io/vaults/1/141",
+  },
+  {
+    strategy: "Fluid: Smart Vault USDE-USDTB/USDT Looping",
+    start: "Jul-30-2025 02:58:11 PM UTC",
+    owner: "0xf264364b93BE654cA466b92C5979eA1c33f126A8",
+    fixedValue: { value: 33.73, asset: "USD" }, // leveraged value of collateral, not just USDe
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 60, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL: "https://fluid.io/vaults/1/137",
+  },
+  {
+    strategy: "Fluid: Smart Vault USDE-USDTB/USDC Looping",
+    start: "Jul-30-2025 03:03:59 PM UTC",
+    owner: "0xB997C131d98809c58C0642f600Db432B65Af6ec5",
+    fixedValue: { value: 33.69, asset: "USD" }, // leveraged value of collateral, not just USDe
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 60, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL: "https://fluid.io/vaults/1/138",
+  },
+  {
+    strategy: "Fluid: Smart Vault USDE-USDTB/GHO Looping",
+    start: "Jul-30-2025 03:13:35 PM UTC",
+    owner: "0xE2f2d1Da114D077113e5B633e8792bcB8e2B931e",
+    fixedValue: { value: 33.65, asset: "USD" }, // leveraged value of collateral, not just USDe
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 60, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL: "https://fluid.io/vaults/1/138",
+  },
+  {
+    strategy: "Fluid: Smart Vault USDE-USDTB/GHO Looping",
+    start: "Jul-30-2025 03:13:35 PM UTC",
+    owner: "0xE2f2d1Da114D077113e5B633e8792bcB8e2B931e",
+    fixedValue: { value: 33.65, asset: "USD" }, // leveraged value of collateral, not just USDe
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 60, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL: "https://fluid.io/vaults/1/140",
+  },
+  {
+    strategy: "Fluid: Smart Vault GHO-USDE/GHO-USDC Looping",
+    start: "Jul-30-2025 03:27:23 PM UTC",
+    owner: "0x159CfFA364B6eF16853217AE4097E2DD517EbA52",
+    fixedValue: { value: 55.6, asset: "USD" }, // leveraged value of collateral, not just USDe
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 60, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL: "https://fluid.io/vaults/1/139",
+  },
 ];
 
 // ---
