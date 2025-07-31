@@ -133,7 +133,7 @@ export const ETH_CONFIG: Strategy[] = [
     points: [
       {
         type: POINTS_ID_ETHENA_SATS_S4,
-        expectedPointsPerDay: { value: 60, baseAsset: "USD" },
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
       },
     ],
     externalAppURL: "https://fluid.io/vaults/1/141",
@@ -146,7 +146,7 @@ export const ETH_CONFIG: Strategy[] = [
     points: [
       {
         type: POINTS_ID_ETHENA_SATS_S4,
-        expectedPointsPerDay: { value: 60, baseAsset: "USD" },
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
       },
     ],
     externalAppURL: "https://fluid.io/vaults/1/137",
@@ -159,7 +159,7 @@ export const ETH_CONFIG: Strategy[] = [
     points: [
       {
         type: POINTS_ID_ETHENA_SATS_S4,
-        expectedPointsPerDay: { value: 60, baseAsset: "USD" },
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
       },
     ],
     externalAppURL: "https://fluid.io/vaults/1/138",
@@ -172,20 +172,7 @@ export const ETH_CONFIG: Strategy[] = [
     points: [
       {
         type: POINTS_ID_ETHENA_SATS_S4,
-        expectedPointsPerDay: { value: 60, baseAsset: "USD" },
-      },
-    ],
-    externalAppURL: "https://fluid.io/vaults/1/138",
-  },
-  {
-    strategy: "Fluid: Smart Vault USDE-USDTB/GHO Looping",
-    start: "Jul-30-2025 03:13:35 PM UTC",
-    owner: "0xE2f2d1Da114D077113e5B633e8792bcB8e2B931e",
-    fixedValue: { value: 33.65, asset: "USD" }, // leveraged value of collateral, not just USDe
-    points: [
-      {
-        type: POINTS_ID_ETHENA_SATS_S4,
-        expectedPointsPerDay: { value: 60, baseAsset: "USD" },
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
       },
     ],
     externalAppURL: "https://fluid.io/vaults/1/140",
@@ -198,7 +185,7 @@ export const ETH_CONFIG: Strategy[] = [
     points: [
       {
         type: POINTS_ID_ETHENA_SATS_S4,
-        expectedPointsPerDay: { value: 60, baseAsset: "USD" },
+        expectedPointsPerDay: { value: 30, baseAsset: "USD" },
       },
     ],
     externalAppURL: "https://fluid.io/vaults/1/139",
