@@ -117,6 +117,15 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     externalAppURL:
       "https://app.hyperbeat.org/earn/0x53a333e51e96fe288bc9add7cdc4b1ead2cd2ffa",
   },
+  {
+    strategy: "Hyperbeat: Hyperithm USDT0 Vault",
+    start: "Jul-30-2025 04:43:34 PM UTC",
+    owner: "0x3E6BE90C7f87774D97cf1c50e3c2E49c5a045652",
+    fixedValue: { value: 8.62, asset: "USD" },
+    points: [{ type: POINTS_ID_HYPERBEAT_S1 }],
+    externalAppURL:
+      "https://app.hyperbeat.org/earn/0xe5add96840f0b908ddeb3bd144c0283ac5ca7ca0",
+  },
   // {
   //   strategy: "Hyperbeat: Gauntlet USDe Core",
   //   start: "Jun-24-2025 2:27:12 PM UTC",
