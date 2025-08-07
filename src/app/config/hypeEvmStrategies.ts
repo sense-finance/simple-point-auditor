@@ -80,20 +80,20 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     ],
     externalAppURL: "https://app.sentiment.xyz/create-position",
   },
-  // {
-  //   strategy: "Hyperbeat: USDT",
-  //   start: "Jun-24-2025 01:48:03 PM UTC",
-  //   owner: "0x6a99970fbec57b3349FC2d06a6DD410BA6e5A78a",
-  //   fixedValue: { value: 11.08, asset: "USD" },
-  //   points: [
-  //     { type: POINTS_ID_HYPERBEAT_S1 },
-  //     {
-  //       type: POINTS_ID_RESOLV_S1,
-  //       expectedPointsPerDay: { value: 30, baseAsset: "USD" },
-  //     },
-  //   ],
-  //   externalAppURL: "https://app.hyperbeat.org/vaults/usdt",
-  // },
+  {
+    strategy: "Hyperbeat: USDT",
+    start: "Jun-24-2025 01:48:03 PM UTC",
+    owner: "0x6a99970fbec57b3349FC2d06a6DD410BA6e5A78a",
+    fixedValue: { value: 11.08, asset: "USD" },
+    points: [
+      { type: POINTS_ID_HYPERBEAT_S1 },
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 1, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL: "https://app.hyperbeat.org/vaults/usdt",
+  },
   {
     strategy: "Hyperbeat: Ultra UBTC",
     start: "Jun-24-2025 01:57:45 PM UTC",
