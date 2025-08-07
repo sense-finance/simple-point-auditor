@@ -253,4 +253,85 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     ],
     externalAppURL: "https://app.hyperbeat.org/staking/behype",
   },
+  {
+    strategy: "Hyperbeat Borrow: hbHYPE/WHYPE",
+    start: "Aug-07-2025 02:26:58 AM UTC",
+    owner: "0xC90780cB9aab4dc0781E2E7b5197846C2907F82B",
+    fixedValue: { value: 0.5549, asset: "HYPE" }, // total collateral
+    points: [
+      {
+        type: POINTS_ID_HYPERBEAT_S1,
+      },
+      {
+        type: POINTS_ID_KINETIQ_S1,
+      },
+      // {
+      //   type: POINTS_ID_HYPERLEND_S1,
+      //   expectedPointsPerDay: { value: 1, baseAsset: "USD" },
+      // },
+      // {
+      //   type: POINTS_ID_HYPURRFI_S1,
+      //   expectedPointsPerDay: { value: 1, baseAsset: "USD" },
+      // },
+      // {
+      //   type: POINTS_ID_HYPERSWAP_S1,
+      //   expectedPointsPerDay: { value: 1, baseAsset: "USD" },
+      // },
+      // {
+      //   type: POINTS_ID_TIMESWAP_S1,
+      //   expectedPointsPerDay: { value: 1, baseAsset: "USD" },
+      // },
+      // {
+      //   type: POINTS_ID_SILHOUETTE_S1,
+      //   expectedPointsPerDay: { value: 1, baseAsset: "USD" },
+      // },
+      { type: POINTS_ID_UPSHIFT_S2 },
+    ],
+    externalAppURL:
+      "https://app.hyperbeat.org/borrow/0x19e47d37453628ebf0fd18766ce6fee1b08ea46752a5da83ca0bfecb270d07e8",
+  },
+  {
+    strategy: "Kinetiq Earn: vkHYPE",
+    start: "Aug-07-2025 02:37:40 AM UTC",
+    owner: "0xD857a632b829611Dc7397F87A7c6BA6821eF5A03",
+    fixedValue: { value: 0.2996, asset: "HYPE" },
+    points: [{ type: POINTS_ID_KINETIQ_S1 }],
+    externalAppURL: "https://kinetiq.xyz/earn/kinetiq-earn",
+  },
+  {
+    strategy: "Pendle: Hold YT-beHYPE-29OCT2025",
+    start: "Aug-07-2025 02:42:22 AM UTC",
+    owner: "0x7f30f6a44a0096AC65b4FfC1ADA94B1051875909",
+    fixedValue: { value: 0.23, asset: "HYPE" },
+    points: [{ type: POINTS_ID_HYPERBEAT_S1 }],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x976fb34e06c933bdd97cb1e8b868e04442edaa8d/swap?view=yt&chain=hyperevm",
+  },
+  {
+    strategy: "Pendle: Hold YT-hbHYPE-17DEC2025",
+    start: "Aug-07-2025 02:45:26 AM UTC",
+    owner: "0xf43744f1153e97B47B5815F8e739b68db6F29B74",
+    fixedValue: { value: 0.25, asset: "HYPE" },
+    points: [{ type: POINTS_ID_HYPERBEAT_S1 }],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x97d985a71131afc02c320b636a268df34c6f42a4/swap?view=yt&chain=hyperevm",
+  },
+  {
+    strategy: "Pendle: Hold YT-hbUSDT-17DEC2025",
+    start: "Aug-07-2025 02:48:45 AM UTC",
+    owner: "0xFD069e1Cc1fdab00d903223fA982E39FC4b12C1E",
+    fixedValue: { value: 0.22, asset: "HYPE" },
+    points: [{ type: POINTS_ID_HYPERBEAT_S1 }],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0xab9b8a04d21c9fb1fee7b7d219cab9e725a86b0a/swap?view=yt&chain=hyperevm",
+  },
+  {
+    strategy: "Pendle: Hold YT-kHYPE-12NOV2025",
+    start: "Aug-07-2025 02:51:21 AM UTC",
+    owner: "0x533dB26C8C9cBf0e01E42583Ba20585b15d80B97",
+    fixedValue: { value: 0.29, asset: "HYPE" },
+    points: [{ type: POINTS_ID_KINETIQ_S1 }],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x8867d2b7adb8609c51810237ecc9a25a2f601b97/swap?view=yt&chain=hyperevm",
+  },
 ];

@@ -206,6 +206,7 @@ const pointIdToFriendlyName: Record<string, string> = {
   POINTS_ID_UPSHIFT_S1: "Upshift (S1)",
   POINTS_ID_FELIX_S1: "Felix (S1)",
   POINTS_ID_UPSHIFT_S2: "Upshift (S2)",
+  POINTS_ID_KINETIQ_S1: "Kinetiq (S1)",
 };
 
 // 2. Helper to group data by pointsId
