@@ -11,6 +11,8 @@ import {
   POINTS_ID_UPSHIFT_S2,
   POINTS_ID_FELIX_S1,
   POINTS_ID_KINETIQ_S1,
+  POINTS_ID_ETHENA_SATS_S4,
+  POINTS_ID_ETHERFI_S5,
 } from "./constants";
 
 export const HYPE_EVM_CONFIG: Strategy[] = [
@@ -303,7 +305,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     start: "Aug-07-2025 02:42:22 AM UTC",
     owner: "0x7f30f6a44a0096AC65b4FfC1ADA94B1051875909",
     fixedValue: { value: 0.23, asset: "HYPE" },
-    points: [{ type: POINTS_ID_HYPERBEAT_S1 }],
+    points: [{ type: POINTS_ID_HYPERBEAT_S1 }, { type: POINTS_ID_ETHERFI_S5 }],
     externalAppURL:
       "https://app.pendle.finance/trade/markets/0x976fb34e06c933bdd97cb1e8b868e04442edaa8d/swap?view=yt&chain=hyperevm",
   },
@@ -321,7 +323,10 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     start: "Aug-07-2025 02:48:45 AM UTC",
     owner: "0xFD069e1Cc1fdab00d903223fA982E39FC4b12C1E",
     fixedValue: { value: 0.22, asset: "HYPE" },
-    points: [{ type: POINTS_ID_HYPERBEAT_S1 }],
+    points: [
+      { type: POINTS_ID_HYPERBEAT_S1 },
+      { type: POINTS_ID_ETHENA_SATS_S4 },
+    ],
     externalAppURL:
       "https://app.pendle.finance/trade/markets/0xab9b8a04d21c9fb1fee7b7d219cab9e725a86b0a/swap?view=yt&chain=hyperevm",
   },
