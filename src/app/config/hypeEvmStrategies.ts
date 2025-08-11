@@ -310,7 +310,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     externalAppURL: "https://kinetiq.xyz/earn/kinetiq-earn",
   },
   {
-    strategy: "Pendle: Hold YT-beHYPE-29OCT2025",
+    strategy: "Pendle: Hold beHYPE YTs (29 Oct 2025)",
     start: "Aug-07-2025 02:42:22 AM UTC",
     owner: "0x7f30f6a44a0096AC65b4FfC1ADA94B1051875909",
     fixedValue: { value: 0.23, asset: "HYPE" },
@@ -319,7 +319,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
       "https://app.pendle.finance/trade/markets/0x976fb34e06c933bdd97cb1e8b868e04442edaa8d/swap?view=yt&chain=hyperevm",
   },
   {
-    strategy: "Pendle: Hold YT-hbHYPE-17DEC2025",
+    strategy: "Pendle: Hold hbHYPE YTs (17 Dec 2025)",
     start: "Aug-07-2025 02:45:26 AM UTC",
     owner: "0xf43744f1153e97B47B5815F8e739b68db6F29B74",
     fixedValue: { value: 0.25, asset: "HYPE" },
@@ -328,7 +328,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
       "https://app.pendle.finance/trade/markets/0x97d985a71131afc02c320b636a268df34c6f42a4/swap?view=yt&chain=hyperevm",
   },
   {
-    strategy: "Pendle: Hold YT-hbUSDT-17DEC2025",
+    strategy: "Pendle: Hold hbUSDT YTs (17 Dec 2025)",
     start: "Aug-07-2025 02:48:45 AM UTC",
     owner: "0xFD069e1Cc1fdab00d903223fA982E39FC4b12C1E",
     fixedValue: { value: 0.22, asset: "HYPE" },
@@ -340,7 +340,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
       "https://app.pendle.finance/trade/markets/0xab9b8a04d21c9fb1fee7b7d219cab9e725a86b0a/swap?view=yt&chain=hyperevm",
   },
   {
-    strategy: "Pendle: Hold YT-kHYPE-12NOV2025",
+    strategy: "Pendle: Hold kHYPE YTs (12 Nov 2025)",
     start: "Aug-07-2025 02:51:21 AM UTC",
     owner: "0x533dB26C8C9cBf0e01E42583Ba20585b15d80B97",
     fixedValue: { value: 0.29, asset: "HYPE" },
