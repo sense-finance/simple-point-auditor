@@ -348,4 +348,13 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     externalAppURL:
       "https://app.pendle.finance/trade/markets/0x8867d2b7adb8609c51810237ecc9a25a2f601b97/swap?view=yt&chain=hyperevm",
   },
+  {
+    strategy: "Hyperbeat: Hyperithm HYPE Vault",
+    start: "Aug-18-2025 10:32:43 PM UTC",
+    owner: "0x530356f59F19a8CFFad25f9f5BD39b2B4149AAd9",
+    fixedValue: { value: 0.09, asset: "HYPE" },
+    points: [{ type: POINTS_ID_HYPERBEAT_S1 }],
+    externalAppURL:
+      "https://app.hyperbeat.org/morphobeat/vault/0x92B518e1cD76dD70D3E20624AEdd7D107F332Cff",
+  },
 ];
