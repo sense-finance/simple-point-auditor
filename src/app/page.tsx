@@ -369,17 +369,6 @@ export default function PointsAuditByPointsId() {
     router.replace(`${pathname}?${sp.toString()}${hash}`);
   }, [selectedNetwork, pathname, router, searchParams]);
 
-  // Error display
-  if (error) {
-    return (
-      <div className="p-8 max-w-7xl mx-auto" role="alert" aria-live="assertive">
-        <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-600">
-          {error}
-        </div>
-      </div>
-    );
-  }
-
   // Grouping the data once we have it
   const groupedData = groupByPointsId(data);
 
@@ -404,6 +393,17 @@ export default function PointsAuditByPointsId() {
     }
   }, [loading, linkStrategy, linkPointsId]);
 
+  // Error display
+  if (error) {
+    return (
+      <div className="p-8 max-w-7xl mx-auto" role="alert" aria-live="assertive">
+        <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-600">
+          {error}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="p-8 max-w-7xl mx-auto">
       <div className="mb-6">
@@ -419,7 +419,7 @@ export default function PointsAuditByPointsId() {
           <ToggleGroup.Item
             value="ethereum"
             className="px-5 py-2.5 text-sm text-gray-600 font-medium rounded-lg hover:text-gray-900 hover:bg-gray-50 data-[state=on]:text-gray-900 data-[state=on]:bg-white data-[state=on]:shadow-sm data-[state=on]:ring-1 data-[state=on]:ring-gray-300 transition"
-            >
+          >
             Ethereum
           </ToggleGroup.Item>
           <ToggleGroup.Item
@@ -591,7 +591,10 @@ export default function PointsAuditByPointsId() {
                     <React.Fragment key={pointsId}>
                       {/* GROUP HEADER ROW */}
                       <tr className="border-b bg-gray-50/70">
-                        <td className="p-4 font-semibold text-gray-800" colSpan={6}>
+                        <td
+                          className="p-4 font-semibold text-gray-800"
+                          colSpan={6}
+                        >
                           {displayName}
                         </td>
                       </tr>
@@ -627,7 +630,9 @@ export default function PointsAuditByPointsId() {
                           selectedNetwork
                         )}&strategy=${encodeURIComponent(
                           row.strategy
-                        )}&pointsId=${encodeURIComponent(row.pointsId)}#${rowAnchorId}`;
+                        )}&pointsId=${encodeURIComponent(
+                          row.pointsId
+                        )}#${rowAnchorId}`;
 
                         return (
                           <tr
@@ -858,7 +863,9 @@ export default function PointsAuditByPointsId() {
                         selectedNetwork
                       )}&strategy=${encodeURIComponent(
                         row.strategy
-                      )}&pointsId=${encodeURIComponent(row.pointsId)}#${rowAnchorId}`;
+                      )}&pointsId=${encodeURIComponent(
+                        row.pointsId
+                      )}#${rowAnchorId}`;
 
                       return (
                         <div
