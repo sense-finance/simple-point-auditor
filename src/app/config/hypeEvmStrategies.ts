@@ -23,9 +23,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     owner: "0x49532bc64C515D6bfe061d44EE0834a996b7c684", // Actual test address
     fixedValue: { value: 0.2, asset: "HYPE" },
     points: [
-      {
-        type: POINTS_ID_HYPERBEAT_S1,
-      },
+      { type: POINTS_ID_HYPERBEAT_S1 },
       {
         type: POINTS_ID_KINETIQ_S1,
       },
@@ -240,15 +238,9 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     owner: "0xe37b6889bffe562d855cf7bede75e5f6f2239bff",
     fixedValue: { value: 0.0398, asset: "HYPE" },
     points: [
-      {
-        type: POINTS_ID_KINETIQ_S1,
-      },
-      {
-        type: POINTS_ID_HYPERBEAT_S1,
-      },
-      {
-        type: POINTS_ID_FELIX_S1,
-      },
+      { type: POINTS_ID_KINETIQ_S1 },
+      { type: POINTS_ID_HYPERBEAT_S1 },
+      { type: POINTS_ID_FELIX_S1 },
     ],
     externalAppURL: "https://app.hyperbeat.org/vaults/lsthype",
   },
@@ -257,11 +249,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     start: "Jul-21-2025 04:31:42 PM UTC",
     owner: "0xdd2c151A221F3bfA2416CDb06E3Dee2aC49F70df",
     fixedValue: { value: 0.2, asset: "HYPE" },
-    points: [
-      {
-        type: POINTS_ID_HYPERBEAT_S1,
-      },
-    ],
+    points: [{ type: POINTS_ID_HYPERBEAT_S1 }],
     externalAppURL: "https://app.hyperbeat.org/staking/behype",
   },
   {
@@ -270,12 +258,8 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     owner: "0xC90780cB9aab4dc0781E2E7b5197846C2907F82B",
     fixedValue: { value: 0.5549, asset: "HYPE" }, // total collateral
     points: [
-      {
-        type: POINTS_ID_HYPERBEAT_S1,
-      },
-      {
-        type: POINTS_ID_KINETIQ_S1,
-      },
+      { type: POINTS_ID_HYPERBEAT_S1 },
+      { type: POINTS_ID_KINETIQ_S1 },
       // {
       //   type: POINTS_ID_HYPERLEND_S1,
       //   expectedPointsPerDay: { value: 1, baseAsset: "USD" },
@@ -313,7 +297,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     strategy: "Pendle: Hold beHYPE YTs (29 Oct 2025)",
     start: "Aug-07-2025 02:42:22 AM UTC",
     owner: "0x7f30f6a44a0096AC65b4FfC1ADA94B1051875909",
-    fixedValue: { value: 0.23, asset: "HYPE" },
+    fixedValue: { value: 8.61, asset: "HYPE" },
     points: [{ type: POINTS_ID_HYPERBEAT_S1 }, { type: POINTS_ID_ETHERFI_S5 }],
     externalAppURL:
       "https://app.pendle.finance/trade/markets/0x976fb34e06c933bdd97cb1e8b868e04442edaa8d/swap?view=yt&chain=hyperevm",
@@ -322,7 +306,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     strategy: "Pendle: Hold hbHYPE YTs (17 Dec 2025)",
     start: "Aug-07-2025 02:45:26 AM UTC",
     owner: "0xf43744f1153e97B47B5815F8e739b68db6F29B74",
-    fixedValue: { value: 0.25, asset: "HYPE" },
+    fixedValue: { value: 5.39, asset: "HYPE" },
     points: [{ type: POINTS_ID_HYPERBEAT_S1 }],
     externalAppURL:
       "https://app.pendle.finance/trade/markets/0x97d985a71131afc02c320b636a268df34c6f42a4/swap?view=yt&chain=hyperevm",
@@ -331,7 +315,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     strategy: "Pendle: Hold hbUSDT YTs (17 Dec 2025)",
     start: "Aug-07-2025 02:48:45 AM UTC",
     owner: "0xFD069e1Cc1fdab00d903223fA982E39FC4b12C1E",
-    fixedValue: { value: 0.22, asset: "HYPE" },
+    fixedValue: { value: 186.86, asset: "USD" },
     points: [
       { type: POINTS_ID_HYPERBEAT_S1 },
       { type: POINTS_ID_ETHENA_SATS_S4 },
@@ -343,7 +327,7 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     strategy: "Pendle: Hold kHYPE YTs (12 Nov 2025)",
     start: "Aug-07-2025 02:51:21 AM UTC",
     owner: "0x533dB26C8C9cBf0e01E42583Ba20585b15d80B97",
-    fixedValue: { value: 0.29, asset: "HYPE" },
+    fixedValue: { value: 11.33, asset: "HYPE" },
     points: [{ type: POINTS_ID_KINETIQ_S1 }],
     externalAppURL:
       "https://app.pendle.finance/trade/markets/0x8867d2b7adb8609c51810237ecc9a25a2f601b97/swap?view=yt&chain=hyperevm",
