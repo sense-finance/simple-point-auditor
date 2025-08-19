@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState, useEffect, useRef } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
@@ -100,10 +102,10 @@ function InfoTooltip({
               }.io/address/${owner}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 rounded-md transition-colors"
+              className="group flex items-center gap-2 px-3 py-1.5 bg-gray-50 hover:bg-gray-100 rounded-md transition-colors"
             >
               <div className="flex flex-col">
-                <span className="text-xs text-indigo-600 font-medium">
+                <span className="text-xs text-gray-700 font-medium">
                   View Strategy Owner
                 </span>
                 <span className="text-xs text-gray-500 font-mono">
@@ -111,7 +113,7 @@ function InfoTooltip({
                 </span>
               </div>
               <svg
-                className="w-3 h-3 text-indigo-600 group-hover:translate-x-0.5 transition-transform"
+                className="w-3 h-3 text-gray-500 group-hover:translate-x-0.5 transition-transform"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -131,10 +133,10 @@ function InfoTooltip({
                 href={externalAppURL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-2 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 rounded-md transition-colors"
+                className="group flex items-center gap-2 px-3 py-1.5 bg-primary-light/10 hover:bg-primary-light/20 rounded-md transition-colors"
               >
                 <div className="flex flex-col">
-                  <span className="text-xs text-emerald-600 font-medium">
+                  <span className="text-xs text-primary-main font-medium">
                     Strategy
                   </span>
                   <span className="text-xs text-gray-500">
@@ -142,7 +144,7 @@ function InfoTooltip({
                   </span>
                 </div>
                 <svg
-                  className="w-3 h-3 text-emerald-600 group-hover:translate-x-0.5 transition-transform"
+                  className="w-3 h-3 text-primary-main group-hover:translate-x-0.5 transition-transform"
                   viewBox="0 0 24 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -285,7 +287,7 @@ function HistoryModal({
                     })}
                   </span>
                 </div>
-                <span className="font-mono font-medium text-indigo-600">
+                <span className="font-mono font-medium text-gray-900">
                   {parseFloat(d.actualPoints).toLocaleString("en-US", {
                     minimumFractionDigits: 4,
                     maximumFractionDigits: 4,
@@ -304,7 +306,15 @@ export default function PointsAuditByPointsId() {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedNetwork, setSelectedNetwork] = useState<string>("ethereum");
+  // Read initial network synchronously from URL to avoid flicker
+  const [selectedNetwork, setSelectedNetwork] = useState<string>(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const n = params.get("network");
+      if (n === "ethereum" || n === "hypeEVM") return n;
+    }
+    return "ethereum";
+  });
   const [config, setConfig] = useState(ETH_CONFIG);
   const [historicalData, setHistoricalData] = useState<
     Record<string, HistoricalData>
@@ -318,6 +328,13 @@ export default function PointsAuditByPointsId() {
     strategy: "",
     pointsId: "",
   });
+
+  // URL/search params helpers
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // (Initial network is read synchronously above; no need to set from URL here.)
 
   // Update config when network changes
   useEffect(() => {
@@ -342,6 +359,16 @@ export default function PointsAuditByPointsId() {
       });
   }, [selectedNetwork]);
 
+  // Sync selected network into URL params for shareable links
+  useEffect(() => {
+    const current = searchParams.get("network");
+    if (current === selectedNetwork) return;
+    const sp = new URLSearchParams(searchParams.toString());
+    sp.set("network", selectedNetwork);
+    const hash = typeof window !== "undefined" ? window.location.hash : "";
+    router.replace(`${pathname}?${sp.toString()}${hash}`);
+  }, [selectedNetwork, pathname, router, searchParams]);
+
   // Error display
   if (error) {
     return (
@@ -356,26 +383,48 @@ export default function PointsAuditByPointsId() {
   // Grouping the data once we have it
   const groupedData = groupByPointsId(data);
 
+  // Helpers for deep-linking/highlighting
+  const linkStrategy = searchParams.get("strategy") ?? "";
+  const linkPointsId = searchParams.get("pointsId") ?? "";
+  const makeRowAnchorId = (strategy: string, pointsId: string) =>
+    `row-${encodeURIComponent(`${strategy}--${pointsId}`)}`;
+
+  // If someone lands with strategy/pointsId in URL, scroll into view once data is loaded
+  useEffect(() => {
+    if (!loading && linkStrategy && linkPointsId) {
+      const id = makeRowAnchorId(linkStrategy, linkPointsId);
+      const scrollToEl = () => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      };
+      if (typeof window !== "undefined") {
+        requestAnimationFrame(scrollToEl);
+        setTimeout(scrollToEl, 250);
+      }
+    }
+  }, [loading, linkStrategy, linkPointsId]);
+
   return (
     <div className="p-8 max-w-7xl mx-auto">
-      <div className="mb-8">
+      <div className="mb-6">
         <ToggleGroup.Root
           type="single"
           value={selectedNetwork}
           onValueChange={(value: string | undefined) =>
             value && setSelectedNetwork(value)
           }
-          className="inline-flex rounded-lg border border-gray-200 bg-gray-50 p-1 shadow-md"
+          aria-label="Select network"
+          className="inline-flex items-center gap-1.5 rounded-xl bg-white p-1.5 ring-1 ring-gray-200 shadow-sm"
         >
           <ToggleGroup.Item
             value="ethereum"
-            className="px-4 py-2 text-gray-700 font-medium rounded-md data-[state=on]:font-semibold data-[state=on]:bg-gray-300 data-[state=on]:text-gray-900 data-[state=on]:shadow-sm hover:bg-gray-100 transition-colors"
-          >
+            className="px-5 py-2.5 text-sm text-gray-600 font-medium rounded-lg hover:text-gray-900 hover:bg-gray-50 data-[state=on]:text-gray-900 data-[state=on]:bg-white data-[state=on]:shadow-sm data-[state=on]:ring-1 data-[state=on]:ring-gray-300 transition"
+            >
             Ethereum
           </ToggleGroup.Item>
           <ToggleGroup.Item
             value="hypeEVM"
-            className="px-4 py-2 text-gray-700 font-medium rounded-md data-[state=on]:font-semibold data-[state=on]:bg-gray-300 data-[state=on]:text-gray-900 data-[state=on]:shadow-sm hover:bg-gray-100 transition-colors"
+            className="px-5 py-2.5 text-sm text-gray-600 font-medium rounded-lg hover:text-gray-900 hover:bg-gray-50 data-[state=on]:text-gray-900 data-[state=on]:bg-white data-[state=on]:shadow-sm data-[state=on]:ring-1 data-[state=on]:ring-gray-300 transition"
           >
             HypeEVM
           </ToggleGroup.Item>
@@ -385,7 +434,7 @@ export default function PointsAuditByPointsId() {
       {loading ? (
         <>
           {/* TABLE SKELETON (Visible on md screens and up) */}
-          <div className="hidden sm:block overflow-x-auto rounded-lg shadow-lg border border-gray-200">
+          <div className="hidden sm:block overflow-x-auto rounded-xl ring-1 ring-gray-200/60 shadow-sm">
             <table className="w-full border-collapse bg-white">
               <thead>
                 <tr className="bg-gray-50">
@@ -469,7 +518,7 @@ export default function PointsAuditByPointsId() {
             {Array.from({ length: 5 }).map((_, idx) => (
               <div
                 key={idx}
-                className="bg-white border border-gray-200 rounded-lg p-4 animate-pulse"
+                className="bg-white rounded-xl p-4 ring-1 ring-gray-200/60 animate-pulse"
               >
                 <div className="h-4 w-32 bg-gray-200 rounded mb-4" />
                 {Array.from({ length: 3 }).map((__, rIdx) => (
@@ -485,44 +534,44 @@ export default function PointsAuditByPointsId() {
       ) : (
         <>
           {/* ---------- TABLE Layout (hidden on small screens) ---------- */}
-          <div className="hidden sm:block overflow-x-auto rounded-lg shadow-lg border border-gray-200">
+          <div className="hidden sm:block overflow-x-auto rounded-xl ring-1 ring-gray-200/60 shadow-sm bg-white">
             <table
               className="w-full border-collapse bg-white"
               aria-label="Points Audit Table"
             >
               <thead>
-                <tr className="bg-gray-50">
+                <tr className="bg-gray-50/80">
                   <th
                     scope="col"
-                    className="p-4 text-left text-gray-700 font-semibold border-b border-gray-200 w-[60px]"
+                    className="p-4 text-left text-gray-700 font-semibold border-b border-gray-100 w-[44px]"
                   ></th>
                   <th
                     scope="col"
-                    className="p-4 text-left text-gray-700 font-semibold border-b border-gray-200"
+                    className="p-4 text-left text-gray-700 font-semibold border-b border-gray-100"
                   >
                     Strategy
                   </th>
                   <th
                     scope="col"
-                    className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200 w-[140px]"
+                    className="p-4 text-right text-gray-700 font-semibold border-b border-gray-100 w-[140px]"
                   >
                     Expected
                   </th>
                   <th
                     scope="col"
-                    className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200 w-[140px]"
+                    className="p-4 text-right text-gray-700 font-semibold border-b border-gray-100 w-[140px]"
                   >
                     Actual
                   </th>
                   <th
                     scope="col"
-                    className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200 w-[160px]"
+                    className="p-4 text-right text-gray-700 font-semibold border-b border-gray-100 w-[160px]"
                   >
                     Diff
                   </th>
                   <th
                     scope="col"
-                    className="p-4 text-right text-gray-700 font-semibold border-b border-gray-200 w-[160px]"
+                    className="p-4 text-right text-gray-700 font-semibold border-b border-gray-100 w-[160px]"
                   >
                     <div>Audit State</div>
                     <div className="text-xs font-normal">
@@ -541,8 +590,8 @@ export default function PointsAuditByPointsId() {
                   return (
                     <React.Fragment key={pointsId}>
                       {/* GROUP HEADER ROW */}
-                      <tr className="border-b bg-gray-100">
-                        <td className="p-4 font-semibold" colSpan={6}>
+                      <tr className="border-b bg-gray-50/70">
+                        <td className="p-4 font-semibold text-gray-800" colSpan={6}>
                           {displayName}
                         </td>
                       </tr>
@@ -565,12 +614,39 @@ export default function PointsAuditByPointsId() {
                           (p) => p.type === row.pointsId
                         )?.state;
 
+                        const isHighlighted =
+                          row.strategy === linkStrategy &&
+                          row.pointsId === linkPointsId;
+
+                        const rowAnchorId = makeRowAnchorId(
+                          row.strategy,
+                          row.pointsId
+                        );
+
+                        const permalink = `${pathname}?network=${encodeURIComponent(
+                          selectedNetwork
+                        )}&strategy=${encodeURIComponent(
+                          row.strategy
+                        )}&pointsId=${encodeURIComponent(row.pointsId)}#${rowAnchorId}`;
+
                         return (
                           <tr
                             key={subIndex}
-                            className="border-b hover:bg-gray-50 transition-colors"
+                            id={rowAnchorId}
+                            className={`group border-b hover:bg-gray-50 transition-colors scroll-mt-24 ${
+                              isHighlighted ? "bg-primary-light/5" : ""
+                            }`}
                           >
-                            <td className="py-5 px-4" />
+                            <td className="py-5 px-4 align-top">
+                              <Link
+                                href={permalink}
+                                aria-label="Link to this row"
+                                title="Link to this row"
+                                className="text-gray-400 hover:text-gray-600 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity"
+                              >
+                                #
+                              </Link>
+                            </td>
                             <td className="py-5 px-4">
                               <div className="font-medium text-gray-900">
                                 <span className="text-gray-900 truncate max-w-[180px]">
@@ -586,7 +662,7 @@ export default function PointsAuditByPointsId() {
                               </div>
                             </td>
                             {noExpectedPoints ? (
-                              <td className="py-5 px-2 bg-gray-50 text-right font-mono text-gray-600">
+                              <td className="py-5 px-2 bg-gray-50 text-right font-mono text-gray-500">
                                 N/A
                               </td>
                             ) : (
@@ -598,7 +674,7 @@ export default function PointsAuditByPointsId() {
                               <Tooltip.Provider delayDuration={0}>
                                 <Tooltip.Root>
                                   <Tooltip.Trigger asChild>
-                                    <span className="cursor-pointer border-b border-dotted border-gray-400 hover:border-indigo-500 transition-colors">
+                                    <span className="cursor-pointer border-b border-dotted border-gray-300 hover:border-gray-500 transition-colors">
                                       {actual.toLocaleString("en-US", {
                                         minimumFractionDigits: 4,
                                         maximumFractionDigits: 4,
@@ -607,7 +683,7 @@ export default function PointsAuditByPointsId() {
                                   </Tooltip.Trigger>
                                   <Tooltip.Portal>
                                     <Tooltip.Content
-                                      className="bg-white border border-gray-200 rounded-lg shadow-lg p-4 z-50 min-w-[320px]"
+                                      className="bg-white border border-gray-200 rounded-lg shadow-md p-4 z-50 min-w-[320px]"
                                       sideOffset={5}
                                     >
                                       {historicalData[
@@ -653,7 +729,7 @@ export default function PointsAuditByPointsId() {
                                                       )}
                                                     </span>
                                                   </div>
-                                                  <span className="font-mono font-medium text-indigo-600 ml-4">
+                                                  <span className="font-mono font-medium text-gray-900 ml-4">
                                                     {parseFloat(
                                                       d.actualPoints
                                                     ).toLocaleString("en-US", {
@@ -678,7 +754,7 @@ export default function PointsAuditByPointsId() {
                                                   pointsId: row.pointsId,
                                                 });
                                               }}
-                                              className="mt-3 text-xs text-indigo-600 hover:text-indigo-800 block text-center"
+                                              className="mt-3 text-xs text-indigo-600 hover:text-indigo-700 block text-center"
                                             >
                                               View{" "}
                                               {historicalData[
@@ -699,12 +775,12 @@ export default function PointsAuditByPointsId() {
                               <td className="py-5 px-2 bg-gray-50"></td>
                             ) : (
                               <td
-                                className={`py-5 px-2 text-right font-mono font-medium whitespace-nowrap ${
+                                className={`py-5 px-2 text-right font-mono font-medium whitespace-nowrap rounded ${
                                   Math.abs(percentDiff) < 0.1
-                                    ? "text-indigo-600 bg-indigo-50"
+                                    ? "text-indigo-700 bg-indigo-50"
                                     : diff < 0
-                                    ? "text-red-600 bg-red-50"
-                                    : "text-emerald-600 bg-emerald-50"
+                                    ? "text-red-700 bg-red-50"
+                                    : "text-emerald-700 bg-emerald-50"
                                 }`}
                               >
                                 {Math.abs(percentDiff) < 0.1 && "⭐"}{" "}
@@ -755,7 +831,7 @@ export default function PointsAuditByPointsId() {
               return (
                 <div
                   key={pointsId}
-                  className="bg-white border border-gray-200 rounded-lg p-4 shadow"
+                  className="bg-white rounded-xl p-4 ring-1 ring-gray-200/60 shadow-sm"
                 >
                   {/* GROUP HEADER */}
                   <h2 className="text-lg font-semibold mb-4">{displayName}</h2>
@@ -769,17 +845,45 @@ export default function PointsAuditByPointsId() {
                       const percentDiff =
                         expected === 0 ? 0 : (diff / expected) * 100;
 
+                      const isHighlighted =
+                        row.strategy === linkStrategy &&
+                        row.pointsId === linkPointsId;
+
+                      const rowAnchorId = makeRowAnchorId(
+                        row.strategy,
+                        row.pointsId
+                      );
+
+                      const permalink = `${pathname}?network=${encodeURIComponent(
+                        selectedNetwork
+                      )}&strategy=${encodeURIComponent(
+                        row.strategy
+                      )}&pointsId=${encodeURIComponent(row.pointsId)}#${rowAnchorId}`;
+
                       return (
                         <div
                           key={subIndex}
-                          className="p-3 rounded-md border border-gray-100"
+                          id={rowAnchorId}
+                          className={`group p-3 rounded-lg ${
+                            isHighlighted
+                              ? "bg-primary-light/5 ring-0"
+                              : "bg-white ring-1 ring-gray-100"
+                          }`}
                         >
                           <div className="flex items-center justify-between mb-1">
                             <span className="font-medium text-gray-700">
                               Strategy
                             </span>
-                            <span className="text-gray-900 truncate max-w-[180px]">
+                            <span className="text-gray-900 truncate max-w-[180px] flex items-center gap-2">
                               {row.strategy}
+                              <Link
+                                href={permalink}
+                                aria-label="Link to this row"
+                                title="Link to this row"
+                                className="text-gray-400 hover:text-gray-600 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-opacity"
+                              >
+                                #
+                              </Link>
                             </span>
                           </div>
                           <div className="flex items-center justify-between mb-1">
