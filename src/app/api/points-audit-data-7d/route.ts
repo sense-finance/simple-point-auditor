@@ -42,6 +42,7 @@ export async function GET(request: Request) {
         expectedPointsPerDay: number | null;
         percentageDiff: number | null;
         daysOfData: number;
+        windowType: string;
       };
     };
   }[] = [];
@@ -56,6 +57,7 @@ export async function GET(request: Request) {
         expectedPointsPerDay: number | null;
         percentageDiff: number | null;
         daysOfData: number;
+        windowType: string;
       };
     } = {};
 
@@ -74,6 +76,7 @@ export async function GET(request: Request) {
           expectedPointsPerDay: 0,
           percentageDiff: 0,
           daysOfData: 0,
+          windowType: "insufficient",
         };
         continue;
       }
@@ -97,34 +100,47 @@ export async function GET(request: Request) {
           expectedPointsPerDay: 0,
           percentageDiff: 0,
           daysOfData: 0,
+          windowType: "insufficient",
         };
         continue;
       }
       const latestLogTime = new Date(latestLog.created_at).getTime();
 
-      // Fetch logs from an extended window (e.g. 8 days back) to capture potential update events.
+      // Fetch logs from a longer window (e.g. 21 days back) to capture weekly updates,
+      // plus grab the latest log PRIOR to the window to provide a baseline if needed.
       const extendedWindowStart = new Date(
-        latestLogTime - 8 * 24 * 60 * 60 * 1000
+        latestLogTime - 21 * 24 * 60 * 60 * 1000
       ).toISOString();
-      const logsRows = await sql`
+      const logsAfterStart = await sql`
          SELECT points_id, actual_points, created_at
          FROM points_audit_logs
          WHERE strategy = ${strategyConfig.strategy} AND points_id = ${pointsId}
            AND created_at >= ${extendedWindowStart}
          ORDER BY created_at ASC
       `;
+      const priorBaseline = await sql`
+         SELECT points_id, actual_points, created_at
+         FROM points_audit_logs
+         WHERE strategy = ${strategyConfig.strategy} AND points_id = ${pointsId}
+           AND created_at < ${extendedWindowStart}
+         ORDER BY created_at DESC
+         LIMIT 1
+      `;
+      const logsRows =
+        priorBaseline.length > 0
+          ? [...priorBaseline.reverse(), ...logsAfterStart]
+          : logsAfterStart;
 
       // Deduplicate consecutive logs (ignoring repeated identical actual_points).
-      const dedupedLogs = [];
+      const dedupedLogs = [] as typeof logsRows;
       for (const row of logsRows) {
+        // Keep first row as baseline even if zero; thereafter, drop consecutive duplicates.
         if (
           dedupedLogs.length === 0 ||
           dedupedLogs[dedupedLogs.length - 1].actual_points !==
             row.actual_points
         ) {
-          if (Number(row.actual_points) !== 0) {
-            dedupedLogs.push(row);
-          }
+          dedupedLogs.push(row);
         }
       }
 
@@ -137,48 +153,131 @@ export async function GET(request: Request) {
           expectedPointsPerDay: 0,
           percentageDiff: 0,
           daysOfData: 0,
+          windowType: "insufficient",
         };
         continue;
       }
 
       // Use the last (i.e. most recent) deduped log as the effective end update.
-      const effectiveEndLog = dedupedLogs[dedupedLogs.length - 1];
+      // Remove single-zero glitches between near-equal neighbors.
+      const cleanedLogs = (() => {
+        if (dedupedLogs.length < 3) return dedupedLogs;
+        const out: typeof dedupedLogs = [];
+        for (let i = 0; i < dedupedLogs.length; i++) {
+          const curr = dedupedLogs[i];
+          const currVal = Number(curr.actual_points);
+          if (i > 0 && i < dedupedLogs.length - 1 && currVal === 0) {
+            const prev = dedupedLogs[i - 1];
+            const next = dedupedLogs[i + 1];
+            const prevVal = Number(prev.actual_points);
+            const nextVal = Number(next.actual_points);
+            const bothPositive = prevVal > 0 && nextVal > 0;
+            const relDiff =
+              Math.abs(prevVal - nextVal) / Math.max(prevVal, nextVal);
+            if (bothPositive && relDiff <= 0.1) {
+              // skip this glitchy zero
+              continue;
+            }
+          }
+          out.push(curr);
+        }
+        return out.length > 0 ? out : dedupedLogs;
+      })();
+
+      const effectiveEndLog = cleanedLogs[cleanedLogs.length - 1];
       const effectiveEndTime = new Date(effectiveEndLog.created_at).getTime();
 
-      // Define the desired start time as 7 days prior to the effective end.
-      const desiredStartMillis = effectiveEndTime - 7 * 24 * 60 * 60 * 1000;
-      let chosenStartLog = dedupedLogs.reduce((closest: any, current: any) => {
-        const currentTime = new Date(current.created_at).getTime();
-        const closestTime = closest
-          ? new Date(closest.created_at).getTime()
-          : null;
+      // Helper to compute days between two timestamps
+      const daysBetween = (endMs: number, startMs: number) =>
+        (endMs - startMs) / (1000 * 60 * 60 * 24);
 
-        // If we don't have a closest yet, or if this entry is closer to the desired start time
-        if (
-          !closest ||
-          (closestTime !== null &&
-            Math.abs(currentTime - desiredStartMillis) <
-              Math.abs(closestTime - desiredStartMillis))
-        ) {
-          return current;
+      // Week-aware window selection:
+      // 1) Prefer the most recent adjacent pair whose spacing is ~1 week (5-9 days)
+      // 2) Otherwise, pick the adjacent pair whose spacing is closest to 7 days
+      // 3) Fallback: approximate 7-day window using the log closest to (end - 7 days)
+      let chosenStartLog: any = null;
+      let chosenEndLog: any = effectiveEndLog;
+      let windowType: string = "fallback";
+
+      if (cleanedLogs.length >= 2) {
+        // Search from the end for a ~weekly pair.
+        let weeklyPairIdx: number | null = null;
+        for (let i = cleanedLogs.length - 1; i >= 1; i--) {
+          const a = cleanedLogs[i - 1];
+          const b = cleanedLogs[i];
+          const d = daysBetween(
+            new Date(b.created_at).getTime(),
+            new Date(a.created_at).getTime()
+          );
+          // Treat 5–14 days as a weekly-style step to account for anomalies (e.g., 11-day gap)
+          if (d >= 5 && d <= 14) {
+            weeklyPairIdx = i;
+            break;
+          }
         }
-        return closest;
-      }, null);
+
+        if (weeklyPairIdx !== null) {
+          chosenStartLog = cleanedLogs[weeklyPairIdx - 1];
+          chosenEndLog = cleanedLogs[weeklyPairIdx];
+          windowType = "weekly_step";
+        } else {
+          // No ~weekly pair; approximate a 7-day window using the log closest to (end - 7 days).
+          const desiredStartMillis = effectiveEndTime - 7 * 24 * 60 * 60 * 1000;
+          chosenStartLog = cleanedLogs.reduce((closest: any, current: any) => {
+            const currentTime = new Date(current.created_at).getTime();
+            const closestTime = closest
+              ? new Date(closest.created_at).getTime()
+              : null;
+            if (
+              !closest ||
+              (closestTime !== null &&
+                Math.abs(currentTime - desiredStartMillis) <
+                  Math.abs(closestTime - desiredStartMillis))
+            ) {
+              return current;
+            }
+            return closest;
+          }, null);
+          chosenEndLog = effectiveEndLog;
+          windowType = "seven_day_window";
+        }
+      }
+
+      if (!chosenStartLog) {
+        // Fallback: pick the log closest to (end - 7 days)
+        const desiredStartMillis = effectiveEndTime - 7 * 24 * 60 * 60 * 1000;
+        chosenStartLog = cleanedLogs.reduce((closest: any, current: any) => {
+          const currentTime = new Date(current.created_at).getTime();
+          const closestTime = closest
+            ? new Date(closest.created_at).getTime()
+            : null;
+          if (
+            !closest ||
+            (closestTime !== null &&
+              Math.abs(currentTime - desiredStartMillis) <
+                Math.abs(closestTime - desiredStartMillis))
+          ) {
+            return current;
+          }
+          return closest;
+        }, null);
+        windowType = "fallback";
+      }
 
       const startTime = new Date(chosenStartLog.created_at).getTime();
-      const daysDifference =
-        (effectiveEndTime - startTime) / (1000 * 60 * 60 * 24);
+      const endTime = new Date(chosenEndLog.created_at).getTime();
+      const daysDifference = daysBetween(endTime, startTime);
       const realizedTotalGrowth =
-        Number(effectiveEndLog.actual_points) -
+        Number(chosenEndLog.actual_points) -
         Number(chosenStartLog.actual_points);
 
       const realizedPointsPerDay =
         daysDifference > 0 ? realizedTotalGrowth / daysDifference : 0;
 
       // Get expected points per day from config
-      let expectedPointsPerDay = null;
-      let totalExpectedPoints = null;
-      let percentageDiff = null;
+      let expectedPointsPerDay: number | null = null;
+      let totalExpectedPoints: number | null = null;
+      let percentageDiff: number | null = null;
       if (pointsConfig.expectedPointsPerDay) {
         expectedPointsPerDay =
           typeof pointsConfig.expectedPointsPerDay.value === "function"
@@ -223,16 +322,18 @@ export async function GET(request: Request) {
         realizedPointsPerDollarPerDay: Number(
           (realizedPointsPerDay / positionValueUSD).toFixed(6)
         ),
-        totalExpectedPoints: totalExpectedPoints
-          ? Number(totalExpectedPoints.toFixed(6))
-          : null,
-        expectedPointsPerDay: expectedPointsPerDay
-          ? Number(expectedPointsPerDay.toFixed(6))
-          : null,
-        percentageDiff: percentageDiff
-          ? Number(percentageDiff.toFixed(2))
-          : null,
+        totalExpectedPoints:
+          totalExpectedPoints !== null
+            ? Number(totalExpectedPoints.toFixed(6))
+            : null,
+        expectedPointsPerDay:
+          expectedPointsPerDay !== null
+            ? Number(expectedPointsPerDay.toFixed(6))
+            : null,
+        percentageDiff:
+          percentageDiff !== null ? Number(percentageDiff.toFixed(2)) : null,
         daysOfData: Number(daysDifference.toFixed(2)),
+        windowType,
       };
     }
 

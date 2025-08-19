@@ -33,9 +33,11 @@ export async function GET() {
     const data = await getAllPointsData(CONFIG);
 
     await sql.transaction((tx) => {
-      // Create all queries first without executing them
-      const queries = data.flatMap((item) => {
-        const logQuery = tx`
+      const queries = [];
+
+      for (const item of data) {
+        // Insert log and capture id
+        const insertLog = tx`
           INSERT INTO points_audit_logs (
             created_at, strategy, points_id, 
             actual_points, expected_points, owner,
@@ -51,25 +53,21 @@ export async function GET() {
           )
           RETURNING id
         `;
+        queries.push(insertLog);
 
-        // Prepare source queries (will be executed after logQuery)
-        const sourceQueries = item.dataSourceURLs.map(
-          (url) =>
-            tx`
+        for (const url of item.dataSourceURLs) {
+          const insertSource = tx`
             INSERT INTO points_audit_sources (
               audit_log_id, source_url, points
             ) VALUES (
-              (SELECT id FROM points_audit_logs 
-               WHERE points_id = ${item.pointsId} 
-               ORDER BY created_at DESC LIMIT 1),
+              (SELECT id FROM points_audit_logs WHERE strategy = ${item.strategy} AND points_id = ${item.pointsId} ORDER BY created_at DESC LIMIT 1),
               ${url}, 
               ${item.pointsBySource[url]}
             )
-          `
-        );
-
-        return [logQuery, ...sourceQueries];
-      });
+          `;
+          queries.push(insertSource);
+        }
+      }
 
       return queries;
     });
