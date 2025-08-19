@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -302,7 +302,7 @@ function HistoryModal({
   );
 }
 
-export default function PointsAuditByPointsId() {
+function PointsAuditByPointsId() {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -956,5 +956,34 @@ export default function PointsAuditByPointsId() {
         />
       )}
     </div>
+  );
+}
+
+// Loading component for Suspense fallback
+function LoadingFallback() {
+  return (
+    <div className="p-8 max-w-7xl mx-auto">
+      <div className="mb-6">
+        <div className="inline-flex items-center gap-1.5 rounded-xl bg-white p-1.5 ring-1 ring-gray-200 shadow-sm">
+          <div className="px-5 py-2.5 text-sm text-gray-600 font-medium rounded-lg bg-white shadow-sm ring-1 ring-gray-300">
+            Loading...
+          </div>
+        </div>
+      </div>
+
+      <div className="hidden sm:block overflow-x-auto rounded-xl ring-1 ring-gray-200/60 shadow-sm">
+        <div className="w-full bg-white p-8 text-center text-gray-500">
+          Loading points audit data...
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <PointsAuditByPointsId />
+    </Suspense>
   );
 }
