@@ -3,7 +3,8 @@ export type Api = {
   seasonEnd?: string;
   seasonStart?: string;
   dataSources: {
-    getURL: (wallet: string) => string;
+    getURL?: (wallet: string) => string;
+    getData?: (wallet: string) => Promise<any>;
     method?: "GET" | "POST";
     headers?: any;
     body?: any;

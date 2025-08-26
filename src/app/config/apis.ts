@@ -28,6 +28,118 @@ function formatGraphQLQuery(query: string): string {
   return query.replace(/\s+/g, " ").trim();
 }
 
+// Felix direct API helpers
+let cachedFelixActionId: string | null = null;
+
+async function discoverFelixActionId(): Promise<string> {
+  if (process.env.FELIX_ACTION_ID) {
+    return process.env.FELIX_ACTION_ID;
+  }
+  if (cachedFelixActionId) {
+    return cachedFelixActionId;
+  }
+
+  try {
+    const pointsPage = await fetch("https://www.usefelix.xyz/points", {
+      cache: "no-store",
+    });
+    const html = await pointsPage.text();
+
+    const scriptMatch = html.match(
+      /\/_next\/static\/chunks\/app\/\(dashboard\)\/points\/page-[^"']+\.js/
+    );
+    if (!scriptMatch) {
+      throw new Error("Unable to locate Felix points page chunk");
+    }
+    const chunkPath = scriptMatch[0];
+    const chunkUrl = `https://www.usefelix.xyz${chunkPath}`;
+
+    const chunkRes = await fetch(chunkUrl, { cache: "no-store" });
+    const chunkJs = await chunkRes.text();
+
+    const idMatch = chunkJs.match(
+      /createServerReference\("([a-f0-9]+)"[\s\S]*?getPointsDataActionAdvanced\"\)/
+    );
+    if (!idMatch) {
+      throw new Error("Unable to discover Felix Next-Action id");
+    }
+    cachedFelixActionId = idMatch[1];
+    return cachedFelixActionId;
+  } catch {
+    cachedFelixActionId = "c0cd7cc71bafc069453ce74ea980982868fbb2375f";
+    return cachedFelixActionId;
+  }
+}
+
+async function fetchFelixPoints(wallet: string) {
+  const actionId = await discoverFelixActionId();
+  const url = "https://www.usefelix.xyz/points";
+  const payload = JSON.stringify([wallet]);
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=UTF-8",
+      Accept: "text/x-component",
+      "Next-Action": actionId,
+    },
+    body: payload,
+    cache: "no-store",
+  });
+
+  const text = await response.text();
+  return {
+    text,
+    status: response.status,
+    contentType: response.headers.get("content-type"),
+    actionId,
+  };
+}
+
+function extractFelixTotalPointsFromObject(data: any): Big {
+  if (!data) return Big(0);
+  if (Array.isArray(data)) {
+    const stats = data.find(
+      (item: any) =>
+        item &&
+        typeof item === "object" &&
+        Object.prototype.hasOwnProperty.call(item, "totalPoints")
+    );
+    const total = stats?.totalPoints ?? 0;
+    return Big(total || 0);
+  }
+  if (typeof data === "object" && data !== null) {
+    if (Object.prototype.hasOwnProperty.call(data, "totalPoints")) {
+      return Big(data.totalPoints || 0);
+    }
+  }
+  return Big(0);
+}
+
+function parseFelixTotalPoints(rawText: string): Big {
+  if (!rawText) return Big(0);
+  try {
+    const obj = JSON.parse(rawText);
+    return extractFelixTotalPointsFromObject(obj);
+  } catch {}
+
+  const lines = rawText
+    .split(/\r?\n/)
+    .map((l) => l.trim())
+    .filter((l) => l.length > 0);
+
+  const objects = [];
+  for (const line of lines) {
+    const cleaned = line.replace(/^\d+:\s*/, "");
+    try {
+      const obj = JSON.parse(cleaned);
+      objects.push(obj);
+    } catch {}
+  }
+
+  return extractFelixTotalPointsFromObject(objects);
+}
+
 export const APIS: Api[] = [
   {
     pointsId: POINTS_ID_ETHENA_SATS_S3,
@@ -319,27 +431,19 @@ export const APIS: Api[] = [
     pointsId: POINTS_ID_FELIX_S1,
     dataSources: [
       {
-        getURL: () => `https://www.usefelix.xyz/points`,
-        method: "POST",
-        headers: {
-          accept: "application/json",
-          "content-type": "text/plain;charset=UTF-8",
-          "next-action": "c02a6722280afd3d9d9ea252161adb964e1e6f68e0",
-          "next-router-state-tree":
-            "%5B%22%22%2C%7B%22children%22%3A%5B%22(dashboard)%22%2C%7B%22children%22%3A%5B%22points%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2C%22%2Fpoints%22%2C%22refresh%22%5D%7D%5D%7D%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
-          origin: "https://www.usefelix.xyz",
-          referer: "https://www.usefelix.xyz/points",
-        },
-        getBody: (wallet: string) => {
-          return JSON.stringify([wallet]);
+        getData: async (wallet: string) => {
+          const felixResponse = await fetchFelixPoints(wallet);
+          return felixResponse.text;
         },
         select: (data: any) => {
-          if (Array.isArray(data) && data.length > 1) {
-            const pointsData = data[1];
-            return pointsData?.totalPoints || 0;
+          const totalPoints = parseFelixTotalPoints(data);
+          console.log("felix total points", totalPoints.toString());
+          if (!totalPoints.eq(0)) {
+            console.log("felix total points IS NOT 0", totalPoints, data);
           }
-          return 0;
+          return totalPoints.toNumber();
         },
+        catchError: true,
       },
     ],
   },

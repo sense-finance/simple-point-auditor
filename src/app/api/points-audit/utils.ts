@@ -73,7 +73,9 @@ export async function getAllPointsData(
           if (matchingApi) {
             // Collect URLs & prefill pointsBySource
             dataSourceURLs = matchingApi.dataSources.map((dataSource) => {
-              const url = dataSource.getURL(configItem.owner);
+              const url = dataSource.getURL
+                ? dataSource.getURL(configItem.owner)
+                : `getData-${dataSource.select.toString().slice(0, 20)}`;
               pointsBySource[url] = "0";
               return url;
             });
@@ -82,42 +84,45 @@ export async function getAllPointsData(
             const parallelResults = await Promise.all(
               matchingApi.dataSources.map(async (dataSource) => {
                 try {
-                  const url = dataSource.getURL(configItem.owner);
-                  const headers = dataSource.headers ? dataSource.headers : {};
-                  const method = dataSource.method ? dataSource.method : "GET";
-                  const body = dataSource.getBody
-                    ? dataSource.getBody(
-                        configItem.owner,
-                        new Date(configItem.start).getTime(),
-                        new Date().getTime()
-                      )
-                    : undefined;
+                  const sourceKey = dataSource.getURL
+                    ? dataSource.getURL(configItem.owner)
+                    : `getData-${dataSource.select.toString().slice(0, 20)}`;
                   let attempts = 0;
                   const maxAttempts = 3;
                   let lastError: unknown;
 
-                  console.log("Fetching:", url);
+                  console.log("Fetching:", sourceKey);
                   while (attempts < maxAttempts) {
                     try {
-                      const response = await fetch(url, {
-                        method,
-                        headers,
-                        body,
-                        cache: "no-store",
-                      });
-
                       let raw;
-                      if (url.includes("usefelix.xyz")) {
-                        // Felix API returns text that needs special parsing
-                        const text = await response.text();
-                        // Remove the numbered prefixes (e.g., "1:", "2:", etc.)
-                        const cleanedText = text.replace(/^\d+:/gm, "");
-                        // Parse each line as JSON
-                        const lines = cleanedText
-                          .split("\n")
-                          .filter((line) => line.trim());
-                        raw = lines.map((line) => JSON.parse(line));
-                      } else {
+
+                      if (dataSource.getData) {
+                        // Use getData method for custom data fetching (like Felix)
+                        raw = await dataSource.getData(configItem.owner);
+                      } else if (dataSource.getURL) {
+                        // Use traditional URL-based fetching
+                        const url = dataSource.getURL(configItem.owner);
+                        const headers = dataSource.headers
+                          ? dataSource.headers
+                          : {};
+                        const method = dataSource.method
+                          ? dataSource.method
+                          : "GET";
+                        const body = dataSource.getBody
+                          ? dataSource.getBody(
+                              configItem.owner,
+                              new Date(configItem.start).getTime(),
+                              new Date().getTime()
+                            )
+                          : undefined;
+
+                        const response = await fetch(url, {
+                          method,
+                          headers,
+                          body,
+                          cache: "no-store",
+                        });
+
                         // Check if response is JSON or an error message
                         const text = await response.text();
                         if (!response.ok) {
@@ -135,24 +140,33 @@ export async function getAllPointsData(
                             )}...`
                           );
                         }
+                      } else {
+                        throw new Error(
+                          "DataSource must have either getURL or getData method"
+                        );
                       }
 
                       const points = dataSource.select(raw, configItem.owner);
                       // Convert to Big just in case
                       const pointsAsBig = new Big(points || 0);
                       // Update local pointsBySource for debugging
-                      pointsBySource[url] = pointsAsBig.toString();
+                      pointsBySource[sourceKey] = pointsAsBig.toString();
                       return pointsAsBig;
                     } catch (e) {
-                      console.log("Error fetching:", url, body, e);
+                      console.log("Error fetching:", sourceKey, e);
                       lastError = e;
                       attempts++;
-                      if (attempts < maxAttempts) {
+                      if (attempts < maxAttempts && !dataSource.catchError) {
                         console.log(
-                          `Retrying fetch from ${url} in ${attempts * 500}ms`
+                          `Retrying fetch from ${sourceKey} in ${
+                            attempts * 500
+                          }ms`
                         );
                         await new Promise((r) => setTimeout(r, attempts * 500));
                         continue;
+                      } else if (dataSource.catchError) {
+                        console.log("Catching error for", sourceKey);
+                        return new Big(0);
                       }
                     }
                   }
@@ -173,6 +187,10 @@ export async function getAllPointsData(
                     e.message.includes("Unexpected token '<'")
                   ) {
                     throw new Error("US region detected");
+                  }
+                  if (dataSource.catchError) {
+                    console.log("Catching error:", e);
+                    return new Big(0);
                   }
                   console.error(e);
                   return new Big(0);
