@@ -183,10 +183,7 @@ async function fetchDbSnapshotForWallet(
   try {
     const sql = neon(sqlUrl);
     // Fetch the latest actual_points per points_id for this owner
-    const rows = await sql<{
-      points_id: string;
-      actual_points: string;
-    }[]>`
+    const rows = (await sql`
       WITH latest AS (
         SELECT DISTINCT ON (points_id) points_id, actual_points, created_at
         FROM points_audit_logs
@@ -194,7 +191,7 @@ async function fetchDbSnapshotForWallet(
         ORDER BY points_id, created_at DESC
       )
       SELECT points_id, actual_points FROM latest
-    `;
+    `) as Array<{ points_id: string; actual_points: string }>;
 
     const items: HyperfolioItem[] = [];
     for (const r of rows) {
