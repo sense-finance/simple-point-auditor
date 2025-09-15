@@ -1,6 +1,6 @@
 // Adjust imports to your actual paths/types
 import { convertValue } from "@/app/lib";
-import { APIS } from "@/app/config/apis";
+import { buildApis, HyperfolioMode } from "@/app/config/apis";
 import { Big } from "big.js";
 import { Strategy, AssetType } from "@/app/types";
 
@@ -28,34 +28,56 @@ const getExpectedPointsPerDay = (
 };
 
 const getActiveDays = (
-  matchingApi: (typeof APIS)[number] | undefined,
+  matchingApi: ReturnType<typeof buildApis>[number] | undefined,
   positionStart: string,
   now: number
 ) => {
-  const end = new Date(matchingApi?.seasonEnd || now);
-  const start = new Date(
-    matchingApi?.seasonStart &&
-    new Date(matchingApi?.seasonStart).getTime() >
-      new Date(positionStart).getTime()
-      ? matchingApi?.seasonStart
-      : positionStart
-  );
-  return new Big(end.getTime() - start.getTime()).div(1000 * 60 * 60 * 24);
+  const endMs = new Date(matchingApi?.seasonEnd ?? now).getTime();
+
+  const positionStartMs = new Date(positionStart).getTime();
+  const seasonStartMs = matchingApi?.seasonStart
+    ? new Date(matchingApi.seasonStart).getTime()
+    : NaN;
+
+  let startMs: number;
+  if (
+    !Number.isNaN(seasonStartMs) &&
+    !Number.isNaN(positionStartMs) &&
+    seasonStartMs > positionStartMs
+  ) {
+    startMs = seasonStartMs;
+  } else if (!Number.isNaN(positionStartMs)) {
+    startMs = positionStartMs;
+  } else {
+    // Invalid positionStart; default start to end to produce 0 days
+    startMs = endMs;
+  }
+
+  let delta = endMs - startMs;
+  if (!Number.isFinite(delta) || delta < 0) delta = 0;
+
+  return new Big(delta).div(1000 * 60 * 60 * 24);
 };
 
 /**
  * The core function that fetches and computes all point data.
  * Returns a list of results for each (configItem, pointDef) pair.
  */
+type GetAllPointsOptions = {
+  hyperfolioMode?: HyperfolioMode;
+};
+
 export async function getAllPointsData(
-  config: Strategy[]
+  config: Strategy[],
+  options?: GetAllPointsOptions
 ): Promise<PointsDataResult[]> {
   const now = Date.now();
+  const apis = buildApis({ hyperfolioMode: options?.hyperfolioMode });
   const tasks: Array<Promise<PointsDataResult>> = [];
 
   for (const configItem of config) {
     for (const pointDef of configItem.points) {
-      const matchingApi = APIS.find(
+      const matchingApi = apis.find(
         (api: any) => api.pointsId === pointDef.type
       );
 

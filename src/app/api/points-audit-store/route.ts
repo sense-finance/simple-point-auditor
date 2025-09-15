@@ -1,13 +1,13 @@
 import { neon } from "@neondatabase/serverless";
 import { getAllPointsData } from "../points-audit/utils";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { fetchPriceUSD } from "@/app/lib";
 import { ETH_CONFIG } from "@/app/config/ethStrategies";
 import { HYPE_EVM_CONFIG } from "@/app/config/hypeEvmStrategies";
 
 export const maxDuration = 180;
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   const sql = neon(process.env.DATABASE_URL!);
 
   try {
@@ -18,11 +18,9 @@ export async function GET() {
       ORDER BY created_at DESC LIMIT 1
     `;
 
+    const force = req.nextUrl.searchParams.get("force") === "true";
     const fourHoursAgo = Date.now() - 4 * 60 * 60 * 1000 + maxDuration * 1000; // maxDuration seconds wiggle room
-    if (
-      lastRun.length > 0 &&
-      new Date(lastRun[0].created_at).getTime() > fourHoursAgo
-    ) {
+    if (!force && lastRun.length > 0 && new Date(lastRun[0].created_at).getTime() > fourHoursAgo) {
       console.log(
         "Skipping points-audit-store, last run was less than ~4 hours ago"
       );
@@ -30,7 +28,9 @@ export async function GET() {
     }
 
     const CONFIG = [...ETH_CONFIG, ...HYPE_EVM_CONFIG];
-    const data = await getAllPointsData(CONFIG);
+    const data = await getAllPointsData(CONFIG, {
+      hyperfolioMode: "live",
+    });
 
     await sql.transaction((tx) => {
       const queries = [];

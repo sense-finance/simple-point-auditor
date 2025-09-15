@@ -27,7 +27,9 @@ export async function GET(
         );
     }
 
-    const results = await getAllPointsData(config);
+    const results = await getAllPointsData(config, {
+      hyperfolioMode: "db",
+    });
     return NextResponse.json(results, {
       status: 200,
       headers: {

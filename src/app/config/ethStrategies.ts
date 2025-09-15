@@ -2909,4 +2909,43 @@ export const CONFIG_OLD: Array<{
   //   ],
   //   externalAppURL: "https://app.contango.xyz/",
   // },
+  // ---
+  // Placeholders removed to avoid invalid dates crashing calculations
+  // {
+  //   strategy: "Spectra: Hold YTs (<EXPIRY_DATE>)",
+  //   start: "<START_DATE UTC>",
+  //   owner: "<OWNER_ADDRESS>",
+  //   points: [
+  //     { type: POINTS_ID_SPECTRA_S1 },
+  //   ],
+  //   externalAppURL: "https://app.spectra.finance/pools?chain=ethereum",
+  // },
+  // {
+  //   strategy: "Cap Money: cUSD YTs (<EXPIRY_DATE>)",
+  //   start: "<START_DATE UTC>",
+  //   owner: "<OWNER_ADDRESS>",
+  //   points: [
+  //     { type: POINTS_ID_SPECTRA_S1 },
+  //     { type: POINTS_ID_CAP_S1 },
+  //   ],
+  //   externalAppURL: "https://app.spectra.finance/trade-yield?chain=ethereum",
+  // },
+  // {
+  //   strategy: "Cap Money: Hold cUSD",
+  //   start: "<START_DATE UTC>",
+  //   owner: "<OWNER_ADDRESS>",
+  //   points: [
+  //     { type: POINTS_ID_CAP_S1 },
+  //   ],
+  //   externalAppURL: "https://cap.app",
+  // },
+  // {
+  //   strategy: "Cap Money: Hold stcUSD",
+  //   start: "<START_DATE UTC>",
+  //   owner: "<OWNER_ADDRESS>",
+  //   points: [
+  //     { type: POINTS_ID_CAP_S1 },
+  //   ],
+  //   externalAppURL: "https://cap.app",
+  // },
 ];

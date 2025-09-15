@@ -341,4 +341,15 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     externalAppURL:
       "https://app.hyperbeat.org/morphobeat/vault/0x92B518e1cD76dD70D3E20624AEdd7D107F332Cff",
   },
+  // ---
+  // Placeholder removed to avoid invalid dates crashing calculations
+  // {
+  //   strategy: "Spectra: Hold YTs (<EXPIRY_DATE>)",
+  //   start: "<START_DATE UTC>",
+  //   owner: "<OWNER_ADDRESS>",
+  //   points: [
+  //     { type: POINTS_ID_SPECTRA_S1 },
+  //   ],
+  //   externalAppURL: "https://app.spectra.finance/pools?chain=hyperevm",
+  // },
 ];

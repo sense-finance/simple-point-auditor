@@ -1,5 +1,6 @@
 import Big from "big.js";
 import { Api } from "../types";
+import { neon } from "@neondatabase/serverless";
 import { getAddress } from "viem";
 import {
   POINTS_ID_ETHENA_SATS_S3,
@@ -17,16 +18,10 @@ import {
   POINTS_ID_HYPERBEAT_S1,
   POINTS_ID_SENTIMENT_S1,
   MAINNET_AGETH,
-  // POINTS_ID_UPSHIFT_S2,
   POINTS_ID_FELIX_S1,
   POINTS_ID_UPSHIFT_S2,
   POINTS_ID_KINETIQ_S1,
 } from "./constants";
-
-// Utility to safely format GraphQL queries as a single line
-function formatGraphQLQuery(query: string): string {
-  return query.replace(/\s+/g, " ").trim();
-}
 
 // Felix direct API helpers
 let cachedFelixActionId: string | null = null;
@@ -140,7 +135,160 @@ function parseFelixTotalPoints(rawText: string): Big {
   return extractFelixTotalPointsFromObject(objects);
 }
 
-export const APIS: Api[] = [
+// -------------------------
+// Hyperfolio shared helpers
+// -------------------------
+type HyperfolioItem = { protocolName: string; points: number };
+type HyperfolioResponse = { data: HyperfolioItem[] };
+export type HyperfolioMode = "db" | "live";
+
+function fabricateHyperfolioLikeResult(
+  protocolName: string,
+  points: number
+): HyperfolioResponse {
+  return { data: [{ protocolName, points }] };
+}
+
+async function fetchHyperfolioLive(wallet: string): Promise<HyperfolioResponse> {
+  const apiKey = process.env.HYPERFOLIO_API_KEY;
+  if (!apiKey) {
+    throw new Error("Missing HYPERFOLIO_API_KEY");
+  }
+  const address = wallet.toLowerCase();
+  const url = `https://api.hyperfolio.xyz/points?address=${address}`;
+  const res = await fetch(url, {
+    headers: { "x-api-key": apiKey },
+    cache: "no-store",
+  });
+  const text = await res.text();
+  if (!res.ok) {
+    throw new Error(`Hyperfolio HTTP ${res.status}: ${text.slice(0, 200)}`);
+  }
+  let json: any;
+  try {
+    json = JSON.parse(text);
+  } catch {
+    throw new Error("Hyperfolio returned non-JSON response");
+  }
+  return {
+    data: Array.isArray(json?.data) ? json.data : [],
+  };
+}
+
+async function fetchDbSnapshotForWallet(
+  wallet: string
+): Promise<HyperfolioResponse | null> {
+  const sqlUrl = process.env.DATABASE_URL;
+  if (!sqlUrl) return null;
+  try {
+    const sql = neon(sqlUrl);
+    // Fetch the latest actual_points per points_id for this owner
+    const rows = await sql<{
+      points_id: string;
+      actual_points: string;
+    }[]>`
+      WITH latest AS (
+        SELECT DISTINCT ON (points_id) points_id, actual_points, created_at
+        FROM points_audit_logs
+        WHERE owner = ${wallet}
+        ORDER BY points_id, created_at DESC
+      )
+      SELECT points_id, actual_points FROM latest
+    `;
+
+    const items: HyperfolioItem[] = [];
+    for (const r of rows) {
+      const pts = Number(r.actual_points || 0);
+      switch (r.points_id) {
+        case POINTS_ID_HYPERBEAT_S1:
+          items.push({ protocolName: "Hyperbeat", points: pts });
+          break;
+        case POINTS_ID_FELIX_S1:
+          items.push({ protocolName: "Felix", points: pts });
+          break;
+        case POINTS_ID_UPSHIFT_S2:
+          items.push({ protocolName: "Upshift", points: pts });
+          break;
+        default:
+          break;
+      }
+    }
+    return { data: items };
+  } catch (e) {
+    console.error("DB snapshot fetch failed", e);
+    return null;
+  }
+}
+
+function createHyperfolioClient(mode: HyperfolioMode) {
+  const cache = new Map<string, HyperfolioResponse>();
+  const inflight = new Map<string, Promise<HyperfolioResponse>>();
+  const preferDb = mode === "db";
+
+  const keyFor = (wallet: string) => wallet.toLowerCase();
+
+  const urlFor = (wallet: string) => {
+    const base = `https://api.hyperfolio.xyz/points?address=${wallet}`;
+    return preferDb ? `${base}&via=db` : base;
+  };
+
+  const fetchFor = async (wallet: string): Promise<HyperfolioResponse> => {
+    const key = keyFor(wallet);
+    if (cache.has(key)) {
+      return cache.get(key)!;
+    }
+    if (inflight.has(key)) {
+      return inflight.get(key)!;
+    }
+
+    const promise = (async () => {
+      if (preferDb) {
+        const snapshot = await fetchDbSnapshotForWallet(wallet);
+        return snapshot ?? { data: [] };
+      }
+
+      try {
+        const live = await fetchHyperfolioLive(wallet);
+        return live;
+      } catch (error) {
+        const snapshot = await fetchDbSnapshotForWallet(wallet);
+        if (snapshot) {
+          return snapshot;
+        }
+        throw error;
+      }
+    })();
+
+    inflight.set(key, promise);
+    try {
+      const result = await promise;
+      cache.set(key, result);
+      return result;
+    } finally {
+      inflight.delete(key);
+    }
+  };
+
+  return {
+    mode,
+    preferDb,
+    fetchFor,
+    urlFor,
+  };
+}
+
+function resolveHyperfolioMode(mode?: HyperfolioMode): HyperfolioMode {
+  if (mode) {
+    return mode;
+  }
+  return process.env.HYPERFOLIO_USE_DB === "true" ? "db" : "live";
+}
+
+type BuildApisOptions = {
+  hyperfolioMode?: HyperfolioMode;
+};
+
+const BASE_APIS: Api[] = [
   {
     pointsId: POINTS_ID_ETHENA_SATS_S3,
     seasonEnd: "Mar-24-2025 00:00:00 AM UTC",
@@ -212,7 +360,7 @@ export const APIS: Api[] = [
         getURL: (wallet: string) =>
           `https://app.ether.fi/api/portfolio/v3/${wallet}`,
         select: (data: any) =>
-          data.totalPointsSummaries.LOYALTY.PreviousSeasonPoints || 0,
+          data?.totalPointsSummaries?.LOYALTY?.PreviousSeasonPoints ?? 0,
       },
     ],
   },
@@ -224,7 +372,7 @@ export const APIS: Api[] = [
         getURL: (wallet: string) =>
           `https://app.ether.fi/api/portfolio/v3/${wallet}`,
         select: (data: any) =>
-          data.totalPointsSummaries.LOYALTY.CurrentSeasonPoints || 0,
+          data?.totalPointsSummaries?.LOYALTY?.CurrentSeasonPoints ?? 0,
       },
     ],
   },
@@ -355,51 +503,10 @@ export const APIS: Api[] = [
       },
     ],
   },
+  // Hyperbeat via Hyperfolio (populated dynamically)
   {
     pointsId: POINTS_ID_HYPERBEAT_S1,
-    dataSources: [
-      {
-        getURL: () => `https://app.hyperbeat.org/api/points`,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          accept: "*/*",
-          origin: "https://app.hyperbeat.org",
-          referer: "https://app.hyperbeat.org/hyperfolio",
-        },
-        getBody: (
-          wallet: string,
-          _startTimestamp?: number,
-          endTimestamp?: number
-        ) => {
-          const query = {
-            query:
-              formatGraphQLQuery(`query GetWeeklyPoints($user_filter: String!, $start_timestamp: bigint!, $end_timestamp: bigint!) {
-              cron_get_ranked_points_by_timestamp(args: {
-                provider_filter: "hyperbeat",
-                user_filter: $user_filter,
-                start_timestamp: $start_timestamp,
-                end_timestamp: $end_timestamp
-              }) {
-                total_value
-              }
-            }`),
-            variables: {
-              user_filter: wallet,
-              start_timestamp: 1743408000, // UI start timestamp, presumably start of all point accruals
-              end_timestamp: endTimestamp,
-            },
-          };
-          return JSON.stringify(query);
-        },
-        select: (data: any) => {
-          const arr = data.data?.cron_get_ranked_points_by_timestamp;
-          return Array.isArray(arr) && arr.length > 0
-            ? new Big(arr[0].total_value).div(1_000_000).toNumber()
-            : 0;
-        },
-      },
-    ],
+    dataSources: [],
   },
   {
     pointsId: POINTS_ID_SENTIMENT_S1,
@@ -417,35 +524,11 @@ export const APIS: Api[] = [
   },
   {
     pointsId: POINTS_ID_UPSHIFT_S2,
-    dataSources: [
-      {
-        getURL: (wallet: string) =>
-          `https://app.upshift.finance/api/proxy/points/total?wallet=${wallet}&chainId=999`,
-        select: (data: any) => {
-          return data?.data?.points["999"]?.totalPoints || 0;
-        },
-      },
-    ],
+    dataSources: [],
   },
   {
     pointsId: POINTS_ID_FELIX_S1,
-    dataSources: [
-      {
-        getData: async (wallet: string) => {
-          const felixResponse = await fetchFelixPoints(wallet);
-          return felixResponse.text;
-        },
-        select: (data: any) => {
-          const totalPoints = parseFelixTotalPoints(data);
-          console.log("felix total points", totalPoints.toString());
-          if (!totalPoints.eq(0)) {
-            console.log("felix total points IS NOT 0", totalPoints, data);
-          }
-          return totalPoints.toNumber();
-        },
-        catchError: true,
-      },
-    ],
+    dataSources: [],
   },
   {
     pointsId: POINTS_ID_KINETIQ_S1,
@@ -460,3 +543,87 @@ export const APIS: Api[] = [
     ],
   },
 ];
+
+export function buildApis(options?: BuildApisOptions): Api[] {
+  const mode = resolveHyperfolioMode(options?.hyperfolioMode);
+  const hyperfolio = createHyperfolioClient(mode);
+
+  return BASE_APIS.map((api) => {
+    if (api.pointsId === POINTS_ID_HYPERBEAT_S1) {
+      return {
+        ...api,
+        dataSources: [
+          {
+            getURL: (wallet: string) => hyperfolio.urlFor(wallet),
+            getData: (wallet: string) => hyperfolio.fetchFor(wallet),
+            select: (data: any) => {
+              const hyperbeatData = data?.data?.find(
+                (item: any) => item.protocolName === "Hyperbeat"
+              );
+              return Number(hyperbeatData?.points || 0);
+            },
+          },
+        ],
+      };
+    }
+
+    if (api.pointsId === POINTS_ID_UPSHIFT_S2) {
+      return {
+        ...api,
+        dataSources: [
+          {
+            getURL: (wallet: string) => hyperfolio.urlFor(wallet),
+            getData: (wallet: string) => hyperfolio.fetchFor(wallet),
+            select: (data: any) => {
+              const upshiftData = data?.data?.find(
+                (item: any) => item.protocolName === "Upshift"
+              );
+              return Number(upshiftData?.points || 0);
+            },
+          },
+        ],
+      };
+    }
+
+    if (api.pointsId === POINTS_ID_FELIX_S1) {
+      return {
+        ...api,
+        dataSources: [
+          {
+            getURL: (wallet: string) => hyperfolio.urlFor(wallet),
+            getData: async (wallet: string) => {
+              const result = await hyperfolio.fetchFor(wallet);
+              const hasFelix = result?.data?.some(
+                (item: any) => item.protocolName === "Felix"
+              );
+              if (!hasFelix && hyperfolio.mode === "live") {
+                try {
+                  const felixResponse = await fetchFelixPoints(wallet);
+                  const parsedPoints = parseFelixTotalPoints(
+                    felixResponse.text
+                  );
+                  return fabricateHyperfolioLikeResult(
+                    "Felix",
+                    parsedPoints.toNumber()
+                  );
+                } catch {
+                  // swallow; return aggregated result even if empty
+                }
+              }
+              return result;
+            },
+            select: (data: any) => {
+              const felixData = data?.data?.find(
+                (item: any) => item.protocolName === "Felix"
+              );
+              return Number(felixData?.points || 0);
+            },
+            catchError: true,
+          },
+        ],
+      };
+    }
+
+    return api;
+  });
+}

@@ -96,6 +96,12 @@ function InfoTooltip({
           />
 
           <div className="mb-3 flex items-center gap-3">
+            {/* DB snapshot badge if applicable */}
+            {dataSourceURLs.some((u) => u.includes("via=db")) && (
+              <div className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide rounded bg-amber-50 text-amber-700 ring-1 ring-amber-200">
+                Using DB snapshot (rate-limited)
+              </div>
+            )}
             <a
               href={`https://${
                 selectedNetwork === "ethereum" ? "etherscan" : "hyperevmscan"
@@ -212,8 +218,9 @@ const pointIdToFriendlyName: Record<string, string> = {
 };
 
 // 2. Helper to group data by pointsId
-function groupByPointsId(rows: any[]): Record<string, any[]> {
-  return rows.reduce((acc, row) => {
+function groupByPointsId(rows: any): Record<string, any[]> {
+  if (!Array.isArray(rows)) return {} as Record<string, any[]>;
+  return rows.reduce((acc: Record<string, any[]>, row: any) => {
     const { pointsId } = row;
     if (!acc[pointsId]) {
       acc[pointsId] = [];
@@ -775,6 +782,14 @@ function PointsAuditByPointsId() {
                                   </Tooltip.Portal>
                                 </Tooltip.Root>
                               </Tooltip.Provider>
+                              {row.dataSourceURLs?.some((u: string) => u.includes("via=db")) && (
+                                <span
+                                  className="ml-2 inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide rounded bg-amber-50 text-amber-700 px-1.5 py-0.5 align-middle"
+                                  title="Using DB snapshot for rate-limited source"
+                                >
+                                  DB
+                                </span>
+                              )}
                             </td>
                             {noExpectedPoints ? (
                               <td className="py-5 px-2 bg-gray-50"></td>
