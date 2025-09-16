@@ -2,7 +2,7 @@
     "crons": [
         {
             "path": "/api/points-audit-store",
-            "schedule": "0 */4 * * *"
+            "schedule": "0 */12 * * *"
         }
     ]
   }
