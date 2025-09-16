@@ -217,61 +217,47 @@ async function fetchDbSnapshotForWallet(
   }
 }
 
-function createHyperfolioClient(mode: HyperfolioMode) {
-  const cache = new Map<string, HyperfolioResponse>();
-  const inflight = new Map<string, Promise<HyperfolioResponse>>();
-  const preferDb = mode === "db";
+type HyperfolioClient = {
+  mode: HyperfolioMode;
+  url: (wallet: string) => string;
+  fetch: (wallet: string) => Promise<HyperfolioResponse>;
+};
 
-  const keyFor = (wallet: string) => wallet.toLowerCase();
+function createHyperfolioClient(mode: HyperfolioMode): HyperfolioClient {
+  const cache = new Map<string, Promise<HyperfolioResponse>>();
 
-  const urlFor = (wallet: string) => {
+  const lower = (wallet: string) => wallet.toLowerCase();
+  const url = (wallet: string) => {
     const base = `https://api.hyperfolio.xyz/points?address=${wallet}`;
-    return preferDb ? `${base}&via=db` : base;
+    return mode === "db" ? `${base}&via=db` : base;
   };
 
-  const fetchFor = async (wallet: string): Promise<HyperfolioResponse> => {
-    const key = keyFor(wallet);
-    if (cache.has(key)) {
-      return cache.get(key)!;
-    }
-    if (inflight.has(key)) {
-      return inflight.get(key)!;
-    }
-
-    const promise = (async () => {
-      if (preferDb) {
-        const snapshot = await fetchDbSnapshotForWallet(wallet);
-        return snapshot ?? { data: [] };
-      }
-
-      try {
-        const live = await fetchHyperfolioLive(wallet);
-        return live;
-      } catch (error) {
-        const snapshot = await fetchDbSnapshotForWallet(wallet);
-        if (snapshot) {
-          return snapshot;
+  const fetch = async (wallet: string) => {
+    const key = lower(wallet);
+    let job = cache.get(key);
+    if (!job) {
+      job = (async () => {
+        if (mode === "db") {
+          return (await fetchDbSnapshotForWallet(wallet)) ?? { data: [] };
         }
-        throw error;
-      }
-    })();
 
-    inflight.set(key, promise);
-    try {
-      const result = await promise;
-      cache.set(key, result);
-      return result;
-    } finally {
-      inflight.delete(key);
+        try {
+          return await fetchHyperfolioLive(wallet);
+        } catch (error) {
+          const snapshot = await fetchDbSnapshotForWallet(wallet);
+          if (snapshot) return snapshot;
+          throw error;
+        }
+      })();
+      cache.set(key, job);
     }
+    return job.catch((err) => {
+      cache.delete(key);
+      throw err;
+    });
   };
 
-  return {
-    mode,
-    preferDb,
-    fetchFor,
-    urlFor,
-  };
+  return { mode, url, fetch };
 }
 
 function resolveHyperfolioMode(mode?: HyperfolioMode): HyperfolioMode {
@@ -541,86 +527,56 @@ const BASE_APIS: Api[] = [
   },
 ];
 
+const HYPERFOLIO_PROTOCOLS: Record<string, { name: string; catchError?: boolean; needsFelixFallback?: boolean }> = {
+  [POINTS_ID_HYPERBEAT_S1]: { name: "Hyperbeat" },
+  [POINTS_ID_UPSHIFT_S2]: { name: "Upshift" },
+  [POINTS_ID_FELIX_S1]: { name: "Felix", catchError: true, needsFelixFallback: true },
+};
+
+function findProtocolPoints(data: any, protocolName: string): number {
+  const entry = data?.data?.find((item: any) => item.protocolName === protocolName);
+  return Number(entry?.points || 0);
+}
+
 export function buildApis(options?: BuildApisOptions): Api[] {
   const mode = resolveHyperfolioMode(options?.hyperfolioMode);
-  const hyperfolio = createHyperfolioClient(mode);
+  const client = createHyperfolioClient(mode);
 
   return BASE_APIS.map((api) => {
-    if (api.pointsId === POINTS_ID_HYPERBEAT_S1) {
-      return {
-        ...api,
-        dataSources: [
-          {
-            getURL: (wallet: string) => hyperfolio.urlFor(wallet),
-            getData: (wallet: string) => hyperfolio.fetchFor(wallet),
-            select: (data: any) => {
-              const hyperbeatData = data?.data?.find(
-                (item: any) => item.protocolName === "Hyperbeat"
-              );
-              return Number(hyperbeatData?.points || 0);
-            },
-          },
-        ],
-      };
-    }
+    const protocol = HYPERFOLIO_PROTOCOLS[api.pointsId];
+    if (!protocol) return api;
 
-    if (api.pointsId === POINTS_ID_UPSHIFT_S2) {
-      return {
-        ...api,
-        dataSources: [
-          {
-            getURL: (wallet: string) => hyperfolio.urlFor(wallet),
-            getData: (wallet: string) => hyperfolio.fetchFor(wallet),
-            select: (data: any) => {
-              const upshiftData = data?.data?.find(
-                (item: any) => item.protocolName === "Upshift"
-              );
-              return Number(upshiftData?.points || 0);
-            },
-          },
-        ],
-      };
-    }
-
-    if (api.pointsId === POINTS_ID_FELIX_S1) {
-      return {
-        ...api,
-        dataSources: [
-          {
-            getURL: (wallet: string) => hyperfolio.urlFor(wallet),
-            getData: async (wallet: string) => {
-              const result = await hyperfolio.fetchFor(wallet);
-              const hasFelix = result?.data?.some(
-                (item: any) => item.protocolName === "Felix"
-              );
-              if (!hasFelix && hyperfolio.mode === "live") {
-                try {
-                  const felixResponse = await fetchFelixPoints(wallet);
-                  const parsedPoints = parseFelixTotalPoints(
-                    felixResponse.text
-                  );
-                  return fabricateHyperfolioLikeResult(
-                    "Felix",
-                    parsedPoints.toNumber()
-                  );
-                } catch {
-                  // swallow; return aggregated result even if empty
-                }
-              }
+    return {
+      ...api,
+      dataSources: [
+        {
+          getURL: (wallet: string) => client.url(wallet),
+          getData: async (wallet: string) => {
+            const result = await client.fetch(wallet);
+            if (!protocol.needsFelixFallback || client.mode === "db") {
               return result;
-            },
-            select: (data: any) => {
-              const felixData = data?.data?.find(
-                (item: any) => item.protocolName === "Felix"
-              );
-              return Number(felixData?.points || 0);
-            },
-            catchError: true,
-          },
-        ],
-      };
-    }
+            }
 
-    return api;
+            const hasFelix = result?.data?.some(
+              (item: any) => item.protocolName === protocol.name
+            );
+            if (hasFelix) return result;
+
+            try {
+              const felixResponse = await fetchFelixPoints(wallet);
+              const parsed = parseFelixTotalPoints(felixResponse.text);
+              return fabricateHyperfolioLikeResult(
+                protocol.name,
+                parsed.toNumber()
+              );
+            } catch {
+              return result;
+            }
+          },
+          select: (data: any) => findProtocolPoints(data, protocol.name),
+          ...(protocol.catchError ? { catchError: true } : {}),
+        },
+      ],
+    };
   });
 }
