@@ -149,13 +149,15 @@ function fabricateHyperfolioLikeResult(
   return { data: [{ protocolName, points }] };
 }
 
-async function fetchHyperfolioLive(wallet: string): Promise<HyperfolioResponse> {
+async function fetchHyperfolioLive(
+  wallet: string
+): Promise<HyperfolioResponse> {
   const apiKey = process.env.HYPERFOLIO_API_KEY;
   if (!apiKey) {
     throw new Error("Missing HYPERFOLIO_API_KEY");
   }
   const address = wallet.toLowerCase();
-  const url = `https://api.hyperfolio.xyz/points?address=${address}`;
+  const url = `https://api.hyperfolio.xyz/points?address=${address}&cache=false`;
   const res = await fetch(url, {
     headers: { "x-api-key": apiKey },
     cache: "no-store",
@@ -527,14 +529,23 @@ const BASE_APIS: Api[] = [
   },
 ];
 
-const HYPERFOLIO_PROTOCOLS: Record<string, { name: string; catchError?: boolean; needsFelixFallback?: boolean }> = {
+const HYPERFOLIO_PROTOCOLS: Record<
+  string,
+  { name: string; catchError?: boolean; needsFelixFallback?: boolean }
+> = {
   [POINTS_ID_HYPERBEAT_S1]: { name: "Hyperbeat" },
   [POINTS_ID_UPSHIFT_S2]: { name: "Upshift" },
-  [POINTS_ID_FELIX_S1]: { name: "Felix", catchError: true, needsFelixFallback: true },
+  [POINTS_ID_FELIX_S1]: {
+    name: "Felix",
+    catchError: true,
+    needsFelixFallback: true,
+  },
 };
 
 function findProtocolPoints(data: any, protocolName: string): number {
-  const entry = data?.data?.find((item: any) => item.protocolName === protocolName);
+  const entry = data?.data?.find(
+    (item: any) => item.protocolName === protocolName
+  );
   return Number(entry?.points || 0);
 }
 
