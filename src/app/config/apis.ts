@@ -21,6 +21,7 @@ import {
   POINTS_ID_FELIX_S1,
   POINTS_ID_UPSHIFT_S2,
   POINTS_ID_KINETIQ_S1,
+  POINTS_ID_CAPS_S4,
 } from "./constants";
 
 // Felix direct API helpers
@@ -485,6 +486,17 @@ const BASE_APIS: Api[] = [
               curr.user_merits_points + acc,
             0
           ),
+      },
+    ],
+  },
+  {
+    pointsId: POINTS_ID_CAPS_S4,
+    seasonStart: "Sep-17-2025 07:19:35 PM UTC",
+    dataSources: [
+      {
+        getURL: (wallet) =>
+          `https://api.cap.app/v1/caps/account/${getAddress(wallet)}`,
+        select: (data) => Big(data?.caps || 0).toNumber(),
       },
     ],
   },

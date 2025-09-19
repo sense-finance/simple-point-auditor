@@ -13,6 +13,7 @@ import {
   POINTS_ID_VEDA_S1,
   POINTS_ID_LOMBARD_LUX_S1,
   POINTS_ID_RESOLV_S1,
+  POINTS_ID_CAPS_S4,
 } from "./constants";
 
 export const ETH_CONFIG: Strategy[] = [
@@ -189,6 +190,90 @@ export const ETH_CONFIG: Strategy[] = [
       },
     ],
     externalAppURL: "https://fluid.io/vaults/1/139",
+  },
+
+  {
+    strategy: "Pendle: Hold USDe YTs (26 Nov 2025)",
+    start: "Sep-18-2025 07:19:35 PM UTC",
+    owner: "0xcf07a95f6381246b4536dc7d04f5b26958eb2b1b",
+    fixedValue: { value: 911.915, asset: "USD" }, // notional value of USDe YTs
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 60, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x4eaa571eafcd96f51728756bd7f396459bb9b869/swap?view=yt&py=output&chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold sUSDe YTs (26 Nov 2025)",
+    start: "Sep-18-2025 07:19:35 PM UTC",
+    owner: "0x67aa79bff1f7de633eeb5791e82dbfe47f1047d7",
+    fixedValue: { value: 679.596, asset: "USD" }, // notional value of sUSDe YTs
+    points: [
+      {
+        type: POINTS_ID_ETHENA_SATS_S4,
+        expectedPointsPerDay: { value: 20, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0xb6ac3d5da138918ac4e84441e924a20daa60dbdd/swap?view=yt&py=output&chain=ethereum",
+  },
+
+  {
+    strategy: "Pendle: Hold cUSD YTs (29 Jan 2026)",
+    start: "Sep-18-2025 07:19:35 PM UTC",
+    owner: "0x6218961dc9a1acc9b70e9dbff7cadf91b2d66e2e",
+    fixedValue: { value: 190.031, asset: "USD" }, // notional value of cUSD YTs
+    points: [
+      {
+        type: POINTS_ID_CAPS_S4,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0x307c15f808914df5a5dbe17e5608f84953ffa023/swap?view=yt&py=output&chain=ethereum",
+  },
+  {
+    strategy: "Pendle: Hold stcUSD YTs (29 Jan 2026)",
+    start: "Sep-19-2025 01:39:11 AM UTC",
+    owner: "0xc52898c7483d7766a31abfb2fbc6661c2dcb17ed",
+    fixedValue: { value: 176.525, asset: "USD" }, // notional value of stcUSD YTs
+    points: [
+      {
+        type: POINTS_ID_CAPS_S4,
+        expectedPointsPerDay: { value: 5, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL:
+      "https://app.pendle.finance/trade/markets/0xcc781b043933c10a04409b22aada3a3d1a7f29d4/swap?view=yt&py=output&chain=ethereum",
+  },
+  {
+    strategy: "Cap: stcUSD",
+    start: "Sep-18-2025 07:19:35 PM UTC",
+    owner: "0xb957f55d46dde3694fc0728bfd23c51ba379510a",
+    fixedValue: { value: 9, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_CAPS_S4,
+        expectedPointsPerDay: { value: 20, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL: "https://cap.app/swap",
+  },
+  {
+    strategy: "Cap: cUSD",
+    start: "Sep-19-2025 01:35:11 AM UTC",
+    owner: "0x5ca75ec94f480ac18a1b017469fc81b31672ace9",
+    fixedValue: { value: 9.35, asset: "USD" },
+    points: [
+      {
+        type: POINTS_ID_CAPS_S4,
+        expectedPointsPerDay: { value: 10, baseAsset: "USD" },
+      },
+    ],
+    externalAppURL: "https://cap.app/swap",
   },
 ];
 
