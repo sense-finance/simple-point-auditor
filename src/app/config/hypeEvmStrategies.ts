@@ -13,6 +13,8 @@ import {
   POINTS_ID_KINETIQ_S1,
   POINTS_ID_ETHENA_SATS_S4,
   POINTS_ID_ETHERFI_S5,
+  POINTS_ID_SPECTRA_S1,
+  POINTS_ID_RESOLV_S1,
 } from "./constants";
 
 export const HYPE_EVM_CONFIG: Strategy[] = [
@@ -341,15 +343,36 @@ export const HYPE_EVM_CONFIG: Strategy[] = [
     externalAppURL:
       "https://app.hyperbeat.org/morphobeat/vault/0x92B518e1cD76dD70D3E20624AEdd7D107F332Cff",
   },
-  // ---
-  // Placeholder removed to avoid invalid dates crashing calculations
-  // {
-  //   strategy: "Spectra: Hold YTs (<EXPIRY_DATE>)",
-  //   start: "<START_DATE UTC>",
-  //   owner: "<OWNER_ADDRESS>",
-  //   points: [
-  //     { type: POINTS_ID_SPECTRA_S1 },
-  //   ],
-  //   externalAppURL: "https://app.spectra.finance/pools?chain=hyperevm",
-  // },
+  {
+    strategy: "Spectra: Hold liquid HYPE YTs (29 Oct 2025)",
+    start: "Sep-24-2025 12:12:39 AM UTC",
+    owner: "0x2cB522c7b529CD721c5F7102Fbd21DF47869952d",
+    fixedValue: { value: 2.7688, asset: "HYPE" }, // notional
+    points: [{ type: POINTS_ID_HYPERBEAT_S1 }],
+    externalAppURL:
+      "https://app.spectra.finance/trade-yield/hyperevm:0xb84402d5b48656e8deb39ad57d0cc3d4073e2e8e",
+  },
+  {
+    strategy: "Spectra: Hold USDT0 YTs (17 Dec 2025)",
+    start: "Sep-24-2025 08:53:52 PM UTC",
+    owner: "0x5a429bd802286baebe75d2c834ad9b46346d5dde",
+    fixedValue: { value: 32.20439, asset: "USD" }, // notional
+    points: [
+      { type: POINTS_ID_HYPERBEAT_S1 },
+      { type: POINTS_ID_ETHENA_SATS_S4 },
+      { type: POINTS_ID_FELIX_S1 },
+      { type: POINTS_ID_RESOLV_S1 },
+    ],
+    externalAppURL:
+      "https://app.spectra.finance/trade-yield/hyperevm:0x94b2150c358ac42d2ccc651d554fb3217cfce925",
+  },
+  {
+    strategy: "Spectra: Hold beHYPE YTs (07 Dec 2025)",
+    start: "Sep-24-2025 09:01:11 PM UTC",
+    owner: "0x09f4442249d49885cdc6b2c43ae0bb8fc6946431",
+    fixedValue: { value: 2.73598, asset: "HYPE" }, // notional
+    points: [{ type: POINTS_ID_HYPERBEAT_S1 }],
+    externalAppURL:
+      "https://app.spectra.finance/trade-yield/hyperevm:0xcdc2e2a6e7756fe6ba444a4e4ffc3ccfa972dc9b",
+  },
 ];
