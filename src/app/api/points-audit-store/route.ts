@@ -32,45 +32,74 @@ export async function GET(req: NextRequest) {
       hyperfolioMode: "live",
     });
 
-    await sql.transaction((tx) => {
-      const queries = [];
+    for (const item of data) {
+      const prevRows = await sql`
+        SELECT actual_points
+        FROM points_audit_logs
+        WHERE strategy = ${item.strategy} AND points_id = ${item.pointsId}
+        ORDER BY created_at DESC
+        LIMIT 1
+      `;
 
-      for (const item of data) {
-        // Insert log and capture id
-        const insertLog = tx`
-          INSERT INTO points_audit_logs (
-            created_at, strategy, points_id, 
-            actual_points, expected_points, owner,
-            eth_price_usd
-          ) VALUES (
-            ${new Date().toISOString()}, 
-            ${item.strategy}, 
-            ${item.pointsId},
-            ${item.actualPoints}, 
-            ${item.expectedPoints}, 
-            ${item.owner},
-            ${currentEthPriceUSD}
-          )
-          RETURNING id
-        `;
-        queries.push(insertLog);
+      const previousPoints = prevRows.length
+        ? Number(prevRows[0].actual_points)
+        : null;
+      const nextPoints = Number(item.actualPoints);
 
-        for (const url of item.dataSourceURLs) {
-          const insertSource = tx`
-            INSERT INTO points_audit_sources (
-              audit_log_id, source_url, points
-            ) VALUES (
-              (SELECT id FROM points_audit_logs WHERE strategy = ${item.strategy} AND points_id = ${item.pointsId} ORDER BY created_at DESC LIMIT 1),
-              ${url}, 
-              ${item.pointsBySource[url]}
-            )
-          `;
-          queries.push(insertSource);
-        }
+      if (
+        nextPoints === 0 &&
+        previousPoints !== null &&
+        previousPoints > 0
+      ) {
+        console.warn(
+          "Skipping points log due to zero fallback",
+          item.strategy,
+          item.pointsId,
+          { previousPoints, nextPoints }
+        );
+        continue;
       }
 
-      return queries;
-    });
+      const insertLogResult = await sql`
+        INSERT INTO points_audit_logs (
+          created_at, strategy, points_id,
+          actual_points, expected_points, owner,
+          eth_price_usd
+        ) VALUES (
+          ${new Date().toISOString()},
+          ${item.strategy},
+          ${item.pointsId},
+          ${item.actualPoints},
+          ${item.expectedPoints},
+          ${item.owner},
+          ${currentEthPriceUSD}
+        )
+        RETURNING id
+      `;
+
+      const logId = insertLogResult[0]?.id;
+
+      if (!logId) {
+        console.error(
+          "Failed to obtain inserted log id",
+          item.strategy,
+          item.pointsId
+        );
+        continue;
+      }
+
+      for (const url of item.dataSourceURLs) {
+        await sql`
+          INSERT INTO points_audit_sources (
+            audit_log_id, source_url, points
+          ) VALUES (
+            ${logId},
+            ${url},
+            ${item.pointsBySource[url]}
+          )
+        `;
+      }
+    }
 
     console.log("Stored points-audit data in postgres");
     return NextResponse.json(

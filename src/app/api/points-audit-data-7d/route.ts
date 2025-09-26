@@ -184,6 +184,18 @@ export async function GET(request: Request) {
         return out.length > 0 ? out : dedupedLogs;
       })();
 
+      if (strategyConfig.strategy.includes("Hyperbeat")) {
+        console.log(
+          "[points-audit-7d:logs]",
+          strategyConfig.strategy,
+          pointsId,
+          cleanedLogs.map((log) => ({
+            created_at: log.created_at,
+            actual_points: Number(log.actual_points),
+          }))
+        );
+      }
+
       const effectiveEndLog = cleanedLogs[cleanedLogs.length - 1];
       const effectiveEndTime = new Date(effectiveEndLog.created_at).getTime();
 
@@ -335,6 +347,24 @@ export async function GET(request: Request) {
         daysOfData: Number(daysDifference.toFixed(2)),
         windowType,
       };
+
+      console.log(
+        "[points-audit-7d]",
+        strategyConfig.strategy,
+        pointsId,
+        {
+          fixedValue: strategyConfig.fixedValue,
+          daysDifference: Number(daysDifference.toFixed(4)),
+          realizedTotalGrowth: Number(realizedTotalGrowth.toFixed(6)),
+          realizedPointsPerDay: Number(realizedPointsPerDay.toFixed(6)),
+          positionValueUSD: Number(positionValueUSD.toFixed(6)),
+          realizedPointsPerDollarPerDay: Number(
+            (realizedPointsPerDay / positionValueUSD).toFixed(6)
+          ),
+          windowType,
+          logsCount: cleanedLogs.length,
+        }
+      );
     }
 
     overallResults.push({
