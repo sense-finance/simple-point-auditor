@@ -5,6 +5,11 @@ import { AssetType } from "@/app/types";
 import { ETH_CONFIG } from "@/app/config/ethStrategies";
 import { HYPE_EVM_CONFIG } from "@/app/config/hypeEvmStrategies";
 
+// Constants for window calculation
+const STALE_DAYS_THRESHOLD = 14; // Mark windows as stale if older than this many days
+
+type WindowType = "weekly_step" | "seven_day_window" | "fallback" | "insufficient" | "stale";
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const strategyParam = searchParams.get("strategy");
@@ -42,7 +47,7 @@ export async function GET(request: Request) {
         expectedPointsPerDay: number | null;
         percentageDiff: number | null;
         daysOfData: number;
-        windowType: string;
+        windowType: WindowType;
       };
     };
   }[] = [];
@@ -158,7 +163,7 @@ export async function GET(request: Request) {
         continue;
       }
 
-      // Use the last (i.e. most recent) deduped log as the effective end update.
+      // Use the last (i.e., most recent) deduped log as the effective end update.
       // Remove single-zero glitches between near-equal neighbors.
       const cleanedLogs = (() => {
         if (dedupedLogs.length < 3) return dedupedLogs;
@@ -209,7 +214,7 @@ export async function GET(request: Request) {
       // 3) Fallback: approximate 7-day window using the log closest to (end - 7 days)
       let chosenStartLog: any = null;
       let chosenEndLog: any = effectiveEndLog;
-      let windowType: string = "fallback";
+      let windowType: WindowType = "fallback";
 
       if (cleanedLogs.length >= 2) {
         // Search from the end for a ~weekly pair.
@@ -279,6 +284,35 @@ export async function GET(request: Request) {
       const startTime = new Date(chosenStartLog.created_at).getTime();
       const endTime = new Date(chosenEndLog.created_at).getTime();
       const daysDifference = daysBetween(endTime, startTime);
+
+      // Check if the chosen window is stale (14+ days old relative to now)
+      const nowMillis = Date.now();
+      const staleDays = (nowMillis - endTime) / (1000 * 60 * 60 * 24);
+      if (staleDays >= STALE_DAYS_THRESHOLD) {
+        pointsMetrics[pointsId] = {
+          realizedTotalGrowth: 0,
+          realizedPointsPerDay: 0,
+          realizedPointsPerDollarPerDay: 0,
+          totalExpectedPoints: null,
+          expectedPointsPerDay: null,
+          percentageDiff: null,
+          daysOfData: 0,
+          windowType: "stale",
+        };
+        console.log(
+          "[points-audit-7d]",
+          strategyConfig.strategy,
+          pointsId,
+          {
+            message: "Window is stale, returning zero rate",
+            staleDays: Number(staleDays.toFixed(2)),
+            windowEndTime: new Date(endTime).toISOString(),
+            now: new Date(nowMillis).toISOString(),
+          }
+        );
+        continue;
+      }
+
       const realizedTotalGrowth =
         Number(chosenEndLog.actual_points) -
         Number(chosenStartLog.actual_points);
