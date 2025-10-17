@@ -220,6 +220,30 @@ async function fetchDbSnapshotForWallet(
   }
 }
 
+// -------------------------
+// Hyperbeat direct helper
+// -------------------------
+async function fetchHyperbeatDirectPoints(wallet: string): Promise<number> {
+  try {
+    const url = `https://api.hyperbeat.org/api/v1/leaderboard-v2/${wallet}`;
+    const res = await fetch(url, { cache: "no-store" });
+    const text = await res.text();
+    if (!res.ok) {
+      return 0;
+    }
+    try {
+      const json = JSON.parse(text);
+      const pts = Number(json?.points || 0);
+      return Number.isFinite(pts) ? pts : 0;
+    } catch {
+      // Non-JSON response (e.g., HTML); treat as 0
+      return 0;
+    }
+  } catch {
+    return 0;
+  }
+}
+
 type HyperfolioClient = {
   mode: HyperfolioMode;
   url: (wallet: string) => string;
@@ -568,6 +592,30 @@ export function buildApis(options?: BuildApisOptions): Api[] {
   return BASE_APIS.map((api) => {
     const protocol = HYPERFOLIO_PROTOCOLS[api.pointsId];
     if (!protocol) return api;
+
+    // Special case: Hyperbeat – take max of Hyperfolio vs. direct Hyperbeat
+    if (api.pointsId === POINTS_ID_HYPERBEAT_S1) {
+      return {
+        ...api,
+        dataSources: [
+          {
+            getURL: (wallet: string) => client.url(wallet),
+            getData: async (wallet: string) => {
+              const [hf, hb] = await Promise.all([
+                client.fetch(wallet),
+                fetchHyperbeatDirectPoints(wallet).catch(() => 0),
+              ]);
+              return { hf, hb };
+            },
+            select: (data: any) => {
+              const hfPoints = findProtocolPoints(data?.hf, "Hyperbeat");
+              const hbPoints = Number(data?.hb || 0);
+              return Math.max(hfPoints, hbPoints);
+            },
+          },
+        ],
+      };
+    }
 
     return {
       ...api,
