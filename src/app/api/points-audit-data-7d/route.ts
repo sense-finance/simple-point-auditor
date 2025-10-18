@@ -62,7 +62,7 @@ export async function GET(request: Request) {
         expectedPointsPerDay: number | null;
         percentageDiff: number | null;
         daysOfData: number;
-        windowType: string;
+        windowType: WindowType;
       };
     } = {};
 
