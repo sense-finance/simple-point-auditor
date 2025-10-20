@@ -8,7 +8,7 @@ import { HYPE_EVM_CONFIG } from "@/app/config/hypeEvmStrategies";
 // Constants for window calculation
 const STALE_DAYS_THRESHOLD = 14; // Mark windows as stale if older than this many days
 
-type WindowType = "weekly_step" | "seven_day_window" | "fallback" | "insufficient" | "stale";
+type WindowType = "weekly_step" | "seven_day_window" | "insufficient" | "stale";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -210,11 +210,10 @@ export async function GET(request: Request) {
 
       // Week-aware window selection:
       // 1) Prefer the most recent adjacent pair whose spacing is ~1 week (5-9 days)
-      // 2) Otherwise, pick the adjacent pair whose spacing is closest to 7 days
-      // 3) Fallback: approximate 7-day window using the log closest to (end - 7 days)
+      // 2) Otherwise, approximate a 7-day window using the log closest to (end - 7 days).
       let chosenStartLog: any = null;
       let chosenEndLog: any = effectiveEndLog;
-      let windowType: WindowType = "fallback";
+      let windowType: WindowType = "insufficient";
 
       if (cleanedLogs.length >= 2) {
         // Search from the end for a ~weekly pair.
@@ -240,50 +239,86 @@ export async function GET(request: Request) {
         } else {
           // No ~weekly pair; approximate a 7-day window using the log closest to (end - 7 days).
           const desiredStartMillis = effectiveEndTime - 7 * 24 * 60 * 60 * 1000;
-          chosenStartLog = cleanedLogs.reduce((closest: any, current: any) => {
-            const currentTime = new Date(current.created_at).getTime();
-            const closestTime = closest
-              ? new Date(closest.created_at).getTime()
-              : null;
-            if (
-              !closest ||
-              (closestTime !== null &&
-                Math.abs(currentTime - desiredStartMillis) <
-                  Math.abs(closestTime - desiredStartMillis))
-            ) {
-              return current;
-            }
-            return closest;
-          }, null);
-          chosenEndLog = effectiveEndLog;
-          windowType = "seven_day_window";
+          // Exclude the effectiveEndLog from consideration to avoid selecting the same log as both start and end
+          const candidateStartLogs = cleanedLogs.filter(
+            (log: any) => log !== effectiveEndLog
+          );
+
+          if (candidateStartLogs.length > 0) {
+            chosenStartLog = candidateStartLogs.reduce((closest: any, current: any) => {
+              const currentTime = new Date(current.created_at).getTime();
+              const closestTime = closest
+                ? new Date(closest.created_at).getTime()
+                : null;
+              if (
+                !closest ||
+                (closestTime !== null &&
+                  Math.abs(currentTime - desiredStartMillis) <
+                    Math.abs(closestTime - desiredStartMillis))
+              ) {
+                return current;
+              }
+              return closest;
+            }, null);
+            chosenEndLog = effectiveEndLog;
+            windowType = "seven_day_window";
+          }
         }
       }
 
-      if (!chosenStartLog) {
-        // Fallback: pick the log closest to (end - 7 days)
-        const desiredStartMillis = effectiveEndTime - 7 * 24 * 60 * 60 * 1000;
-        chosenStartLog = cleanedLogs.reduce((closest: any, current: any) => {
-          const currentTime = new Date(current.created_at).getTime();
-          const closestTime = closest
-            ? new Date(closest.created_at).getTime()
-            : null;
-          if (
-            !closest ||
-            (closestTime !== null &&
-              Math.abs(currentTime - desiredStartMillis) <
-                Math.abs(closestTime - desiredStartMillis))
-          ) {
-            return current;
+      // If we still don't have a valid start log (e.g., only one log total), fall back to insufficient unless the single log is stale.
+      if (!chosenStartLog || !chosenEndLog) {
+        let derivedWindowType: WindowType = "insufficient";
+        if (!chosenStartLog && chosenEndLog) {
+          const endMillis = new Date(chosenEndLog.created_at).getTime();
+          const daysSinceEnd =
+            (Date.now() - endMillis) / (1000 * 60 * 60 * 24);
+          if (daysSinceEnd >= STALE_DAYS_THRESHOLD) {
+            derivedWindowType = "stale";
           }
-          return closest;
-        }, null);
-        windowType = "fallback";
+        }
+        windowType = derivedWindowType;
+        pointsMetrics[pointsId] = {
+          realizedTotalGrowth: 0,
+          realizedPointsPerDay: 0,
+          realizedPointsPerDollarPerDay: 0,
+          totalExpectedPoints: null,
+          expectedPointsPerDay: null,
+          percentageDiff: null,
+          daysOfData: 0,
+          windowType,
+        };
+        continue;
       }
 
       const startTime = new Date(chosenStartLog.created_at).getTime();
       const endTime = new Date(chosenEndLog.created_at).getTime();
       const daysDifference = daysBetween(endTime, startTime);
+
+      if (!Number.isFinite(daysDifference) || daysDifference <= 0) {
+        windowType = "insufficient";
+        pointsMetrics[pointsId] = {
+          realizedTotalGrowth: 0,
+          realizedPointsPerDay: 0,
+          realizedPointsPerDollarPerDay: 0,
+          totalExpectedPoints: null,
+          expectedPointsPerDay: null,
+          percentageDiff: null,
+          daysOfData: 0,
+          windowType,
+        };
+        console.log(
+          "[points-audit-7d]",
+          strategyConfig.strategy,
+          pointsId,
+          {
+            message: "Zero-day window detected, returning zero rate",
+            startTime: new Date(startTime).toISOString(),
+            endTime: new Date(endTime).toISOString(),
+          }
+        );
+        continue;
+      }
 
       // Check if the chosen window is stale (14+ days old relative to now)
       const nowMillis = Date.now();
